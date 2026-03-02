@@ -25,7 +25,7 @@ class SenderMail extends Mailable
         return $this->from(config('mail.from.address'), config('mail.from.name'))
                     ->subject('Archtech New Contact Form: ' . $this->formData['subject'])
                     ->replyTo($this->formData['email'])
-                    ->view('emails.contact-form')
+                    ->view('emails.sender')
                     ->with([
                         'data' => $this->formData,
                         'name' => $this->formData['name'],
