@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail;
+use App\Mail\SenderMail;
 use App\Models\ContactSubmission;
 
 class ContactController extends Controller
@@ -33,8 +34,10 @@ class ContactController extends Controller
             ]);
 
             // Send email
-            Mail::to(['aerron.archtechphil@gmail.com', 'cymerdenampo@gmail.com', $request->email])
+            Mail::to(['jophetbaruel.archtechphil@gmail.com', 'aerron.archtechphil@gmail.com'])
                 ->send(new ContactFormMail($validated));
+              Mail::to([$request->email])
+                ->send(new SenderMail($validated));
 
             return response()->json([
                 'success' => true,
