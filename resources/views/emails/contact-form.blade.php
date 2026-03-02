@@ -14,6 +14,17 @@
 
     <div style="background-color: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #eaeaea;">
         <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+
+            <!-- Receiver Notification Message -->
+            <div style="background-color: #fff4e5; padding: 15px; border-radius: 6px; border-left: 4px solid #ff9800; margin-bottom: 20px;">
+                <p style="margin: 0; font-size: 16px; color: #b26a00;">
+                    <strong>Someone inquired through the contact form.</strong>
+                </p>
+                <p style="margin: 5px 0 0 0; font-size: 14px; color: #555;">
+                    Please review the contact details and message below.
+                </p>
+            </div>
+
             <h2 style="color: #016563; margin-top: 0;">Contact Details</h2>
 
             <div style="margin-bottom: 15px;">
