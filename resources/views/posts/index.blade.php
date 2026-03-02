@@ -1126,7 +1126,7 @@
                             <li><a class="dropdown-item" href="{{ route('material-handling.index') }}">Material Handling</a></li>
                             <li><a class="dropdown-item" href="{{ Route('tools-lifting.index') }}">Tools & lifting equipment</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">All Products</a></li>
+
                         </ul>
                     </li>
 
