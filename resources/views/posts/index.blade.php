@@ -1175,7 +1175,7 @@
                 <div class="row align-items-center g-3">
                     <!-- Project Image -->
                     <div class="col-lg-6 text-center">
-                        <img src="{{ asset('homepage/file/assets/fire.jpg') }}"
+                        <img src="{{ asset('homepage/file/fire-img.jpg') }}"
                             alt="Completed Project"
                             class="img-fluid rounded-1 shadow-sm"
                             style="width:600px; height:400px; object-fit:cover;">
