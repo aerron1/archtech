@@ -507,60 +507,78 @@
         @yield('content')
     </main>
 
-     <!-- Updated Footer with All Accreditation Images -->
-     <footer class="bg-dark text-light pt-5 pb-3 mt-5">
+      <!-- Updated Footer with All Accreditation Images -->
+      <footer class="bg-dark text-light pt-5 pb-3 mt-5">
         <div class="container">
          <div class="row text-center text-md-start">
-                     <!-- Contact -->
-                 <div class="col-md-6">
+             <div class="row align-items-center text-center text-md-start">
+
+                 <!-- Contact -->
+                 <div class="col-md-5 mb-4 mb-md-0">
                      <h6 class="fw-semibold">Contact Us</h6>
-                     <p class="small text-muted mb-1"><i class="fa-solid fa-location-dot"></i> Yellow Bell Lower Cayam St. RLJB Purok 18, Colon,
-                         City of Naga, Cebu Philippines</p>
-                     <p class="small text-muted mb-1"><i class="fa-solid fa-phone"></i> +63 969 193 8522</p>
-                     <p class="small text-muted mb-1"><i class="fa-solid fa-at"></i> jophetbaruel.archtechphil@gmail.com</p>
-                     <p class="small text-muted"><i class="fa-brands fa-facebook"></i> Archtech Industries</p>
+                     <p class="small text-muted mb-1">
+                         <i class="fa-solid fa-location-dot"></i>
+                         Yellow Bell Lower Cayam St. RLJB Purok 18, Colon,
+                         City of Naga, Cebu Philippines
+                     </p>
+                     <p class="small text-muted mb-1">
+                         <i class="fa-solid fa-phone"></i> +63 969 193 8522
+                     </p>
+                     <p class="small text-muted mb-1">
+                         <i class="fa-solid fa-at"></i> jophetbaruel.archtechphil@gmail.com
+                     </p>
+                     <p class="small text-muted">
+                         <i class="fa-brands fa-facebook"></i> Archtech Industries
+                     </p>
                  </div>
 
 
-                 <!-- Social Images -->
-                 <div class="col-md-6 d-flex justify-content-md-end justify-content-center align-items-center gap-1 mt-3 mt-md-0">
+                 <!-- Accreditation / Social Images -->
+                 <div class="col-md-7 d-flex justify-content-md-end justify-content-end align-items-end gap-2 flex-wrap">
 
-                     <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-                         <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/pcab.gif') }}"
-                             alt="Bureau Logo" width="50" height="50" class="img-fluid d-block">
+                     <img src="{{ asset('homepage/file/assets/logo/nfpa.png') }}"
+                          alt="Fire Logo"
+                          class="img-fluid"
+                          style="max-height: 80px;">
+
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/pcab.gif') }}"
+                              alt="PCAB" width="70" height="70" class="img-fluid rounded-circle">
                      </a>
 
-                     <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-                         <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/buro.png') }}"
-                             alt="Bureau Logo" width="50" height="50" class="img-fluid d-block">
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/buro.png') }}"
+                              alt="Bureau" width="70" height="70" class="img-fluid rounded-circle">
                      </a>
 
-                     <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-                         <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/com.png') }}"
-                             alt="Twitter" width="50" height="50" class="img-fluid d-block">
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/com.png') }}"
+                              alt="COM" width="70" height="70" class="img-fluid rounded-circle">
                      </a>
 
-                     <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-                         <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/naga.png') }}"
-                             alt="LinkedIn" width="50" height="50" class="img-fluid d-block">
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/naga.png') }}"
+                              alt="Naga" width="70" height="70" class="img-fluid rounded-circle">
                      </a>
 
-                     <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-                         <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/dole.png') }}"
-                             alt="Instagram" width="50" height="50" class="img-fluid d-block">
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/dole.png') }}"
+                              alt="DOLE" width="70" height="70" class="img-fluid rounded-circle">
                      </a>
 
-                     <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-                         <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/phil.png') }}"
-                             alt="YouTube" width="50" height="50" class="img-fluid d-block">
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/phil.png') }}"
+                              alt="Philippines" width="70" height="70" class="img-fluid rounded-circle">
                      </a>
 
                  </div>
+
+             </div>
 
 
                          <!-- Quick Links -->
                          <div class="col-md-2 mb-4">
-                             <h2 class="fw-semibold">Brands</h2>
+                             <h2 class="fw-semibold">Our Brands</h2>
                              <ul class="list-unstyled">
                                  <h6 class="fw-semibold">A</h6>
                                  <li><a href="#" class="text-decoration-none text-muted">ABB</a></li>

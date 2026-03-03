@@ -63,7 +63,6 @@
                 'All Products' => 'all',
                 'Gaseous Suppression - Clean Agent' => 'Gaseous Suppression - Clean Agent',
                 'Detection & Control System' => 'Detection & Control System',
-                'Room Integrity Test' => 'Room Integrity Test',
                 'Water Suppression System' => 'Water Suppression System'
             ]
         ],
