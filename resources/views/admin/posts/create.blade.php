@@ -1185,14 +1185,51 @@
                                                 ],
                                                 'Buckeye' => [
                                                     'Fire Extinguishers',
-                                                    'Gas Detection Transmitters' // CHANGED: from 'Fire Suppression Systems' to 'Gas Detection Transmitters'
+                                                    'Gas Detection Transmitters'
                                                 ],
                                                 'Lehavot' => [
-                                                        'Kitchen Shield'  // CHANGED: from ['Fire Extinguishers', 'Fire Suppression Equipment'] to just 'Kitchen Shield'
+                                                    'Kitchen Shield'
                                                 ],
                                                 'Nittan' => [
-                                                    'Fire Detectors',
-                                                    'Fire Alarm Systems'
+                                                    'UL Addressable' => [
+                                                        'Panels',
+                                                        'Optional Modules',
+                                                        'Annunciators',
+                                                        'Graphic Monitor Softwares',
+                                                        'Detectors & Bases',
+                                                        'Accessories'
+                                                    ],
+                                                    'UL Conventional' => [
+                                                        'Detectors & Bases',
+                                                        'Pull Stations',
+                                                        'Notification Appliances',
+                                                        'Accessories'
+                                                    ],
+                                                    'JP Conventional' => [
+                                                        'Panels',
+                                                        'Accessories',
+                                                        'Detectors & Bases',
+                                                        'Manual Alarm Station',
+                                                        'Gas Detectors',
+                                                        'Explosion Proof Type',
+                                                        'Test Tool'
+                                                    ],
+                                                    'EN Addressable' => [
+                                                        'Panel',
+                                                        'FX Series Accessories',
+                                                        'NF Series Accessories',
+                                                        'Call Points',
+                                                        'Notification Appliances',
+                                                        'Gas Detectors',
+                                                        'Loop Modules'
+                                                    ],
+                                                    'EN Conventional' => [
+                                                        'Panels',
+                                                        'Gas Detectors',
+                                                        'Detectors & Bases',
+                                                        'Call points',
+                                                        'Notification Appliances'
+                                                    ]
                                                 ],
                                                 'Honeywell' => [
                                                     'Fire Alarm Systems',
@@ -1884,8 +1921,20 @@
                     'Foam Equipment & Device', 'Foam Proportioning Systems', 'Deluge Valves & Systems',
                     'Foam Concentrates', 'Pre Action Fire Protection', 'Sprinklers & Accessories',
                     'Gaseous Suppression - Clean Agent', 'Detection & Control System', 'Room Integrity Test', 'Water Suppression System',
-                    'Fire Extinguishers', 'Gas Detection Transmitters', // CHANGED: from 'Fire Suppression Systems' to 'Gas Detection Transmitters'
-                    'Fire Detectors', 'Fire Alarm Systems', 'Gas Detection', 'Linear Heat Detection','Kitchen Shield',  // ADDED: Kitchen Shield
+                    'Fire Extinguishers', 'Gas Detection Transmitters',
+                    'Kitchen Shield',
+                    // Nittan Categories - UL Addressable
+                    'Panels', 'Optional Modules', 'Annunciators', 'Graphic Monitor Softwares', 'Detectors & Bases', 'Accessories',
+                    // Nittan Categories - UL Conventional
+                    'Pull Stations', 'Notification Appliances',
+                    // Nittan Categories - JP Conventional
+                    'Manual Alarm Station', 'Explosion Proof Type', 'Test Tool',
+                    // Nittan Categories - EN Addressable
+                    'FX Series Accessories', 'NF Series Accessories', 'Call Points', 'Loop Modules',
+                    // Nittan Categories - EN Conventional
+                    'Call points',
+                    // Rest of fire protection categories
+                    'Fire Detectors', 'Fire Alarm Systems', 'Gas Detection', 'Linear Heat Detection',
                     'Fire Pumps', 'End Suction Pumps', 'In-Line Pumps', 'Split Case Pumps', 'Vertical Multi-Stage Pumps',
                     'Vertical Turbine Pumps', 'End Suction Fire Pumps', 'Split Case Fire Pumps', 'Vertical Turbine Fire Pumps',
                     'CCTV Cameras', 'DVRs', 'NVRs', 'CCTV Accessories', 'Access Control Systems', 'Biometric Readers',
@@ -2041,7 +2090,7 @@
                     if (fireProtectionCategoriesSection && categories) {
                         // Check if categories is an object with keys (nested structure)
                         if (typeof categories === 'object' && categories !== null && !Array.isArray(categories)) {
-                            // It's a nested object structure (like Viking)
+                            // It's a nested object structure (like Viking or new Nittan structure)
                             fireProtectionCategoriesSection.style.display = 'block';
 
                             // Get all main categories
@@ -2115,7 +2164,7 @@
                                 // Create tag value
                                 let tagValue;
                                 if (mainCategory) {
-                                    // For nested categories (Viking), include the main category
+                                    // For nested categories (Viking or Nittan), include the main category
                                     tagValue = mainCategory + ' - ' + categoryValue;
                                 } else {
                                     // For simple categories (other brands)

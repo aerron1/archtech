@@ -82,7 +82,11 @@
         'Nittan' => [
             'main_categories' => [
                 'All Products' => 'all',
-                'Fire Alarm' => 'Fire Alarm',
+                'UL Addressable' => 'UL Addressable',
+                'UL Conventional' => 'UL Conventional',
+                'JP Conventional' => 'JP Conventional',
+                'EN Addressable' => 'EN Addressable',
+                'EN Conventional' => 'EN Conventional'
             ]
         ],
         'Honeywell' => [
@@ -596,6 +600,49 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     };
 
+    // Create mapping for Nittan categories
+    const nittanCategories = {
+        'UL Addressable': [
+            'Panels',
+            'Optional Modules',
+            'Annunciators',
+            'Graphic Monitor Softwares',
+            'Detectors & Bases',
+            'Accessories'
+        ],
+        'UL Conventional': [
+            'Detectors & Bases',
+            'Pull Stations',
+            'Notification Appliances',
+            'Accessories'
+        ],
+        'JP Conventional': [
+            'Panels',
+            'Accessories',
+            'Detectors & Bases',
+            'Manual Alarm Station',
+            'Gas Detectors',
+            'Explosion Proof Type',
+            'Test Tool'
+        ],
+        'EN Addressable': [
+            'Panel',
+            'FX Series Accessories',
+            'NF Series Accessories',
+            'Call Points',
+            'Notification Appliances',
+            'Gas Detectors',
+            'Loop Modules'
+        ],
+        'EN Conventional': [
+            'Panels',
+            'Gas Detectors',
+            'Detectors & Bases',
+            'Call points',
+            'Notification Appliances'
+        ]
+    };
+
     // Function to check if a category belongs to a main category
     function categoryBelongsToMain(category, mainCategory) {
         // Direct match with main category
@@ -606,18 +653,18 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         }
 
-        // Get subcategories for this main category
-        const subcategories = vikingCategories[mainCategory];
-        if (subcategories) {
+        // Check Viking categories
+        const vikingSubcategories = vikingCategories[mainCategory];
+        if (vikingSubcategories) {
             // Check exact match in subcategories
-            if (subcategories.includes(category)) {
+            if (vikingSubcategories.includes(category)) {
                 return true;
             }
 
             // Check case-insensitive match
             const categoryLower = category.toLowerCase();
-            for (let i = 0; i < subcategories.length; i++) {
-                if (subcategories[i].toLowerCase() === categoryLower) {
+            for (let i = 0; i < vikingSubcategories.length; i++) {
+                if (vikingSubcategories[i].toLowerCase() === categoryLower) {
                     return true;
                 }
             }
@@ -625,15 +672,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // For Electricals categories, handle specific keywords
             if (mainCategory === 'Electricals') {
                 if (categoryLower.includes('release control') &&
-                    subcategories.some(s => s.toLowerCase().includes('release control'))) {
+                    vikingSubcategories.some(s => s.toLowerCase().includes('release control'))) {
                     return true;
                 }
                 if (categoryLower.includes('detection and control') &&
-                    subcategories.some(s => s.toLowerCase().includes('detection and control'))) {
+                    vikingSubcategories.some(s => s.toLowerCase().includes('detection and control'))) {
                     return true;
                 }
                 if (categoryLower.includes('view all electrical') &&
-                    subcategories.some(s => s.toLowerCase().includes('view all electrical'))) {
+                    vikingSubcategories.some(s => s.toLowerCase().includes('view all electrical'))) {
                     return true;
                 }
             }
@@ -641,6 +688,23 @@ document.addEventListener('DOMContentLoaded', function() {
             // For Foam Systems, handle SFFF variations
             if (mainCategory === 'Foam Systems') {
                 if (categoryLower.includes('sfff') || categoryLower.includes('fluorine free')) {
+                    return true;
+                }
+            }
+        }
+
+        // Check Nittan categories
+        const nittanSubcategories = nittanCategories[mainCategory];
+        if (nittanSubcategories) {
+            // Check exact match in subcategories
+            if (nittanSubcategories.includes(category)) {
+                return true;
+            }
+
+            // Check case-insensitive match
+            const categoryLower = category.toLowerCase();
+            for (let i = 0; i < nittanSubcategories.length; i++) {
+                if (nittanSubcategories[i].toLowerCase() === categoryLower) {
                     return true;
                 }
             }
@@ -685,7 +749,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 2. Modal Functionality - UPDATED FOR VIKING CATEGORIES
+    // 2. Modal Functionality - UPDATED FOR VIKING AND NITTAN CATEGORIES
     document.querySelectorAll('.portfolio-modal').forEach(modal => {
         const modalId = modal.id;
         const modalSearch = modal.querySelector('.modal-search[data-modal="' + modalId + '"]');
@@ -732,7 +796,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Modal category filtering - UPDATED for Viking
+        // Modal category filtering - UPDATED for Viking and Nittan
         navButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 // Update active state

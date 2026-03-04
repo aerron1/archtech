@@ -105,14 +105,36 @@ class FireProtectionController extends Controller
 
                 // Buckeye Categories
                 'Fire Extinguishers',
-                'Gas Detection Transmitter',
+                'Gas Detection Transmitters',
 
-               // Lehavot Categories
-                'Kitchen Shield',  // CHANGED: from 'Fire Extinguishers', 'Fire Suppression Equipment'
+                // Lehavot Categories
+                'Kitchen Shield',
 
-                // Nittan Categories
-                'Fire Detectors',
-                'Fire Alarm Systems',
+                // Nittan Categories - UL Addressable
+                'Panels',
+                'Optional Modules',
+                'Annunciators',
+                'Graphic Monitor Softwares',
+                'Detectors & Bases',
+                'Accessories',
+
+                // Nittan Categories - UL Conventional
+                'Pull Stations',
+                'Notification Appliances',
+
+                // Nittan Categories - JP Conventional
+                'Manual Alarm Station',
+                'Explosion Proof Type',
+                'Test Tool',
+
+                // Nittan Categories - EN Addressable
+                'FX Series Accessories',
+                'NF Series Accessories',
+                'Call Points',
+                'Loop Modules',
+
+                // Nittan Categories - EN Conventional
+                'Call points',
 
                 // Honeywell Categories
                 'Fire Alarm Systems',
@@ -261,27 +283,55 @@ class FireProtectionController extends Controller
             'integrity test' => 'Room Integrity Test',
             'water suppression' => 'Water Suppression System',
 
-          // Buckeye Categories
+            // Buckeye Categories
             'fire extinguisher' => 'Fire Extinguishers',
             'extinguisher' => 'Fire Extinguishers',
-            'gas detection' => 'Gas Detection Transmitters',  // CHANGED: from 'fire suppression system'
+            'gas detection' => 'Gas Detection Transmitters',
             'gas transmitter' => 'Gas Detection Transmitters',
             'gas detection transmitter' => 'Gas Detection Transmitters',
             'transmitter' => 'Gas Detection Transmitters',
 
-          // Lehavot Categories
+            // Lehavot Categories
             'kitchen shield' => 'Kitchen Shield',
             'kitchen' => 'Kitchen Shield',
             'shield' => 'Kitchen Shield',
 
-            // Nittan Categories
-            'fire detector' => 'Fire Detectors',
-            'detector' => 'Fire Detectors',
-            'fire alarm' => 'Fire Alarm Systems',
-            'alarm system' => 'Fire Alarm Systems',
+            // Nittan Categories - UL Addressable
+            'panel' => 'Panels',
+            'optional module' => 'Optional Modules',
+            'annunciator' => 'Annunciators',
+            'graphic monitor' => 'Graphic Monitor Softwares',
+            'monitor software' => 'Graphic Monitor Softwares',
+            'detector' => 'Detectors & Bases',
+            'bases' => 'Detectors & Bases',
+            'accessories' => 'Accessories',
+
+            // Nittan Categories - UL Conventional
+            'pull station' => 'Pull Stations',
+            'pull stations' => 'Pull Stations',
+            'notification appliance' => 'Notification Appliances',
+
+            // Nittan Categories - JP Conventional
+            'manual alarm' => 'Manual Alarm Station',
+            'alarm station' => 'Manual Alarm Station',
+            'explosion proof' => 'Explosion Proof Type',
+            'test tool' => 'Test Tool',
+
+            // Nittan Categories - EN Addressable
+            'fx series' => 'FX Series Accessories',
+            'nf series' => 'NF Series Accessories',
+            'call point' => 'Call Points',
+            'call points' => 'Call Points',
+            'loop module' => 'Loop Modules',
+
+            // Nittan Categories - EN Conventional
+            'call points' => 'Call points',
+            'gas detectors' => 'Gas Detectors',
 
             // Honeywell Categories
-            'gas-detection' => 'Gas Detection',
+            'fire alarm' => 'Fire Alarm Systems',
+            'alarm system' => 'Fire Alarm Systems',
+            'gas detection' => 'Gas Detection',
             'fire suppression' => 'Fire Suppression',
 
             // Protectowire Categories
