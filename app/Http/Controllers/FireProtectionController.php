@@ -105,7 +105,7 @@ class FireProtectionController extends Controller
 
                 // Buckeye Categories
                 'Fire Extinguishers',
-                'Fire Suppression Systems',
+                'Gas Detection Transmitter',
 
                 // Lehavot Categories
                 'Fire Suppression Equipment',
@@ -261,11 +261,13 @@ class FireProtectionController extends Controller
             'integrity test' => 'Room Integrity Test',
             'water suppression' => 'Water Suppression System',
 
-            // Buckeye Categories
+          // Buckeye Categories
             'fire extinguisher' => 'Fire Extinguishers',
             'extinguisher' => 'Fire Extinguishers',
-            'fire suppression system' => 'Fire Suppression Systems',
-            'suppression system' => 'Fire Suppression Systems',
+            'gas detection' => 'Gas Detection Transmitters',  // CHANGED: from 'fire suppression system'
+            'gas transmitter' => 'Gas Detection Transmitters',
+            'gas detection transmitter' => 'Gas Detection Transmitters',
+            'transmitter' => 'Gas Detection Transmitters',
 
             // Lehavot Categories
             'fire suppression equipment' => 'Fire Suppression Equipment',

@@ -1185,7 +1185,7 @@
                                                 ],
                                                 'Buckeye' => [
                                                     'Fire Extinguishers',
-                                                    'Fire Suppression Systems'
+                                                    'Gas Detection Transmitters' // CHANGED: from 'Fire Suppression Systems' to 'Gas Detection Transmitters'
                                                 ],
                                                 'Lehavot' => [
                                                     'Fire Extinguishers',
@@ -1885,12 +1885,12 @@
                     'Foam Equipment & Device', 'Foam Proportioning Systems', 'Deluge Valves & Systems',
                     'Foam Concentrates', 'Pre Action Fire Protection', 'Sprinklers & Accessories',
                     'Gaseous Suppression - Clean Agent', 'Detection & Control System', 'Room Integrity Test', 'Water Suppression System',
-                    'Fire Extinguishers', 'Fire Suppression Systems', 'Fire Detectors', 'Fire Alarm Systems',
-                    'Gas Detection', 'Linear Heat Detection', 'Fire Pumps', 'End Suction Pumps', 'In-Line Pumps',
-                    'Split Case Pumps', 'Vertical Multi-Stage Pumps', 'Vertical Turbine Pumps', 'End Suction Fire Pumps',
-                    'Split Case Fire Pumps', 'Vertical Turbine Fire Pumps', 'CCTV Cameras', 'DVRs', 'NVRs',
-                    'CCTV Accessories', 'Access Control Systems', 'Biometric Readers', 'Time Attendance',
-                    'Access Control Accessories', 'Access Control Readers', 'Access Control Cards',
+                    'Fire Extinguishers', 'Gas Detection Transmitters', // CHANGED: from 'Fire Suppression Systems' to 'Gas Detection Transmitters'
+                    'Fire Detectors', 'Fire Alarm Systems', 'Gas Detection', 'Linear Heat Detection',
+                    'Fire Pumps', 'End Suction Pumps', 'In-Line Pumps', 'Split Case Pumps', 'Vertical Multi-Stage Pumps',
+                    'Vertical Turbine Pumps', 'End Suction Fire Pumps', 'Split Case Fire Pumps', 'Vertical Turbine Fire Pumps',
+                    'CCTV Cameras', 'DVRs', 'NVRs', 'CCTV Accessories', 'Access Control Systems', 'Biometric Readers',
+                    'Time Attendance', 'Access Control Accessories', 'Access Control Readers', 'Access Control Cards',
                     'Access Control Software', 'Access Control Panels', 'Security Management', 'Video Intercom',
 
                     // Viking Main Categories
