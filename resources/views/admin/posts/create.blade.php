@@ -1188,8 +1188,7 @@
                                                     'Gas Detection Transmitters' // CHANGED: from 'Fire Suppression Systems' to 'Gas Detection Transmitters'
                                                 ],
                                                 'Lehavot' => [
-                                                    'Fire Extinguishers',
-                                                    'Fire Suppression Equipment'
+                                                        'Kitchen Shield'  // CHANGED: from ['Fire Extinguishers', 'Fire Suppression Equipment'] to just 'Kitchen Shield'
                                                 ],
                                                 'Nittan' => [
                                                     'Fire Detectors',
@@ -1886,7 +1885,7 @@
                     'Foam Concentrates', 'Pre Action Fire Protection', 'Sprinklers & Accessories',
                     'Gaseous Suppression - Clean Agent', 'Detection & Control System', 'Room Integrity Test', 'Water Suppression System',
                     'Fire Extinguishers', 'Gas Detection Transmitters', // CHANGED: from 'Fire Suppression Systems' to 'Gas Detection Transmitters'
-                    'Fire Detectors', 'Fire Alarm Systems', 'Gas Detection', 'Linear Heat Detection',
+                    'Fire Detectors', 'Fire Alarm Systems', 'Gas Detection', 'Linear Heat Detection','Kitchen Shield',  // ADDED: Kitchen Shield
                     'Fire Pumps', 'End Suction Pumps', 'In-Line Pumps', 'Split Case Pumps', 'Vertical Multi-Stage Pumps',
                     'Vertical Turbine Pumps', 'End Suction Fire Pumps', 'Split Case Fire Pumps', 'Vertical Turbine Fire Pumps',
                     'CCTV Cameras', 'DVRs', 'NVRs', 'CCTV Accessories', 'Access Control Systems', 'Biometric Readers',

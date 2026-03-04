@@ -107,8 +107,8 @@ class FireProtectionController extends Controller
                 'Fire Extinguishers',
                 'Gas Detection Transmitter',
 
-                // Lehavot Categories
-                'Fire Suppression Equipment',
+               // Lehavot Categories
+                'Kitchen Shield',  // CHANGED: from 'Fire Extinguishers', 'Fire Suppression Equipment'
 
                 // Nittan Categories
                 'Fire Detectors',
@@ -269,8 +269,10 @@ class FireProtectionController extends Controller
             'gas detection transmitter' => 'Gas Detection Transmitters',
             'transmitter' => 'Gas Detection Transmitters',
 
-            // Lehavot Categories
-            'fire suppression equipment' => 'Fire Suppression Equipment',
+          // Lehavot Categories
+            'kitchen shield' => 'Kitchen Shield',
+            'kitchen' => 'Kitchen Shield',
+            'shield' => 'Kitchen Shield',
 
             // Nittan Categories
             'fire detector' => 'Fire Detectors',
@@ -279,7 +281,7 @@ class FireProtectionController extends Controller
             'alarm system' => 'Fire Alarm Systems',
 
             // Honeywell Categories
-            'gas detection' => 'Gas Detection',
+            'gas-detection' => 'Gas Detection',
             'fire suppression' => 'Fire Suppression',
 
             // Protectowire Categories
