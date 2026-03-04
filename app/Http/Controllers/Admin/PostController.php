@@ -88,7 +88,7 @@ class PostController extends Controller
         return view('admin.posts.create', compact('categories', 'brandsByCategory'));
     }
 
-  public function store(Request $request)
+ public function store(Request $request)
 {
     $validationRules = [
         'title' => 'required|string|max:255',
