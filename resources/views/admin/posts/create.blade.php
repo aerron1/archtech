@@ -1558,61 +1558,58 @@
                         </div>
 
                         <div class="col-lg-4">
-                            <!-- Publish Status -->
-                            <div class="admin-card mb-4">
-                                <div class="admin-card-header">
-                                    <h4 class="admin-card-title mb-0">
-                                        <i class="fas fa-paper-plane me-2"></i>Publish
-                                    </h4>
-                                </div>
-                                <div class="p-3">
-                                    <div class="mb-3">
-                                        <label class="form-label">Status</label>
-                                        <div class="status-options">
-                                            <div class="status-item">
-                                                <input class="form-check-input" type="radio" name="is_published"
-                                                       id="statusDraft" value="0">
-                                                <label class="status-name" for="statusDraft">
-                                                    <i class="fas fa-save"></i>
-                                                    Save as Draft
-                                                </label>
-                                            </div>
-                                            <div class="status-item">
-                                                <input class="form-check-input" type="radio" name="is_published"
-                                                       id="statusPublished" value="1" checked>
-                                                <label class="status-name" for="statusPublished">
-                                                    <i class="fas fa-check-circle"></i>
-                                                    Publish
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                           <!-- Publish Status -->
+<div class="admin-card mb-4">
+    <div class="admin-card-header">
+        <h4 class="admin-card-title mb-0">
+            <i class="fas fa-paper-plane me-2"></i>Publish
+        </h4>
+    </div>
+    <div class="p-3">
+        <div class="mb-3">
+            <label class="form-label">Status</label>
+            <div class="status-options">
+                <div class="status-item">
+                    <input class="form-check-input" type="radio" name="is_published"
+                           id="statusDraft" value="0">
+                    <label class="status-name" for="statusDraft">
+                        <i class="fas fa-save"></i>
+                        Save as Draft
+                    </label>
+                </div>
+                <div class="status-item">
+                    <input class="form-check-input" type="radio" name="is_published"
+                           id="statusPublished" value="1" checked>
+                    <label class="status-name" for="statusPublished">
+                        <i class="fas fa-check-circle"></i>
+                        Publish
+                    </label>
+                </div>
+            </div>
+        </div>
 
-                                    <!-- Publish Date -->
-                                    <div class="mb-3">
-                                        <label for="published_at" class="form-label">Publish Date</label>
-                                        <input type="datetime-local" class="form-control @error('published_at') is-invalid @enderror"
-                                               id="published_at" name="published_at"
-                                               value="{{ old('published_at') }}">
-                                        @error('published_at')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                        <small class="text-muted" id="publishDateHelp">
-                                            <i class="fas fa-info-circle me-1"></i>
-                                            Auto-filled with current date/time. You can edit this date anytime.
-                                        </small>
-                                    </div>
+        <!-- Publish Date -->
+        <div class="mb-3">
+            <label for="published_at" class="form-label">Publish Date</label>
+            <input type="datetime-local" class="form-control @error('published_at') is-invalid @enderror"
+                   id="published_at" name="published_at"
+                   value="{{ old('published_at') }}">
+            @error('published_at')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <small class="text-muted">Leave blank to publish immediately or schedule for future.</small>
+        </div>
 
-                                    <div class="d-grid gap-2">
-                                        <button type="submit" class="btn-archtech">
-                                            <i class="fas fa-paper-plane me-2"></i>Create Post
-                                        </button>
-                                        <button type="submit" name="draft" value="1" class="btn-archtech-outline">
-                                            <i class="fas fa-save me-2"></i>Save Draft
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn-archtech">
+                <i class="fas fa-paper-plane me-2"></i>Create Post
+            </button>
+            <button type="submit" name="draft" value="1" class="btn-archtech-outline">
+                <i class="fas fa-save me-2"></i>Save Draft
+            </button>
+        </div>
+    </div>
+</div>
 
                             <!-- Featured Image -->
                             <div class="admin-card mb-4">
@@ -1769,64 +1766,7 @@
                 });
             }, 5000);
 
-            // ========== PUBLISH DATE FUNCTIONALITY ==========
-            // Function to get current datetime in local format for input
-            function getCurrentDateTimeLocal() {
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                return `${year}-${month}-${day}T${hours}:${minutes}`;
-            }
-
-            // Auto-fill publish date with current time when page loads
-            const publishedAtInput = document.getElementById('published_at');
-            const statusDraftRadio = document.getElementById('statusDraft');
-            const statusPublishedRadio = document.getElementById('statusPublished');
-            const publishDateHelp = document.getElementById('publishDateHelp');
-
-            // Set initial date to current time if no old value exists
-            if (!publishedAtInput.value) {
-                publishedAtInput.value = getCurrentDateTimeLocal();
-            }
-
-            // Update help text based on selected status
-            function updateDateHelpText() {
-                if (statusPublishedRadio.checked) {
-                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Auto-filled with current date/time. You can edit this date anytime.';
-                } else {
-                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Optional: Set a date for when this draft should be published, or leave as is.';
-                }
-            }
-
-            // Handle status changes
-            if (statusPublishedRadio) {
-                statusPublishedRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // If no date is set, set to current time
-                        if (!publishedAtInput.value) {
-                            publishedAtInput.value = getCurrentDateTimeLocal();
-                        }
-                        updateDateHelpText();
-                    }
-                });
-            }
-
-            if (statusDraftRadio) {
-                statusDraftRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // For drafts, keep the date as is (allows scheduling)
-                        updateDateHelpText();
-                    }
-                });
-            }
-
-            // Initialize help text
-            updateDateHelpText();
-
-            // ========== CATEGORY AND BRAND SELECTION LOGIC ==========
+            // Category and brand selection logic
             const categoryRadios = document.querySelectorAll('.category-radio');
             const auxiliaryCategoryRadios = document.querySelectorAll('.auxiliary-category-radio');
             const brandOptions = document.querySelectorAll('.brand-option');
@@ -2004,134 +1944,134 @@
             });
 
            // Handle brand selection for Fire Protection - UPDATED to properly handle nested categories
-            const fireProtectionBrandOptions = document.querySelectorAll('#fireProtectionBrands .brand-option');
-            fireProtectionBrandOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    const brandValue = this.dataset.value;
+const fireProtectionBrandOptions = document.querySelectorAll('#fireProtectionBrands .brand-option');
+fireProtectionBrandOptions.forEach(option => {
+    option.addEventListener('click', function() {
+        const brandValue = this.dataset.value;
 
-                    // Parse the categories data
-                    let categories;
-                    try {
-                        categories = JSON.parse(this.dataset.categories);
-                        console.log('Brand selected:', brandValue, 'Categories:', categories); // Debug log
-                    } catch (e) {
-                        console.error('Error parsing categories:', e);
-                        categories = [];
+        // Parse the categories data
+        let categories;
+        try {
+            categories = JSON.parse(this.dataset.categories);
+            console.log('Brand selected:', brandValue, 'Categories:', categories); // Debug log
+        } catch (e) {
+            console.error('Error parsing categories:', e);
+            categories = [];
+        }
+
+        // Remove selected class from all brand options
+        fireProtectionBrandOptions.forEach(opt => {
+            opt.classList.remove('selected');
+        });
+
+        // Add selected class to clicked brand
+        this.classList.add('selected');
+        document.getElementById('selectedBrand').value = brandValue;
+
+        // Clear previously selected category
+        if (selectedFireProtectionCategoryInput) {
+            selectedFireProtectionCategoryInput.value = '';
+        }
+
+        // Clear category options
+        if (fireProtectionCategoryOptions) {
+            fireProtectionCategoryOptions.innerHTML = '';
+        }
+
+        // Show categories section if we have categories
+        if (fireProtectionCategoriesSection && categories) {
+            // Check if categories is an object with keys (nested structure)
+            if (typeof categories === 'object' && categories !== null && !Array.isArray(categories)) {
+                // It's a nested object structure (like Viking)
+                fireProtectionCategoriesSection.style.display = 'block';
+
+                // Get all main categories
+                const mainCategories = Object.keys(categories);
+
+                mainCategories.forEach(mainCategory => {
+                    // Create main category header
+                    const mainCategoryHeader = document.createElement('div');
+                    mainCategoryHeader.className = 'main-category-header';
+                    mainCategoryHeader.textContent = mainCategory;
+                    fireProtectionCategoryOptions.appendChild(mainCategoryHeader);
+
+                    // Get subcategories for this main category
+                    const subCategories = categories[mainCategory];
+
+                    // Check if subCategories is an array
+                    if (Array.isArray(subCategories)) {
+                        subCategories.forEach(subCategory => {
+                            const categoryDiv = document.createElement('div');
+                            categoryDiv.className = 'category-option-item subcategory';
+                            categoryDiv.dataset.value = subCategory;
+                            categoryDiv.dataset.mainCategory = mainCategory;
+                            categoryDiv.textContent = subCategory;
+                            fireProtectionCategoryOptions.appendChild(categoryDiv);
+                        });
+                    } else {
+                        console.warn('Subcategories is not an array for', mainCategory, subCategories);
                     }
+                });
+            }
+            // Check if categories is an array (simple structure like other brands)
+            else if (Array.isArray(categories) && categories.length > 0) {
+                fireProtectionCategoriesSection.style.display = 'block';
 
-                    // Remove selected class from all brand options
-                    fireProtectionBrandOptions.forEach(opt => {
+                categories.forEach(category => {
+                    // Check if category is a string
+                    if (typeof category === 'string') {
+                        const categoryDiv = document.createElement('div');
+                        categoryDiv.className = 'category-option-item';
+                        categoryDiv.dataset.value = category;
+                        categoryDiv.textContent = category;
+                        fireProtectionCategoryOptions.appendChild(categoryDiv);
+                    }
+                });
+            }
+            // If categories is empty or invalid
+            else {
+                fireProtectionCategoriesSection.style.display = 'none';
+            }
+
+            // Add click handlers to all category options
+            fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(catOption => {
+                catOption.addEventListener('click', function() {
+                    // Remove selected class from all category options
+                    fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(opt => {
                         opt.classList.remove('selected');
                     });
 
-                    // Add selected class to clicked brand
+                    // Add selected class to clicked category
                     this.classList.add('selected');
-                    document.getElementById('selectedBrand').value = brandValue;
 
-                    // Clear previously selected category
+                    const categoryValue = this.dataset.value;
+
                     if (selectedFireProtectionCategoryInput) {
-                        selectedFireProtectionCategoryInput.value = '';
+                        selectedFireProtectionCategoryInput.value = categoryValue;
                     }
 
-                    // Clear category options
-                    if (fireProtectionCategoryOptions) {
-                        fireProtectionCategoryOptions.innerHTML = '';
-                    }
+                    // Get the main category for context if it's a subcategory
+                    const mainCategory = this.dataset.mainCategory || '';
 
-                    // Show categories section if we have categories
-                    if (fireProtectionCategoriesSection && categories) {
-                        // Check if categories is an object with keys (nested structure)
-                        if (typeof categories === 'object' && categories !== null && !Array.isArray(categories)) {
-                            // It's a nested object structure (like Viking)
-                            fireProtectionCategoriesSection.style.display = 'block';
-
-                            // Get all main categories
-                            const mainCategories = Object.keys(categories);
-
-                            mainCategories.forEach(mainCategory => {
-                                // Create main category header
-                                const mainCategoryHeader = document.createElement('div');
-                                mainCategoryHeader.className = 'main-category-header';
-                                mainCategoryHeader.textContent = mainCategory;
-                                fireProtectionCategoryOptions.appendChild(mainCategoryHeader);
-
-                                // Get subcategories for this main category
-                                const subCategories = categories[mainCategory];
-
-                                // Check if subCategories is an array
-                                if (Array.isArray(subCategories)) {
-                                    subCategories.forEach(subCategory => {
-                                        const categoryDiv = document.createElement('div');
-                                        categoryDiv.className = 'category-option-item subcategory';
-                                        categoryDiv.dataset.value = subCategory;
-                                        categoryDiv.dataset.mainCategory = mainCategory;
-                                        categoryDiv.textContent = subCategory;
-                                        fireProtectionCategoryOptions.appendChild(categoryDiv);
-                                    });
-                                } else {
-                                    console.warn('Subcategories is not an array for', mainCategory, subCategories);
-                                }
-                            });
-                        }
-                        // Check if categories is an array (simple structure like other brands)
-                        else if (Array.isArray(categories) && categories.length > 0) {
-                            fireProtectionCategoriesSection.style.display = 'block';
-
-                            categories.forEach(category => {
-                                // Check if category is a string
-                                if (typeof category === 'string') {
-                                    const categoryDiv = document.createElement('div');
-                                    categoryDiv.className = 'category-option-item';
-                                    categoryDiv.dataset.value = category;
-                                    categoryDiv.textContent = category;
-                                    fireProtectionCategoryOptions.appendChild(categoryDiv);
-                                }
-                            });
-                        }
-                        // If categories is empty or invalid
-                        else {
-                            fireProtectionCategoriesSection.style.display = 'none';
-                        }
-
-                        // Add click handlers to all category options
-                        fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(catOption => {
-                            catOption.addEventListener('click', function() {
-                                // Remove selected class from all category options
-                                fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(opt => {
-                                    opt.classList.remove('selected');
-                                });
-
-                                // Add selected class to clicked category
-                                this.classList.add('selected');
-
-                                const categoryValue = this.dataset.value;
-
-                                if (selectedFireProtectionCategoryInput) {
-                                    selectedFireProtectionCategoryInput.value = categoryValue;
-                                }
-
-                                // Get the main category for context if it's a subcategory
-                                const mainCategory = this.dataset.mainCategory || '';
-
-                                // Create tag value
-                                let tagValue;
-                                if (mainCategory) {
-                                    // For nested categories (Viking), include the main category
-                                    tagValue = mainCategory + ' - ' + categoryValue;
-                                } else {
-                                    // For simple categories (other brands)
-                                    tagValue = categoryValue;
-                                }
-
-                                console.log('Category selected:', tagValue); // Debug log
-                                updateTagsWithCategory(tagValue, 'fire_protection');
-                            });
-                        });
+                    // Create tag value
+                    let tagValue;
+                    if (mainCategory) {
+                        // For nested categories (Viking), include the main category
+                        tagValue = mainCategory + ' - ' + categoryValue;
                     } else {
-                        fireProtectionCategoriesSection.style.display = 'none';
+                        // For simple categories (other brands)
+                        tagValue = categoryValue;
                     }
+
+                    console.log('Category selected:', tagValue); // Debug log
+                    updateTagsWithCategory(tagValue, 'fire_protection');
                 });
             });
+        } else {
+            fireProtectionCategoriesSection.style.display = 'none';
+        }
+    });
+});
 
             // Handle auxiliary category selection
             auxiliaryCategoryRadios.forEach(radio => {
@@ -2334,6 +2274,20 @@
                     }
                 }
             });
+
+            // Set default publish date to now if publishing
+            const publishedAtInput = document.getElementById('published_at');
+            const statusPublishedRadio = document.getElementById('statusPublished');
+
+            if (statusPublishedRadio) {
+                statusPublishedRadio.addEventListener('change', function() {
+                    if (this.checked && !publishedAtInput.value) {
+                        const now = new Date();
+                        const localDateTime = now.toISOString().slice(0, 16);
+                        publishedAtInput.value = localDateTime;
+                    }
+                });
+            }
 
             // Featured image preview
             const featuredImageInput = document.getElementById('featured_image');

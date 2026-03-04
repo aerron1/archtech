@@ -1528,10 +1528,7 @@
                                         @error('published_at')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                        <small class="text-muted" id="publishDateHelp">
-                                            <i class="fas fa-info-circle me-1"></i>
-                                            Auto-filled with current date/time. You can edit this date anytime.
-                                        </small>
+                                        <small class="text-muted">Leave blank to publish immediately or schedule for future.</small>
                                     </div>
 
                                     <div class="d-grid gap-2">
@@ -1623,63 +1620,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ========== PUBLISH DATE FUNCTIONALITY ==========
-            // Function to get current datetime in local format for input
-            function getCurrentDateTimeLocal() {
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                return `${year}-${month}-${day}T${hours}:${minutes}`;
-            }
-
-            // Auto-fill publish date with current time if empty
-            const publishedAtInput = document.getElementById('published_at');
-            const statusDraftRadio = document.getElementById('statusDraft');
-            const statusPublishedRadio = document.getElementById('statusPublished');
-            const publishDateHelp = document.getElementById('publishDateHelp');
-
-            // If no published_at value exists, set to current time
-            if (!publishedAtInput.value) {
-                publishedAtInput.value = getCurrentDateTimeLocal();
-            }
-
-            // Update help text based on selected status
-            function updateDateHelpText() {
-                if (statusPublishedRadio && statusPublishedRadio.checked) {
-                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Auto-filled with current date/time. You can edit this date anytime.';
-                } else if (statusDraftRadio && statusDraftRadio.checked) {
-                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Optional: Set a date for when this draft should be published, or leave as is.';
-                }
-            }
-
-            // Handle status changes
-            if (statusPublishedRadio) {
-                statusPublishedRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // If no date is set, set to current time
-                        if (!publishedAtInput.value) {
-                            publishedAtInput.value = getCurrentDateTimeLocal();
-                        }
-                        updateDateHelpText();
-                    }
-                });
-            }
-
-            if (statusDraftRadio) {
-                statusDraftRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // For drafts, keep the date as is (allows scheduling)
-                        updateDateHelpText();
-                    }
-                });
-            }
-
-            // Initialize help text
-            updateDateHelpText();
-
             // Mobile Sidebar Functionality - EXACTLY like dashboard.blade.php
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('adminSidebar');
@@ -2272,6 +2212,20 @@
                     }
                 }
             });
+
+            // Set default publish date to now if publishing
+            const publishedAtInput = document.getElementById('published_at');
+            const statusPublishedRadio = document.getElementById('statusPublished');
+
+            if (statusPublishedRadio) {
+                statusPublishedRadio.addEventListener('change', function() {
+                    if (this.checked && !publishedAtInput.value) {
+                        const now = new Date();
+                        const localDateTime = now.toISOString().slice(0, 16);
+                        publishedAtInput.value = localDateTime;
+                    }
+                });
+            }
 
             // Featured image preview
             const featuredImageInput = document.getElementById('featured_image');
