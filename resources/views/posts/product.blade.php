@@ -507,119 +507,244 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
-     <!-- Updated Footer with All Accreditation Images -->
-    <footer class="bg-dark text-light pt-5 pb-3 mt-5">
-           <div class="container">
-            <div class="row text-center text-md-start">
+      <!-- Updated Footer with All Accreditation Images -->
+      <footer class="bg-dark text-light pt-5 pb-3 mt-5">
+        <div class="container">
+         <div class="row text-center text-md-start">
+             <div class="row align-items-center text-center text-md-start">
 
-                <!-- Company Info -->
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold">Archtech Industries</h5>
-                    <p class="small text-muted">
-                        Providing reliable engineered systems and innovative solutions for modern industries.
-                    </p>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-semibold">Quick Links</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('home') }}" class="text-decoration-none text-muted">Home</a></li>
-                        <li><a href="{{ route('home') }}#about" class="text-decoration-none text-muted">Products</a></li>
-                        <li><a href="{{ route('home') }}#services" class="text-decoration-none text-muted">Services</a></li>
-                        <li><a href="{{ route('home') }}#contact" class="text-decoration-none text-muted">Contact</a></li>
-                    </ul>
-                </div>
-
-                <!-- Support -->
-                <div class="col-md-3 mb-4">
-                    <h6 class="fw-semibold">Support</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none text-muted">Help Center</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">FAQs</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Privacy Policy</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <!-- Support -->
-                {{-- <div class="col-md-3 mb-4">
-                    <h6 class="fw-semibold">Brands</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none text-muted">Help Center</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">FAQs</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Privacy Policy</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Terms of Service</a></li>
-                    </ul>
-                </div> --}}
-
-                <!-- Contact -->
-                <div class="col-md-6">
-                    <h6 class="fw-semibold">Contact Us</h6>
-                    <p class="small text-muted mb-1"><i class="fa-solid fa-location-dot"></i> Yellow Bell Lower Cayam St. RLJB Purok 18, Colon,
-                        City of Naga, Cebu Philippines</p>
-                    <p class="small text-muted mb-1"><i class="fa-solid fa-phone"></i> +63 969 193 8522</p>
-                    <p class="small text-muted mb-1"><i class="fa-solid fa-at"></i> jophetbaruel.archtechphil@gmail.com</p>
-                    <p class="small text-muted"><i class="fa-brands fa-facebook"></i> Archtech Industries</p>
-                </div>
+                 <!-- Contact -->
+                 <div class="col-md-5 mb-4 mb-md-0">
+                     <h6 class="fw-semibold">Contact Us</h6>
+                     <p class="small text-muted mb-1">
+                         <i class="fa-solid fa-location-dot"></i>
+                         Yellow Bell Lower Cayam St. RLJB Purok 18, Colon,
+                         City of Naga, Cebu Philippines
+                     </p>
+                     <p class="small text-muted mb-1">
+                         <i class="fa-solid fa-phone"></i> +63 969 193 8522
+                     </p>
+                     <p class="small text-muted mb-1">
+                         <i class="fa-solid fa-at"></i> jophetbaruel.archtechphil@gmail.com
+                     </p>
+                     <p class="small text-muted">
+                         <i class="fa-brands fa-facebook"></i> Archtech Industries
+                     </p>
+                 </div>
 
 
-                <!-- Social Images -->
-<div class="col-md-6 d-flex justify-content-md-end justify-content-center align-items-center gap-1 mt-3 mt-md-0">
+                 <!-- Accreditation / Social Images -->
+                 <div class="col-md-7 d-flex justify-content-md-end justify-content-end align-items-end gap-2 flex-wrap">
 
-    <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-        <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/pcab.gif') }}"
-             alt="Bureau Logo" width="50" height="50" class="img-fluid d-block">
-    </a>
+                     <img src="{{ asset('homepage/file/assets/logo/nfpa.png') }}"
+                          alt="Fire Logo"
+                          class="img-fluid"
+                          style="max-height: 80px;">
 
-    <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-        <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/buro.png') }}"
-             alt="Bureau Logo" width="50" height="50" class="img-fluid d-block">
-    </a>
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/pcab.gif') }}"
+                              alt="PCAB" width="70" height="70" class="img-fluid rounded-circle">
+                     </a>
 
-    <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-        <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/com.png') }}"
-             alt="Twitter" width="50" height="50" class="img-fluid d-block">
-    </a>
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/buro.png') }}"
+                              alt="Bureau" width="70" height="70" class="img-fluid rounded-circle">
+                     </a>
 
-    <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-        <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/naga.png') }}"
-             alt="LinkedIn" width="50" height="50" class="img-fluid d-block">
-    </a>
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/com.png') }}"
+                              alt="COM" width="70" height="70" class="img-fluid rounded-circle">
+                     </a>
 
-    <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-        <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/dole.png') }}"
-             alt="Instagram" width="50" height="50" class="img-fluid d-block">
-    </a>
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/naga.png') }}"
+                              alt="Naga" width="70" height="70" class="img-fluid rounded-circle">
+                     </a>
 
-    <a href="#" class="d-inline-block bg-white rounded-circle p-1 shadow-sm">
-        <img class="rounded-circle" src="{{ asset('homepage/file/assets/logo/phil.png') }}"
-             alt="YouTube" width="50" height="50" class="img-fluid d-block">
-    </a>
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/dole.png') }}"
+                              alt="DOLE" width="70" height="70" class="img-fluid rounded-circle">
+                     </a>
 
-</div>
-            </div>
+                     <a href="#" class="bg-white rounded-circle p-1 shadow-sm">
+                         <img src="{{ asset('homepage/file/assets/logo/phil.png') }}"
+                              alt="Philippines" width="70" height="70" class="img-fluid rounded-circle">
+                     </a>
 
-            <!-- Divider -->
-            <hr class="border-secondary">
+                 </div>
 
-            <!-- Bottom Row -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <p class="small text-muted mb-2 mb-md-0">
-                    © 2026 Archtech Industries. All rights reserved.
-                </p>
-
-                <!-- Social Icons (Bootstrap Icons) -->
-                <div class="d-flex gap-3">
-                    <a href="https://www.facebook.com/profile.php?id=100078186617093" class="text-muted fs-5"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-muted fs-5"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#" class="text-muted fs-5"><i class="bi bi-linkedin"></i></a>
-                </div>
+             </div>
 
 
-            </div>
-        </div>
-    </footer>
+                         <!-- Quick Links -->
+                         <div class="col-md-2 mb-4">
+                             <h2 class="fw-semibold">Our Brands</h2>
+                             <ul class="list-unstyled">
+                                 <h6 class="fw-semibold">A</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">ABB</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">ACT</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">ADT</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">AIKOH</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">AMAG</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">AMEREX</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">ANSUL</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">APOLLO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">AS ONE</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">ASSA ABLOY</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">ATTOM</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">AUDAC</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">AXIS</a></li>
+                                 <h6 class="fw-semibold mt-3">B</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">BOSCH</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">BRADY</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">BRISTOL</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">BRIVO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">BUCKEYE</a></li>
+                             </ul>
+                         </div>
+                         <!-- Support -->
+                         <div class="col-md-2 mt-4">
+                             <ul class="list-unstyled">
+                                 <h6 class="fw-semibold mt-4">C</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">CAMPBELL</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">CFCOOPER</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">CIRCUTOR</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">CLECO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">CODIPRO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">CONTEC</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">CROSSMAN</a></li>
+
+                                 <h6 class="fw-semibold mt-3">D</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">DBC</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">DSPA</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">DSX</a></li>
+
+                                 <h6 class="fw-semibold mt-3">F</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">FIREDETEC</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">FLUKE</a></li>
+
+                                 <h6 class="fw-semibold mt-3">G</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">GALLAGHER</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">GENESIS</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">GIACOMINI</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">GROSVENOR</a></li>
+                             </ul>
+                         </div>
+                         <!-- Support -->
+                         <div class="col-md-2 mt-4">
+                             <ul class="list-unstyled">
+                                 <h6 class="fw-semibold mt-4">H</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">HD FIRE PROTECTION</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">HID</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">HI-FOG</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">HIOKI</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">HITACHI</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">HONEYWELL</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">HKP</a></li>
+
+                                 <h6 class="fw-semibold mt-3">I</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">IDENTICARD</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">IMPRO TECHNOLOGIES</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">INDALA</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">INNERRANGE</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">ISONAS</a></li>
+
+                                 <h6 class="fw-semibold mt-3">J</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">JANUS</a></li>
+                             </ul>
+                         </div>
+                          <!-- Support -->
+                         <div class="col-md-2 mt-4">
+                             <ul class="list-unstyled">
+                                 <h6 class="fw-semibold mt-3">K</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">KIDDE FIRE SYSTEM</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">KIKUSUI</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">KONE</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">KYB</a></li>
+
+                                 <h6 class="fw-semibold mt-3">L</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">LEHAVOT</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">LOCKWOOD</a></li>
+
+                                 <h6 class="fw-semibold mt-3">M</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">MITUTOYO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">MSA</a></li>
+
+                                 <h6 class="fw-semibold mt-3">N</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">NITCHI</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">NITTAN</a></li>
+
+                                 <h6 class="fw-semibold mt-3">P</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">PAC</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">PAXTON</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">PRESCO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">PROTECTOWIRE</a></li>
+                             </ul>
+                         </div>
+
+                          <!-- Support -->
+                          <div class="col-md-2 mt-4">
+                             <ul class="list-unstyled">
+                                 <h6 class="fw-semibold mt-3">R</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">RION</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">ROSSLARE</a></li>
+
+                                 <h6 class="fw-semibold mt-3">S</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">SALICRU</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SALTO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SCHINDLER</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SCHLAGE</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SHIMADZU</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SIFER</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SIEMENS</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SLIDESLEDGE</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SOTRA</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">STANLEY BLACK & DECKER</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">SYSTEMHOUSE SOLUTION</a></li>
+
+                             </ul>
+                         </div>
+
+                            <!-- Support -->
+                            <div class="col-md-2 mt-4">
+                             <ul class="list-unstyled">
+                                 <h6 class="fw-semibold mt-3">T</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">TECOM</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">TOA</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">TRUSCO</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">TTK</a></li>
+                                 <li><a href="#" class="text-decoration-none text-muted">TYCO</a></li>
+
+                                 <h6 class="fw-semibold mt-3">V</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">VICTAULIC</a></li>
+
+                                 <h6 class="fw-semibold mt-3">3</h6>
+                                 <li><a href="#" class="text-decoration-none text-muted">3M</a></li>
+                             </ul>
+                         </div>
+         </div>
+
+         <!-- Divider -->
+         <hr class="border-secondary">
+
+         <!-- Bottom Row -->
+         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+             <p class="small text-muted mb-2 mb-md-0">
+                 © 2026 Archtech Industries. All rights reserved.
+             </p>
+
+             <!-- Social Icons (Bootstrap Icons) -->
+             <div class="d-flex gap-3">
+                 <a href="https://www.facebook.com/profile.php?id=100078186617093" class="text-muted fs-5"><i class="bi bi-facebook"></i></a>
+                 <a href="#" class="text-muted fs-5"><i class="bi bi-twitter-x"></i></a>
+                 <a href="#" class="text-muted fs-5"><i class="bi bi-linkedin"></i></a>
+             </div>
+
+
+         </div>
+     </div>
+ </footer>
+
 
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
