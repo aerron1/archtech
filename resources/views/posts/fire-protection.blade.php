@@ -70,21 +70,19 @@
             'main_categories' => [
                 'All Products' => 'all',
                 'Fire Extinguishers' => 'Fire Extinguishers',
-                'Fire Suppression Systems' => 'Fire Suppression Systems'
+                'Gas Detection Transmeter' => 'Gas Detection Transmeter'
             ]
         ],
         'Lehavot' => [
             'main_categories' => [
                 'All Products' => 'all',
-                'Fire Extinguishers' => 'Fire Extinguishers',
-                'Fire Suppression Equipment' => 'Fire Suppression Equipment'
+                'Kitchen Shield' => 'Kitchen Shield',
             ]
         ],
         'Nittan' => [
             'main_categories' => [
                 'All Products' => 'all',
-                'Fire Detectors' => 'Fire Detectors',
-                'Fire Alarm Systems' => 'Fire Alarm Systems'
+                'Fire Alarm' => 'Fire Alarm',
             ]
         ],
         'Honeywell' => [
