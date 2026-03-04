@@ -177,7 +177,7 @@
             .admin-sidebar {
                 transform: translateX(-100%);
                 width: var(--sidebar-width);
-                top: 60px; /* Leave space for mobile header */
+                top: 60px;
                 height: calc(100vh - 60px);
             }
 
@@ -188,14 +188,13 @@
             .admin-main {
                 margin-left: 0;
                 padding: 20px 15px;
-                padding-top: 80px; /* Space for mobile header */
+                padding-top: 80px;
             }
 
             .admin-main.sidebar-open {
                 margin-left: 0;
             }
 
-            /* Adjust header for mobile */
             .admin-header {
                 padding: 15px;
                 margin-top: 0;
@@ -210,14 +209,12 @@
                 font-size: 1.5rem;
             }
 
-            /* Make buttons full width on mobile */
             .btn-archtech, .btn-archtech-outline {
                 width: 100%;
                 text-align: center;
                 margin: 5px 0;
             }
 
-            /* Stack filter elements */
             .filter-group {
                 flex-direction: column;
                 gap: 10px;
@@ -228,7 +225,6 @@
                 min-width: auto;
             }
 
-            /* Make table horizontally scrollable */
             .posts-table {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
@@ -239,7 +235,6 @@
                 min-width: 700px;
             }
 
-            /* Adjust user info in sidebar */
             .admin-user-info {
                 padding: 10px;
             }
@@ -250,7 +245,6 @@
                 font-size: 1.3rem;
             }
 
-            /* Pagination mobile */
             .posts-table + div {
                 flex-direction: column;
                 gap: 15px;
@@ -261,7 +255,6 @@
                 justify-content: center;
             }
 
-            /* Action buttons group */
             .btn-group {
                 flex-direction: row;
                 justify-content: flex-start;
@@ -273,7 +266,6 @@
                 padding: 8px;
             }
 
-            /* No posts section */
             .no-posts {
                 padding: 30px 15px;
             }
@@ -286,17 +278,15 @@
                 font-size: 1.3rem;
             }
 
-            /* Flash messages */
             .alert {
                 padding: 12px;
                 font-size: 0.95rem;
             }
         }
 
-        /* Small mobile devices */
         @media (max-width: 480px) {
             .mobile-header-logo span {
-                display: none; /* Hide text on very small screens */
+                display: none;
             }
 
             .mobile-header-logo img {
@@ -358,12 +348,10 @@
                 font-size: 0.85rem;
             }
 
-            /* Adjust date display */
             .posts-table td > div {
                 font-size: 0.85rem;
             }
 
-            /* User avatar in table */
             .posts-table td > div > div > div {
                 width: 28px;
                 height: 28px;
@@ -371,7 +359,6 @@
             }
         }
 
-        /* Rest of your existing styles remain the same */
         .admin-header {
             background: white;
             padding: 20px 25px;
@@ -721,7 +708,6 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* SweetAlert2 Mobile Styles */
         @media (max-width: 480px) {
             .swal2-popup {
                 font-size: 0.9rem !important;
@@ -771,7 +757,6 @@
         <div class="admin-sidebar" id="adminSidebar">
             <div class="admin-logo">
                 <a href="{{ route('admin.dashboard') }}" class="d-block">
-                    <!-- Use navbar-logo.png for desktop sidebar -->
                     <img src="{{ asset('homepage/file/assets/img/navbar-logo.png') }}" alt="Archtech Admin">
                 </a>
             </div>
@@ -788,7 +773,7 @@
                             <i class="fas fa-newspaper"></i>
                             <span>Blog Posts</span>
                         </a>
-                            <!-- NEW: Projects Menu Item - Just below Blog Posts -->
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.projects.*') && !request()->routeIs('admin.projects.trash') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">
                             <i class="fas fa-project-diagram"></i>
                             <span>Projects</span>
@@ -942,19 +927,19 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if($post->is_published && $post->published_at <= now())
-                                        <span class="badge badge-published">
-                                            <i class="fas fa-check-circle me-1"></i> Published
+                                    @if(!$post->is_published)
+                                        <span class="badge badge-draft">
+                                            <i class="fas fa-save me-1"></i> Draft
                                         </span>
-                                    @elseif($post->is_published && $post->published_at > now())
+                                    @elseif($post->published_at && $post->published_at->isFuture())
                                         <span class="badge badge-pending">
                                             <i class="fas fa-clock me-1"></i> Scheduled
                                         </span>
                                         <br>
                                         <small>{{ $post->published_at->format('M d, Y') }}</small>
                                     @else
-                                        <span class="badge badge-draft">
-                                            <i class="fas fa-save me-1"></i> Draft
+                                        <span class="badge badge-published">
+                                            <i class="fas fa-check-circle me-1"></i> Published
                                         </span>
                                     @endif
                                 </td>
@@ -1082,11 +1067,9 @@
             // Mobile header actions
             if (mobileSearchToggle) {
                 mobileSearchToggle.addEventListener('click', function() {
-                    // Scroll to filters or toggle search
                     const filters = document.querySelector('.filters');
                     if (filters) {
                         filters.scrollIntoView({ behavior: 'smooth' });
-                        // Optionally focus on search input
                         setTimeout(() => {
                             document.getElementById('searchInput')?.focus();
                         }, 500);
@@ -1096,7 +1079,6 @@
 
             if (mobileUserMenu) {
                 mobileUserMenu.addEventListener('click', function() {
-                    // Open sidebar or navigate to settings
                     if (window.innerWidth <= 992) {
                         openSidebar();
                     } else {
@@ -1265,7 +1247,6 @@
             box-shadow: 0 5px 15px rgba(8, 68, 51, 0.3) !important;
         }
 
-        /* Additional mobile optimizations */
         @media (max-width: 992px) {
             .admin-header > div {
                 text-align: center;

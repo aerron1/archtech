@@ -88,145 +88,152 @@ class PostController extends Controller
         return view('admin.posts.create', compact('categories', 'brandsByCategory'));
     }
 
-    public function store(Request $request)
-    {
-        $validationRules = [
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'product_name' => 'required|string|max:255',
-            'featured_image' => 'nullable|image|max:2048',
-            'is_published' => 'boolean',
-            'published_at' => 'nullable|date',
-            'category' => 'required|string',
-            'tags' => 'required|string',
-        ];
+  public function store(Request $request)
+{
+    $validationRules = [
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'product_name' => 'required|string|max:255',
+        'featured_image' => 'nullable|image|max:2048',
+        'is_published' => 'boolean',
+        'published_at' => 'nullable|date',
+        'category' => 'required|string',
+        'tags' => 'required|string',
+    ];
 
-        // Add conditional validation based on category
-        $category = Category::where('name', $request->category)->first();
+    // Add conditional validation based on category
+    $category = Category::where('name', $request->category)->first();
 
-        if ($category) {
-            if ($category->slug === 'mechanical') {
-                // For Mechanical - require mechanical_category, brand is optional
-                $validationRules['mechanical_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } elseif ($category->slug === 'electrical') {
-                // For Electrical - require electrical_category, brand is optional
-                $validationRules['electrical_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } elseif ($category->slug === 'material-handling') {
-                // For Material Handling - require material_handling_category, brand is optional
-                $validationRules['material_handling_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } elseif ($category->slug === 'tools-and-lifting-equipment') {
-                // For Tools & Lifting - require tools_lifting_category, brand is optional
-                $validationRules['tools_lifting_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } else {
-                // For other categories - require brand
-                $validationRules['brand'] = 'required|string';
-            }
-        }
-
-        $validated = $request->validate($validationRules);
-
-        // Handle featured image upload
-        if ($request->hasFile('featured_image')) {
-            $validated['featured_image'] = $request->file('featured_image')->store('posts', 'public');
-        }
-
-        // Generate slug from title
-        $validated['slug'] = Str::slug($validated['title']);
-
-        // Ensure unique slug
-        $slugCount = Post::where('slug', $validated['slug'])->count();
-        if ($slugCount > 0) {
-            $validated['slug'] = $validated['slug'] . '-' . time();
-        }
-
-        // Set user_id
-        $validated['user_id'] = auth()->id();
-
-        // Handle draft vs publish
-        if ($request->has('draft')) {
-            $validated['is_published'] = false;
-        }
-
-        // Convert category name to category_id
-        $category = Category::where('name', $validated['category'])->first();
-        if (!$category) {
-            return back()->withErrors(['category' => 'Selected category does not exist.']);
-        }
-        $validated['category_id'] = $category->id;
-
-        // Handle brand - only if provided (not required for Mechanical, Electrical, Material Handling, Tools & Lifting)
-        if (!empty($validated['brand'])) {
-            $brand = Brand::where('name', $validated['brand'])->first();
-
-            if (!$brand) {
-                // If brand doesn't exist, create it automatically
-                $brand = Brand::create([
-                    'name' => $validated['brand'],
-                    'slug' => Str::slug($validated['brand']),
-                    'is_active' => true,
-                ]);
-            }
-
-            $validated['brand_id'] = $brand->id;
+    if ($category) {
+        if ($category->slug === 'mechanical') {
+            // For Mechanical - require mechanical_category, brand is optional
+            $validationRules['mechanical_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
+        } elseif ($category->slug === 'electrical') {
+            // For Electrical - require electrical_category, brand is optional
+            $validationRules['electrical_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
+        } elseif ($category->slug === 'material-handling') {
+            // For Material Handling - require material_handling_category, brand is optional
+            $validationRules['material_handling_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
+        } elseif ($category->slug === 'tools-and-lifting-equipment') {
+            // For Tools & Lifting - require tools_lifting_category, brand is optional
+            $validationRules['tools_lifting_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
         } else {
-            $validated['brand_id'] = null;
+            // For other categories - require brand
+            $validationRules['brand'] = 'required|string';
         }
-
-        // For Mechanical, store the mechanical_category in tags
-        if ($category->slug === 'mechanical' && !empty($validated['mechanical_category'])) {
-            if (!empty($validated['tags'])) {
-                $validated['tags'] = $validated['mechanical_category'] . ', ' . $validated['tags'];
-            } else {
-                $validated['tags'] = $validated['mechanical_category'];
-            }
-        }
-
-        // For Electrical, store the electrical_category in tags
-        if ($category->slug === 'electrical' && !empty($validated['electrical_category'])) {
-            if (!empty($validated['tags'])) {
-                $validated['tags'] = $validated['electrical_category'] . ', ' . $validated['tags'];
-            } else {
-                $validated['tags'] = $validated['electrical_category'];
-            }
-        }
-
-        // For Material Handling, store the material_handling_category in tags
-        if ($category->slug === 'material-handling' && !empty($validated['material_handling_category'])) {
-            if (!empty($validated['tags'])) {
-                $validated['tags'] = $validated['material_handling_category'] . ', ' . $validated['tags'];
-            } else {
-                $validated['tags'] = $validated['material_handling_category'];
-            }
-        }
-
-        // For Tools & Lifting, store the tools_lifting_category in tags
-        if ($category->slug === 'tools-and-lifting-equipment' && !empty($validated['tools_lifting_category'])) {
-            if (!empty($validated['tags'])) {
-                $validated['tags'] = $validated['tools_lifting_category'] . ', ' . $validated['tags'];
-            } else {
-                $validated['tags'] = $validated['tools_lifting_category'];
-            }
-        }
-
-        // Remove the string fields that don't exist in database
-        unset($validated['category']);
-        unset($validated['brand']);
-        unset($validated['mechanical_category']);
-        unset($validated['electrical_category']);
-        unset($validated['material_handling_category']);
-        unset($validated['tools_lifting_category']);
-
-        Post::create($validated);
-
-        $message = $validated['is_published'] ? 'Post published successfully!' : 'Post saved as draft!';
-
-        return back()->with('success', $message);
     }
 
+    $validated = $request->validate($validationRules);
+
+    // Handle featured image upload
+    if ($request->hasFile('featured_image')) {
+        $validated['featured_image'] = $request->file('featured_image')->store('posts', 'public');
+    }
+
+    // Generate slug from title
+    $validated['slug'] = Str::slug($validated['title']);
+
+    // Ensure unique slug
+    $slugCount = Post::where('slug', $validated['slug'])->count();
+    if ($slugCount > 0) {
+        $validated['slug'] = $validated['slug'] . '-' . time();
+    }
+
+    // Set user_id
+    $validated['user_id'] = auth()->id();
+
+    // Handle draft vs publish - CRITICAL FIX
+    if ($request->has('draft')) {
+        $validated['is_published'] = false;
+        // For drafts, keep the user-selected published_at date or set to null
+        if (empty($validated['published_at'])) {
+            $validated['published_at'] = null;
+        }
+    } else {
+        // For published posts, ALWAYS set to current server time
+        $validated['is_published'] = true;
+        $validated['published_at'] = now(); // Force current server time, ignore browser input
+    }
+
+    // Convert category name to category_id
+    $category = Category::where('name', $validated['category'])->first();
+    if (!$category) {
+        return back()->withErrors(['category' => 'Selected category does not exist.']);
+    }
+    $validated['category_id'] = $category->id;
+
+    // Handle brand - only if provided (not required for Mechanical, Electrical, Material Handling, Tools & Lifting)
+    if (!empty($validated['brand'])) {
+        $brand = Brand::where('name', $validated['brand'])->first();
+
+        if (!$brand) {
+            // If brand doesn't exist, create it automatically
+            $brand = Brand::create([
+                'name' => $validated['brand'],
+                'slug' => Str::slug($validated['brand']),
+                'is_active' => true,
+            ]);
+        }
+
+        $validated['brand_id'] = $brand->id;
+    } else {
+        $validated['brand_id'] = null;
+    }
+
+    // For Mechanical, store the mechanical_category in tags
+    if ($category->slug === 'mechanical' && !empty($validated['mechanical_category'])) {
+        if (!empty($validated['tags'])) {
+            $validated['tags'] = $validated['mechanical_category'] . ', ' . $validated['tags'];
+        } else {
+            $validated['tags'] = $validated['mechanical_category'];
+        }
+    }
+
+    // For Electrical, store the electrical_category in tags
+    if ($category->slug === 'electrical' && !empty($validated['electrical_category'])) {
+        if (!empty($validated['tags'])) {
+            $validated['tags'] = $validated['electrical_category'] . ', ' . $validated['tags'];
+        } else {
+            $validated['tags'] = $validated['electrical_category'];
+        }
+    }
+
+    // For Material Handling, store the material_handling_category in tags
+    if ($category->slug === 'material-handling' && !empty($validated['material_handling_category'])) {
+        if (!empty($validated['tags'])) {
+            $validated['tags'] = $validated['material_handling_category'] . ', ' . $validated['tags'];
+        } else {
+            $validated['tags'] = $validated['material_handling_category'];
+        }
+    }
+
+    // For Tools & Lifting, store the tools_lifting_category in tags
+    if ($category->slug === 'tools-and-lifting-equipment' && !empty($validated['tools_lifting_category'])) {
+        if (!empty($validated['tags'])) {
+            $validated['tags'] = $validated['tools_lifting_category'] . ', ' . $validated['tags'];
+        } else {
+            $validated['tags'] = $validated['tools_lifting_category'];
+        }
+    }
+
+    // Remove the string fields that don't exist in database
+    unset($validated['category']);
+    unset($validated['brand']);
+    unset($validated['mechanical_category']);
+    unset($validated['electrical_category']);
+    unset($validated['material_handling_category']);
+    unset($validated['tools_lifting_category']);
+
+    Post::create($validated);
+
+    $message = $validated['is_published'] ? 'Post published successfully!' : 'Post saved as draft!';
+
+    return redirect()->route('admin.posts.index')->with('success', $message);
+}
     public function show(Post $post)
     {
         return view('admin.posts.show', compact('post'));
@@ -295,161 +302,181 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('post', 'categories', 'brandsByCategory', 'mechanicalCategory', 'electricalCategory', 'materialHandlingCategory', 'toolsLiftingCategory'));
     }
 
-    public function update(Request $request, Post $post)
-    {
-        $validationRules = [
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'product_name' => 'nullable|string|max:255',
-            'featured_image' => 'nullable|image|max:2048',
-            'is_published' => 'boolean',
-            'published_at' => 'nullable|date',
-            'category' => 'required|string',
-            'tags' => 'nullable|string',
-        ];
+   public function update(Request $request, Post $post)
+{
+    $validationRules = [
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'product_name' => 'nullable|string|max:255',
+        'featured_image' => 'nullable|image|max:2048',
+        'is_published' => 'boolean',
+        'published_at' => 'nullable|date',
+        'category' => 'required|string',
+        'tags' => 'nullable|string',
+    ];
 
-        // Add conditional validation based on category
-        $category = Category::where('name', $request->category)->first();
+    // Add conditional validation based on category
+    $category = Category::where('name', $request->category)->first();
 
-        if ($category) {
-            if ($category->slug === 'mechanical') {
-                // For Mechanical - require mechanical_category, brand is optional
-                $validationRules['mechanical_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } elseif ($category->slug === 'electrical') {
-                // For Electrical - require electrical_category, brand is optional
-                $validationRules['electrical_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } elseif ($category->slug === 'material-handling') {
-                // For Material Handling - require material_handling_category, brand is optional
-                $validationRules['material_handling_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } elseif ($category->slug === 'tools-and-lifting-equipment') {
-                // For Tools & Lifting - require tools_lifting_category, brand is optional
-                $validationRules['tools_lifting_category'] = 'required|string';
-                $validationRules['brand'] = 'nullable|string';
-            } else {
-                // For other categories - require brand
-                $validationRules['brand'] = 'required|string';
-            }
-        }
-
-        $validated = $request->validate($validationRules);
-
-        // Handle featured image upload
-        if ($request->hasFile('featured_image')) {
-            // Delete old image if exists
-            if ($post->featured_image) {
-                Storage::disk('public')->delete($post->featured_image);
-            }
-            $validated['featured_image'] = $request->file('featured_image')->store('posts', 'public');
-        }
-
-        // Update slug if title changed
-        if ($post->title !== $validated['title']) {
-            $validated['slug'] = Str::slug($validated['title']);
-
-            // Ensure unique slug
-            $slugCount = Post::where('slug', $validated['slug'])
-                ->where('id', '!=', $post->id)
-                ->count();
-
-            if ($slugCount > 0) {
-                $validated['slug'] = $validated['slug'] . '-' . time();
-            }
-        }
-
-        // Convert category name to category_id
-        $category = Category::where('name', $validated['category'])->first();
-        if (!$category) {
-            return back()->withErrors(['category' => 'Selected category does not exist.']);
-        }
-        $validated['category_id'] = $category->id;
-
-        // Handle brand - only if provided (not required for Mechanical, Electrical, Material Handling, Tools & Lifting)
-        if (!empty($validated['brand'])) {
-            $brand = Brand::where('name', $validated['brand'])->first();
-
-            if (!$brand) {
-                // Create the brand if it doesn't exist
-                $brand = Brand::create([
-                    'name' => $validated['brand'],
-                    'slug' => Str::slug($validated['brand']),
-                    'is_active' => true,
-                ]);
-            }
-
-            $validated['brand_id'] = $brand->id;
+    if ($category) {
+        if ($category->slug === 'mechanical') {
+            // For Mechanical - require mechanical_category, brand is optional
+            $validationRules['mechanical_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
+        } elseif ($category->slug === 'electrical') {
+            // For Electrical - require electrical_category, brand is optional
+            $validationRules['electrical_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
+        } elseif ($category->slug === 'material-handling') {
+            // For Material Handling - require material_handling_category, brand is optional
+            $validationRules['material_handling_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
+        } elseif ($category->slug === 'tools-and-lifting-equipment') {
+            // For Tools & Lifting - require tools_lifting_category, brand is optional
+            $validationRules['tools_lifting_category'] = 'required|string';
+            $validationRules['brand'] = 'nullable|string';
         } else {
-            $validated['brand_id'] = null;
+            // For other categories - require brand
+            $validationRules['brand'] = 'required|string';
         }
-
-        // For Mechanical, update the mechanical_category in tags
-        if ($category->slug === 'mechanical' && !empty($validated['mechanical_category'])) {
-            $existingTags = '';
-            if (!empty($validated['tags'])) {
-                $existingTags = $validated['tags'];
-            }
-
-            $validated['tags'] = $validated['mechanical_category'];
-            if (!empty($existingTags)) {
-                $validated['tags'] .= ', ' . $existingTags;
-            }
-        }
-
-        // For Electrical, update the electrical_category in tags
-        if ($category->slug === 'electrical' && !empty($validated['electrical_category'])) {
-            $existingTags = '';
-            if (!empty($validated['tags'])) {
-                $existingTags = $validated['tags'];
-            }
-
-            $validated['tags'] = $validated['electrical_category'];
-            if (!empty($existingTags)) {
-                $validated['tags'] .= ', ' . $existingTags;
-            }
-        }
-
-        // For Material Handling, update the material_handling_category in tags
-        if ($category->slug === 'material-handling' && !empty($validated['material_handling_category'])) {
-            $existingTags = '';
-            if (!empty($validated['tags'])) {
-                $existingTags = $validated['tags'];
-            }
-
-            $validated['tags'] = $validated['material_handling_category'];
-            if (!empty($existingTags)) {
-                $validated['tags'] .= ', ' . $existingTags;
-            }
-        }
-
-        // For Tools & Lifting, update the tools_lifting_category in tags
-        if ($category->slug === 'tools-and-lifting-equipment' && !empty($validated['tools_lifting_category'])) {
-            $existingTags = '';
-            if (!empty($validated['tags'])) {
-                $existingTags = $validated['tags'];
-            }
-
-            $validated['tags'] = $validated['tools_lifting_category'];
-            if (!empty($existingTags)) {
-                $validated['tags'] .= ', ' . $existingTags;
-            }
-        }
-
-        // Remove the string fields that don't exist in database
-        unset($validated['category']);
-        unset($validated['brand']);
-        unset($validated['mechanical_category']);
-        unset($validated['electrical_category']);
-        unset($validated['material_handling_category']);
-        unset($validated['tools_lifting_category']);
-
-        $post->update($validated);
-
-        $message = $validated['is_published'] ? 'Post updated and published!' : 'Post updated!';
-
-        return back()->with('success', $message);
     }
+
+    $validated = $request->validate($validationRules);
+
+    // Handle featured image upload
+    if ($request->hasFile('featured_image')) {
+        // Delete old image if exists
+        if ($post->featured_image) {
+            Storage::disk('public')->delete($post->featured_image);
+        }
+        $validated['featured_image'] = $request->file('featured_image')->store('posts', 'public');
+    }
+
+    // Update slug if title changed
+    if ($post->title !== $validated['title']) {
+        $validated['slug'] = Str::slug($validated['title']);
+
+        // Ensure unique slug
+        $slugCount = Post::where('slug', $validated['slug'])
+            ->where('id', '!=', $post->id)
+            ->count();
+
+        if ($slugCount > 0) {
+            $validated['slug'] = $validated['slug'] . '-' . time();
+        }
+    }
+
+    // Handle draft vs publish - CRITICAL FIX
+    if ($request->has('draft')) {
+        $validated['is_published'] = false;
+        // For drafts, keep the user-selected published_at date or set to null
+        if (empty($validated['published_at'])) {
+            $validated['published_at'] = null;
+        }
+    } else {
+        // For published posts, if it's being published now, set to current server time
+        $validated['is_published'] = true;
+
+        // If it was previously a draft or no published_at date, set to current time
+        if (!$post->is_published || empty($post->published_at)) {
+            $validated['published_at'] = now();
+        } else {
+            // Keep existing published_at date (for already published posts)
+            $validated['published_at'] = $post->published_at;
+        }
+    }
+
+    // Convert category name to category_id
+    $category = Category::where('name', $validated['category'])->first();
+    if (!$category) {
+        return back()->withErrors(['category' => 'Selected category does not exist.']);
+    }
+    $validated['category_id'] = $category->id;
+
+    // Handle brand - only if provided (not required for Mechanical, Electrical, Material Handling, Tools & Lifting)
+    if (!empty($validated['brand'])) {
+        $brand = Brand::where('name', $validated['brand'])->first();
+
+        if (!$brand) {
+            // Create the brand if it doesn't exist
+            $brand = Brand::create([
+                'name' => $validated['brand'],
+                'slug' => Str::slug($validated['brand']),
+                'is_active' => true,
+            ]);
+        }
+
+        $validated['brand_id'] = $brand->id;
+    } else {
+        $validated['brand_id'] = null;
+    }
+
+    // For Mechanical, update the mechanical_category in tags
+    if ($category->slug === 'mechanical' && !empty($validated['mechanical_category'])) {
+        $existingTags = '';
+        if (!empty($validated['tags'])) {
+            $existingTags = $validated['tags'];
+        }
+
+        $validated['tags'] = $validated['mechanical_category'];
+        if (!empty($existingTags)) {
+            $validated['tags'] .= ', ' . $existingTags;
+        }
+    }
+
+    // For Electrical, update the electrical_category in tags
+    if ($category->slug === 'electrical' && !empty($validated['electrical_category'])) {
+        $existingTags = '';
+        if (!empty($validated['tags'])) {
+            $existingTags = $validated['tags'];
+        }
+
+        $validated['tags'] = $validated['electrical_category'];
+        if (!empty($existingTags)) {
+            $validated['tags'] .= ', ' . $existingTags;
+        }
+    }
+
+    // For Material Handling, update the material_handling_category in tags
+    if ($category->slug === 'material-handling' && !empty($validated['material_handling_category'])) {
+        $existingTags = '';
+        if (!empty($validated['tags'])) {
+            $existingTags = $validated['tags'];
+        }
+
+        $validated['tags'] = $validated['material_handling_category'];
+        if (!empty($existingTags)) {
+            $validated['tags'] .= ', ' . $existingTags;
+        }
+    }
+
+    // For Tools & Lifting, update the tools_lifting_category in tags
+    if ($category->slug === 'tools-and-lifting-equipment' && !empty($validated['tools_lifting_category'])) {
+        $existingTags = '';
+        if (!empty($validated['tags'])) {
+            $existingTags = $validated['tags'];
+        }
+
+        $validated['tags'] = $validated['tools_lifting_category'];
+        if (!empty($existingTags)) {
+            $validated['tags'] .= ', ' . $existingTags;
+        }
+    }
+
+    // Remove the string fields that don't exist in database
+    unset($validated['category']);
+    unset($validated['brand']);
+    unset($validated['mechanical_category']);
+    unset($validated['electrical_category']);
+    unset($validated['material_handling_category']);
+    unset($validated['tools_lifting_category']);
+
+    $post->update($validated);
+
+    $message = $validated['is_published'] ? 'Post updated and published!' : 'Post updated!';
+
+    return redirect()->route('admin.posts.index')->with('success', $message);
+}
 
     public function destroy(Post $post)
     {
