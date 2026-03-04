@@ -70,7 +70,7 @@
             'main_categories' => [
                 'All Products' => 'all',
                 'Fire Extinguishers' => 'Fire Extinguishers',
-                'Gas Detection Transmeter' => 'Gas Detection Transmitters'
+                'Gas Detection Transmitters' => 'Gas Detection Transmitters'
             ]
         ],
         'Lehavot' => [
