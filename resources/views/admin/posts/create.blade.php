@@ -1558,58 +1558,58 @@
                         </div>
 
                         <div class="col-lg-4">
-                           <!-- Publish Status -->
-<div class="admin-card mb-4">
-    <div class="admin-card-header">
-        <h4 class="admin-card-title mb-0">
-            <i class="fas fa-paper-plane me-2"></i>Publish
-        </h4>
-    </div>
-    <div class="p-3">
-        <div class="mb-3">
-            <label class="form-label">Status</label>
-            <div class="status-options">
-                <div class="status-item">
-                    <input class="form-check-input" type="radio" name="is_published"
-                           id="statusDraft" value="0">
-                    <label class="status-name" for="statusDraft">
-                        <i class="fas fa-save"></i>
-                        Save as Draft
-                    </label>
-                </div>
-                <div class="status-item">
-                    <input class="form-check-input" type="radio" name="is_published"
-                           id="statusPublished" value="1" checked>
-                    <label class="status-name" for="statusPublished">
-                        <i class="fas fa-check-circle"></i>
-                        Publish
-                    </label>
-                </div>
-            </div>
-        </div>
+                            <!-- Publish Status -->
+                            <div class="admin-card mb-4">
+                                <div class="admin-card-header">
+                                    <h4 class="admin-card-title mb-0">
+                                        <i class="fas fa-paper-plane me-2"></i>Publish
+                                    </h4>
+                                </div>
+                                <div class="p-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <div class="status-options">
+                                            <div class="status-item">
+                                                <input class="form-check-input" type="radio" name="is_published"
+                                                       id="statusDraft" value="0" checked>
+                                                <label class="status-name" for="statusDraft">
+                                                    <i class="fas fa-save"></i>
+                                                    Save as Draft
+                                                </label>
+                                            </div>
+                                            <div class="status-item">
+                                                <input class="form-check-input" type="radio" name="is_published"
+                                                       id="statusPublished" value="1">
+                                                <label class="status-name" for="statusPublished">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    Publish
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
 
-        <!-- Publish Date -->
-        <div class="mb-3">
-            <label for="published_at" class="form-label">Publish Date</label>
-            <input type="datetime-local" class="form-control @error('published_at') is-invalid @enderror"
-                   id="published_at" name="published_at"
-                   value="{{ old('published_at') }}">
-            @error('published_at')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-            <small class="text-muted">Leave blank to publish immediately or schedule for future.</small>
-        </div>
+                                    <!-- Publish Date -->
+                                    <div class="mb-3">
+                                        <label for="published_at" class="form-label">Publish Date</label>
+                                        <input type="datetime-local" class="form-control @error('published_at') is-invalid @enderror"
+                                               id="published_at" name="published_at"
+                                               value="{{ old('published_at') }}">
+                                        @error('published_at')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <small class="text-muted">Leave blank to publish immediately or schedule for future.</small>
+                                    </div>
 
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn-archtech">
-                <i class="fas fa-paper-plane me-2"></i>Create Post
-            </button>
-            <button type="submit" name="draft" value="1" class="btn-archtech-outline">
-                <i class="fas fa-save me-2"></i>Save Draft
-            </button>
-        </div>
-    </div>
-</div>
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn-archtech">
+                                            <i class="fas fa-paper-plane me-2"></i>Create Post
+                                        </button>
+                                        <button type="submit" name="draft" value="1" class="btn-archtech-outline">
+                                            <i class="fas fa-save me-2"></i>Save Draft
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- Featured Image -->
                             <div class="admin-card mb-4">
