@@ -236,6 +236,18 @@
                 padding: 8px;
             }
 
+            .no-posts {
+                padding: 30px 15px;
+            }
+
+            .no-posts i {
+                font-size: 3rem;
+            }
+
+            .no-posts h3 {
+                font-size: 1.3rem;
+            }
+
             .alert {
                 padding: 12px;
                 font-size: 0.95rem;
@@ -253,63 +265,6 @@
             .btn-archtech {
                 width: 100%;
                 margin-top: 10px;
-            }
-
-            .nav-link-admin span,
-            .logout-btn span {
-                display: inline-block;
-            }
-
-            .admin-logo img {
-                height: 40px;
-            }
-
-            .nav-link-admin {
-                justify-content: flex-start;
-                padding: 15px 20px;
-            }
-
-            .nav-link-admin i {
-                font-size: 1rem;
-            }
-
-            .admin-user-info .user-name,
-            .admin-user-info small {
-                display: block;
-            }
-
-            .user-avatar {
-                width: 50px;
-                height: 50px;
-                font-size: 1.3rem;
-                margin-bottom: 12px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .admin-main {
-                padding: 15px 12px;
-                padding-top: 75px;
-            }
-
-            .admin-header {
-                padding: 15px;
-            }
-
-            .admin-header h1 {
-                font-size: 1.3rem;
-            }
-
-            .admin-card {
-                padding: 15px;
-            }
-
-            .brand-options {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-
-            .category-options-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
         }
 
@@ -344,40 +299,23 @@
                 margin-bottom: 10px;
             }
 
-            .admin-card {
-                padding: 12px;
+            .filters {
+                padding: 15px;
             }
 
-            .admin-card-header {
-                padding-bottom: 10px;
-                margin-bottom: 15px;
-            }
-
-            .admin-card-title {
-                font-size: 1.1rem;
-            }
-
-            .form-control,
-            .form-select,
-            .btn-archtech,
-            .btn-archtech-outline {
+            .filter-select, .search-input, .search-btn {
                 padding: 8px 12px;
                 font-size: 0.95rem;
             }
 
-            .category-item,
-            .status-item {
-                padding: 10px 12px;
+            .badge {
+                padding: 4px 8px;
+                font-size: 0.75rem;
             }
 
-            .brand-option,
-            .category-option-item {
-                padding: 8px;
-                font-size: 0.9rem;
-            }
-
-            .brand-note {
-                font-size: 0.8rem;
+            .btn-group a, .btn-group button {
+                padding: 6px;
+                font-size: 0.85rem;
             }
 
             .admin-user-info .user-name,
@@ -390,6 +328,14 @@
                 height: 40px;
                 font-size: 1rem;
                 margin-bottom: 0;
+            }
+
+            .brand-options {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+
+            .category-options-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
         }
 
@@ -730,6 +676,85 @@
             margin-right: 10px;
         }
 
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .badge-success {
+            background: #198754;
+            color: white;
+        }
+
+        .badge-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .badge-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-group a, .btn-group button {
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-decoration: none;
+            border: 1px solid;
+            background: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-group a:hover, .btn-group button:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            border-color: #0d6efd;
+            color: #0d6efd;
+        }
+
+        .btn-outline-primary:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .btn-outline-success {
+            border-color: #198754;
+            color: #198754;
+        }
+
+        .btn-outline-success:hover {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .btn-outline-danger:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         /* Category-Brand relationship styling */
         .category-brand-relationship {
             border: 1px solid #dee2e6;
@@ -906,6 +931,27 @@
             color: #6c757d;
             margin-top: 5px;
             font-style: italic;
+        }
+
+        /* Main category header style for nested categories */
+        .main-category-header {
+            grid-column: 1 / -1;
+            font-weight: bold;
+            color: var(--archtech-primary);
+            margin-top: 10px;
+            margin-bottom: 5px;
+            padding: 8px;
+            background: #e9ecef;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            border-left: 3px solid var(--archtech-primary);
+        }
+
+        .subcategory {
+            margin-left: 15px;
+            font-size: 0.95em;
+            background: #ffffff;
+            border-left: 2px solid var(--archtech-light);
         }
 
         /* SweetAlert2 Mobile Styles */
@@ -1150,22 +1196,58 @@
                                                     'Sprinklers & Accessories'
                                                 ],
                                                 'Kidde' => [
-                                                    'Clean Agent Suppression',
-                                                    'Fire Detection System',
+                                                    'Gaseous Suppression - Clean Agent',
+                                                    'Detection & Control System',
                                                     'Room Integrity Test',
                                                     'Water Suppression System'
                                                 ],
                                                 'Buckeye' => [
                                                     'Fire Extinguishers',
-                                                    'Fire Suppression Systems'
+                                                    'Gas Detection Transmitters'
                                                 ],
                                                 'Lehavot' => [
-                                                    'Fire Extinguishers',
-                                                    'Fire Suppression Equipment'
+                                                    'Kitchen Shield'
                                                 ],
                                                 'Nittan' => [
-                                                    'Fire Detectors',
-                                                    'Fire Alarm Systems'
+                                                    'UL Addressable' => [
+                                                        'Panels',
+                                                        'Optional Modules',
+                                                        'Annunciators',
+                                                        'Graphic Monitor Softwares',
+                                                        'Detectors & Bases',
+                                                        'Accessories'
+                                                    ],
+                                                    'UL Conventional' => [
+                                                        'Detectors & Bases',
+                                                        'Pull Stations',
+                                                        'Notification Appliances',
+                                                        'Accessories'
+                                                    ],
+                                                    'JP Conventional' => [
+                                                        'Panels',
+                                                        'Accessories',
+                                                        'Detectors & Bases',
+                                                        'Manual Alarm Station',
+                                                        'Gas Detectors',
+                                                        'Explosion Proof Type',
+                                                        'Test Tool'
+                                                    ],
+                                                    'EN Addressable' => [
+                                                        'Panel',
+                                                        'FX Series Accessories',
+                                                        'NF Series Accessories',
+                                                        'Call Points',
+                                                        'Notification Appliances',
+                                                        'Gas Detectors',
+                                                        'Loop Modules'
+                                                    ],
+                                                    'EN Conventional' => [
+                                                        'Panels',
+                                                        'Gas Detectors',
+                                                        'Detectors & Bases',
+                                                        'Call points',
+                                                        'Notification Appliances'
+                                                    ]
                                                 ],
                                                 'Honeywell' => [
                                                     'Fire Alarm Systems',
@@ -1208,6 +1290,52 @@
                                                 'Rotarex' => [
                                                     'Gas Control Equipment',
                                                     'Fire Suppression'
+                                                ],
+                                                'Viking' => [
+                                                    'Fire Sprinkler' => [
+                                                        'Standard Coverage - Standard Response',
+                                                        'Standard Coverage - Quick Response',
+                                                        'Extended Coverage Sprinklers',
+                                                        'Storage Sprinklers',
+                                                        'Special Sprinklers',
+                                                        'Residential Sprinklers',
+                                                        'Dry Barrel Sprinklers',
+                                                        'Sprinkler Accessories',
+                                                        'Spray Nozzles',
+                                                        'View All Sprinklers'
+                                                    ],
+                                                    'Valves & Systems' => [
+                                                        'EasyPac Riser Assemblies',
+                                                        'Wet Pipe Systems',
+                                                        'Dry Pipe Systems',
+                                                        'Deluge & Preaction Systems',
+                                                        'Data Center Upgradeable Systems',
+                                                        'Flow Control & Pressure Regulation',
+                                                        'Firecycle® Systems',
+                                                        'Accessories',
+                                                        'View All Valves & Systems'
+                                                    ],
+                                                    'Foam Systems' => [
+                                                        'High Expansion Foam Systems',
+                                                        'Low Expansion Synthetic Fluorine Free Foam (SFFF) Systems',
+                                                        'Shared Foam System Components',
+                                                        'View All Foam Products'
+                                                    ],
+                                                    'Special Hazards' => [
+                                                        'Oxeo Clean Agent Extinguishing System',
+                                                        'Ignitable Liquid Storage Protection',
+                                                        'View All Special Hazards'
+                                                    ],
+                                                    'Piping Systems' => [
+                                                        'BlazeMaster® CPVC Pipe & Fittings',
+                                                        'InstaSeal® Welded Outlet Systems',
+                                                        'View All Piping Systems'
+                                                    ],
+                                                    'Electricals' => [
+                                                        'Release Control Panels',
+                                                        'Detection and Control Solutions',
+                                                        'View All Electrical Products'
+                                                    ]
                                                 ]
                                             ];
                                         @endphp
@@ -1598,9 +1726,9 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label class="form-label">Update Tags <span class="text-danger">*</span></label>
+                                        <label class="form-label">Tags <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('tags') is-invalid @enderror"
-                                               id="tagsInput" name="tags" placeholder="Enter additional tags separated by commas"
+                                               id="tagsInput" name="tags" placeholder="Enter tags separated by commas"
                                                value="{{ old('tags', $post->tags) }}" required>
                                         @error('tags')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -1623,63 +1751,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ========== PUBLISH DATE FUNCTIONALITY ==========
-            // Function to get current datetime in local format for input
-            function getCurrentDateTimeLocal() {
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                return `${year}-${month}-${day}T${hours}:${minutes}`;
-            }
-
-            // Auto-fill publish date with current time if empty
-            const publishedAtInput = document.getElementById('published_at');
-            const statusDraftRadio = document.getElementById('statusDraft');
-            const statusPublishedRadio = document.getElementById('statusPublished');
-            const publishDateHelp = document.getElementById('publishDateHelp');
-
-            // If no published_at value exists, set to current time
-            if (!publishedAtInput.value) {
-                publishedAtInput.value = getCurrentDateTimeLocal();
-            }
-
-            // Update help text based on selected status
-            function updateDateHelpText() {
-                if (statusPublishedRadio && statusPublishedRadio.checked) {
-                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Auto-filled with current date/time. You can edit this date anytime.';
-                } else if (statusDraftRadio && statusDraftRadio.checked) {
-                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Optional: Set a date for when this draft should be published, or leave as is.';
-                }
-            }
-
-            // Handle status changes
-            if (statusPublishedRadio) {
-                statusPublishedRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // If no date is set, set to current time
-                        if (!publishedAtInput.value) {
-                            publishedAtInput.value = getCurrentDateTimeLocal();
-                        }
-                        updateDateHelpText();
-                    }
-                });
-            }
-
-            if (statusDraftRadio) {
-                statusDraftRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // For drafts, keep the date as is (allows scheduling)
-                        updateDateHelpText();
-                    }
-                });
-            }
-
-            // Initialize help text
-            updateDateHelpText();
-
             // Mobile Sidebar Functionality - EXACTLY like dashboard.blade.php
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('adminSidebar');
@@ -1776,36 +1847,99 @@
                 });
             }, 5000);
 
-            // Category and brand selection logic (same as create.blade.php)
+            // ========== PUBLISH DATE FUNCTIONALITY ==========
+            // Function to get current datetime in local format for input
+            function getCurrentDateTimeLocal() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                return `${year}-${month}-${day}T${hours}:${minutes}`;
+            }
+
+            // Auto-fill publish date with current time if empty
+            const publishedAtInput = document.getElementById('published_at');
+            const statusDraftRadio = document.getElementById('statusDraft');
+            const statusPublishedRadio = document.getElementById('statusPublished');
+            const publishDateHelp = document.getElementById('publishDateHelp');
+
+            // If no published_at value exists, set to current time
+            if (!publishedAtInput.value) {
+                publishedAtInput.value = getCurrentDateTimeLocal();
+            }
+
+            // Update help text based on selected status
+            function updateDateHelpText() {
+                if (statusPublishedRadio && statusPublishedRadio.checked) {
+                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Auto-filled with current date/time. You can edit this date anytime.';
+                } else if (statusDraftRadio && statusDraftRadio.checked) {
+                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Optional: Set a date for when this draft should be published, or leave as is.';
+                }
+            }
+
+            // Handle status changes
+            if (statusPublishedRadio) {
+                statusPublishedRadio.addEventListener('change', function() {
+                    if (this.checked) {
+                        // If no date is set, set to current time
+                        if (!publishedAtInput.value) {
+                            publishedAtInput.value = getCurrentDateTimeLocal();
+                        }
+                        updateDateHelpText();
+                    }
+                });
+            }
+
+            if (statusDraftRadio) {
+                statusDraftRadio.addEventListener('change', function() {
+                    if (this.checked) {
+                        // For drafts, keep the date as is (allows scheduling)
+                        updateDateHelpText();
+                    }
+                });
+            }
+
+            // Initialize help text
+            updateDateHelpText();
+
+            // ========== CATEGORY AND BRAND SELECTION LOGIC ==========
             const categoryRadios = document.querySelectorAll('.category-radio');
             const auxiliaryCategoryRadios = document.querySelectorAll('.auxiliary-category-radio');
             const brandOptions = document.querySelectorAll('.brand-option');
             const brandSections = document.querySelectorAll('.brand-section');
             const brandSubSections = document.querySelectorAll('.brand-sub-section');
 
+            // Fire Protection elements
             const fireProtectionCategoriesSection = document.getElementById('fireProtectionCategories');
             const fireProtectionCategoryOptions = document.getElementById('fireProtectionCategoryOptions');
             const selectedFireProtectionCategoryInput = document.getElementById('selectedFireProtectionCategory');
 
+            // Mechanical elements
             const mechanicalCategorySection = document.getElementById('mechanicalCategories');
             const mechanicalCategoryOptions = document.querySelectorAll('#mechanicalCategories .category-option-item');
             const selectedMechanicalCategoryInput = document.getElementById('selectedMechanicalCategory');
 
+            // Electrical elements
             const electricalCategorySection = document.getElementById('electricalCategories');
             const electricalCategoryOptions = document.querySelectorAll('#electricalCategories .category-option-item');
             const selectedElectricalCategoryInput = document.getElementById('selectedElectricalCategory');
 
+            // Material Handling elements
             const materialHandlingCategorySection = document.getElementById('materialHandlingCategories');
             const materialHandlingCategoryOptions = document.querySelectorAll('#materialHandlingCategories .category-option-item');
             const selectedMaterialHandlingCategoryInput = document.getElementById('selectedMaterialHandlingCategory');
 
+            // Tools & Lifting elements
             const toolsLiftingCategorySection = document.getElementById('toolsLiftingCategories');
             const toolsLiftingCategoryOptions = document.querySelectorAll('#toolsLiftingCategories .category-option-item');
             const selectedToolsLiftingCategoryInput = document.getElementById('selectedToolsLiftingCategory');
 
+            // Tags input
             const tagsInput = document.getElementById('tagsInput');
-            let originalTagsValue = tagsInput ? tagsInput.value : '';
 
+            // Function to update tags with category
             function updateTagsWithCategory(category, categoryType) {
                 if (!tagsInput) return;
 
@@ -1828,14 +1962,42 @@
                     'Alarm Valve', 'Flexible Sprinkler Drops', 'Water Spray Nozzle', 'Custom Engineered Systems',
                     'Foam Equipment & Device', 'Foam Proportioning Systems', 'Deluge Valves & Systems',
                     'Foam Concentrates', 'Pre Action Fire Protection', 'Sprinklers & Accessories',
-                    'Clean Agent Suppression', 'Fire Detection System', 'Room Integrity Test', 'Water Suppression System',
-                    'Fire Extinguishers', 'Fire Suppression Systems', 'Fire Detectors', 'Fire Alarm Systems',
-                    'Gas Detection', 'Linear Heat Detection', 'Fire Pumps', 'End Suction Pumps', 'In-Line Pumps',
-                    'Split Case Pumps', 'Vertical Multi-Stage Pumps', 'Vertical Turbine Pumps', 'End Suction Fire Pumps',
-                    'Split Case Fire Pumps', 'Vertical Turbine Fire Pumps', 'CCTV Cameras', 'DVRs', 'NVRs',
-                    'CCTV Accessories', 'Access Control Systems', 'Biometric Readers', 'Time Attendance',
-                    'Access Control Accessories', 'Access Control Readers', 'Access Control Cards',
-                    'Access Control Software', 'Access Control Panels', 'Security Management', 'Video Intercom'
+                    'Gaseous Suppression - Clean Agent', 'Detection & Control System', 'Room Integrity Test', 'Water Suppression System',
+                    'Fire Extinguishers', 'Gas Detection Transmitters',
+                    'Kitchen Shield',
+                    // Nittan Categories - UL Addressable
+                    'Panels', 'Optional Modules', 'Annunciators', 'Graphic Monitor Softwares', 'Detectors & Bases', 'Accessories',
+                    // Nittan Categories - UL Conventional
+                    'Pull Stations', 'Notification Appliances',
+                    // Nittan Categories - JP Conventional
+                    'Manual Alarm Station', 'Explosion Proof Type', 'Test Tool',
+                    // Nittan Categories - EN Addressable
+                    'FX Series Accessories', 'NF Series Accessories', 'Call Points', 'Loop Modules',
+                    // Nittan Categories - EN Conventional
+                    'Call points',
+                    // Rest of fire protection categories
+                    'Fire Detectors', 'Fire Alarm Systems', 'Gas Detection', 'Linear Heat Detection',
+                    'Fire Pumps', 'End Suction Pumps', 'In-Line Pumps', 'Split Case Pumps', 'Vertical Multi-Stage Pumps',
+                    'Vertical Turbine Pumps', 'End Suction Fire Pumps', 'Split Case Fire Pumps', 'Vertical Turbine Fire Pumps',
+                    'CCTV Cameras', 'DVRs', 'NVRs', 'CCTV Accessories', 'Access Control Systems', 'Biometric Readers',
+                    'Time Attendance', 'Access Control Accessories', 'Access Control Readers', 'Access Control Cards',
+                    'Access Control Software', 'Access Control Panels', 'Security Management', 'Video Intercom',
+
+                    // Viking Main Categories
+                    'Fire Sprinkler', 'Valves & Systems', 'Foam Systems', 'Special Hazards', 'Piping Systems', 'Electricals',
+
+                    // Viking Subcategories
+                    'Standard Coverage - Standard Response', 'Standard Coverage - Quick Response', 'Extended Coverage Sprinklers',
+                    'Storage Sprinklers', 'Special Sprinklers', 'Residential Sprinklers', 'Dry Barrel Sprinklers',
+                    'Sprinkler Accessories', 'Spray Nozzles', 'View All Sprinklers',
+                    'EasyPac Riser Assemblies', 'Wet Pipe Systems', 'Dry Pipe Systems', 'Deluge & Preaction Systems',
+                    'Data Center Upgradeable Systems', 'Flow Control & Pressure Regulation', 'Firecycle® Systems',
+                    'Accessories', 'View All Valves & Systems',
+                    'High Expansion Foam Systems', 'Low Expansion Synthetic Fluorine Free Foam (SFFF) Systems',
+                    'Shared Foam System Components', 'View All Foam Products',
+                    'Oxeo Clean Agent Extinguishing System', 'Ignitable Liquid Storage Protection', 'View All Special Hazards',
+                    'BlazeMaster® CPVC Pipe & Fittings', 'InstaSeal® Welded Outlet Systems', 'View All Piping Systems',
+                    'Release Control Panels', 'Detection and Control Solutions', 'View All Electrical Products'
                 ];
 
                 if (categoryType === 'mechanical') {
@@ -1909,33 +2071,27 @@
                     const category = this.dataset.category;
                     if (category === 'fire_protection') {
                         document.getElementById('fireProtectionBrands').classList.add('active');
-                        tagsInput.value = originalTagsValue;
+                        restoreFireProtectionBrandSelection();
                     } else if (category === 'mechanical') {
                         if (mechanicalCategorySection) {
                             mechanicalCategorySection.classList.add('active');
                         }
-                        tagsInput.value = originalTagsValue;
                     } else if (category === 'electrical') {
                         if (electricalCategorySection) {
                             electricalCategorySection.classList.add('active');
                         }
-                        tagsInput.value = originalTagsValue;
                     } else if (category === 'material_handling') {
                         if (materialHandlingCategorySection) {
                             materialHandlingCategorySection.classList.add('active');
                         }
-                        tagsInput.value = originalTagsValue;
                     } else if (category === 'tools_and_lifting_equipment') {
                         if (toolsLiftingCategorySection) {
                             toolsLiftingCategorySection.classList.add('active');
                         }
-                        tagsInput.value = originalTagsValue;
                     } else if (category === 'auxilliary') {
                         document.getElementById('auxiliaryBrands').classList.add('active');
-                        tagsInput.value = originalTagsValue;
+                        restoreAuxiliarySelection();
                     }
-
-                    restoreBrandSelection();
                 });
 
                 if (radio.checked) {
@@ -1943,61 +2099,130 @@
                 }
             });
 
-            // Handle brand selection for Fire Protection
+            // Handle brand selection for Fire Protection - with nested category support
             const fireProtectionBrandOptions = document.querySelectorAll('#fireProtectionBrands .brand-option');
             fireProtectionBrandOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     const brandValue = this.dataset.value;
-                    const categories = JSON.parse(this.dataset.categories || '[]');
 
+                    // Parse the categories data
+                    let categories;
+                    try {
+                        categories = JSON.parse(this.dataset.categories);
+                        console.log('Brand selected:', brandValue, 'Categories:', categories); // Debug log
+                    } catch (e) {
+                        console.error('Error parsing categories:', e);
+                        categories = [];
+                    }
+
+                    // Remove selected class from all brand options
                     fireProtectionBrandOptions.forEach(opt => {
                         opt.classList.remove('selected');
                     });
 
+                    // Add selected class to clicked brand
                     this.classList.add('selected');
                     document.getElementById('selectedBrand').value = brandValue;
 
+                    // Clear previously selected category
                     if (selectedFireProtectionCategoryInput) {
                         selectedFireProtectionCategoryInput.value = '';
                     }
 
+                    // Clear category options
                     if (fireProtectionCategoryOptions) {
-                        fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(opt => {
-                            opt.classList.remove('selected');
-                        });
+                        fireProtectionCategoryOptions.innerHTML = '';
                     }
 
-                    if (fireProtectionCategoriesSection && categories.length > 0) {
-                        fireProtectionCategoriesSection.style.display = 'block';
+                    // Show categories section if we have categories
+                    if (fireProtectionCategoriesSection && categories) {
+                        // Check if categories is an object with keys (nested structure)
+                        if (typeof categories === 'object' && categories !== null && !Array.isArray(categories)) {
+                            // It's a nested object structure (like Viking or Nittan)
+                            fireProtectionCategoriesSection.style.display = 'block';
 
-                        fireProtectionCategoryOptions.innerHTML = '';
-                        categories.forEach(category => {
-                            const categoryDiv = document.createElement('div');
-                            categoryDiv.className = 'category-option-item';
-                            categoryDiv.dataset.value = category;
-                            categoryDiv.textContent = category;
-                            fireProtectionCategoryOptions.appendChild(categoryDiv);
-                        });
+                            // Get all main categories
+                            const mainCategories = Object.keys(categories);
 
+                            mainCategories.forEach(mainCategory => {
+                                // Create main category header
+                                const mainCategoryHeader = document.createElement('div');
+                                mainCategoryHeader.className = 'main-category-header';
+                                mainCategoryHeader.textContent = mainCategory;
+                                fireProtectionCategoryOptions.appendChild(mainCategoryHeader);
+
+                                // Get subcategories for this main category
+                                const subCategories = categories[mainCategory];
+
+                                // Check if subCategories is an array
+                                if (Array.isArray(subCategories)) {
+                                    subCategories.forEach(subCategory => {
+                                        const categoryDiv = document.createElement('div');
+                                        categoryDiv.className = 'category-option-item subcategory';
+                                        categoryDiv.dataset.value = subCategory;
+                                        categoryDiv.dataset.mainCategory = mainCategory;
+                                        categoryDiv.textContent = subCategory;
+                                        fireProtectionCategoryOptions.appendChild(categoryDiv);
+                                    });
+                                } else {
+                                    console.warn('Subcategories is not an array for', mainCategory, subCategories);
+                                }
+                            });
+                        }
+                        // Check if categories is an array (simple structure like other brands)
+                        else if (Array.isArray(categories) && categories.length > 0) {
+                            fireProtectionCategoriesSection.style.display = 'block';
+
+                            categories.forEach(category => {
+                                // Check if category is a string
+                                if (typeof category === 'string') {
+                                    const categoryDiv = document.createElement('div');
+                                    categoryDiv.className = 'category-option-item';
+                                    categoryDiv.dataset.value = category;
+                                    categoryDiv.textContent = category;
+                                    fireProtectionCategoryOptions.appendChild(categoryDiv);
+                                }
+                            });
+                        }
+                        // If categories is empty or invalid
+                        else {
+                            fireProtectionCategoriesSection.style.display = 'none';
+                        }
+
+                        // Add click handlers to all category options
                         fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(catOption => {
                             catOption.addEventListener('click', function() {
-                                const categoryValue = this.dataset.value;
-
+                                // Remove selected class from all category options
                                 fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(opt => {
                                     opt.classList.remove('selected');
                                 });
 
+                                // Add selected class to clicked category
                                 this.classList.add('selected');
+
+                                const categoryValue = this.dataset.value;
 
                                 if (selectedFireProtectionCategoryInput) {
                                     selectedFireProtectionCategoryInput.value = categoryValue;
                                 }
 
-                                updateTagsWithCategory(categoryValue, 'fire_protection');
+                                // Get the main category for context if it's a subcategory
+                                const mainCategory = this.dataset.mainCategory || '';
+
+                                // Create tag value
+                                let tagValue;
+                                if (mainCategory) {
+                                    // For nested categories (Viking or Nittan), include the main category
+                                    tagValue = mainCategory + ' - ' + categoryValue;
+                                } else {
+                                    // For simple categories (other brands)
+                                    tagValue = categoryValue;
+                                }
+
+                                console.log('Category selected:', tagValue); // Debug log
+                                updateTagsWithCategory(tagValue, 'fire_protection');
                             });
                         });
-
-                        restoreFireProtectionCategorySelection();
                     } else {
                         fireProtectionCategoriesSection.style.display = 'none';
                     }
@@ -2011,21 +2236,18 @@
                         section.style.display = 'none';
                     });
 
-                    let selectedAuxCategory = '';
                     if (this.value === 'cctv') {
                         document.getElementById('cctvBrands').style.display = 'block';
-                        selectedAuxCategory = 'CCTV';
+                        updateTagsWithCategory('CCTV', 'auxiliary');
                     } else if (this.value === 'access_control') {
                         document.getElementById('accessControlBrands').style.display = 'block';
-                        selectedAuxCategory = 'Access Control';
+                        updateTagsWithCategory('Access Control', 'auxiliary');
                     }
 
                     document.querySelectorAll('.brand-option').forEach(option => {
                         option.classList.remove('selected');
                     });
                     document.getElementById('selectedBrand').value = '';
-
-                    updateTagsWithCategory(selectedAuxCategory, 'auxiliary');
                 });
 
                 if (radio.checked) {
@@ -2133,63 +2355,47 @@
                 });
             });
 
-            // Restore functions
-            function restoreBrandSelection() {
-                const oldBrand = '{{ old("brand", $currentBrand) }}';
+            // Restore functions for existing data
+            function restoreFireProtectionBrandSelection() {
+                const oldBrand = '{{ $currentBrand }}';
                 if (oldBrand) {
-                    document.querySelectorAll('.brand-option').forEach(option => {
-                        if (option.dataset.value === oldBrand) {
-                            option.classList.add('selected');
-                            document.getElementById('selectedBrand').value = oldBrand;
+                    const brandOption = Array.from(fireProtectionBrandOptions).find(opt => opt.dataset.value === oldBrand);
+                    if (brandOption) {
+                        brandOption.click();
 
-                            if (option.closest('#fireProtectionBrands')) {
-                                const categories = JSON.parse(option.dataset.categories || '[]');
-                                if (fireProtectionCategoriesSection && categories.length > 0) {
-                                    fireProtectionCategoriesSection.style.display = 'block';
-                                    fireProtectionCategoryOptions.innerHTML = '';
-                                    categories.forEach(category => {
-                                        const categoryDiv = document.createElement('div');
-                                        categoryDiv.className = 'category-option-item';
-                                        categoryDiv.dataset.value = category;
-                                        categoryDiv.textContent = category;
-                                        fireProtectionCategoryOptions.appendChild(categoryDiv);
-                                    });
-
-                                    fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(catOption => {
-                                        catOption.addEventListener('click', function() {
-                                            const categoryValue = this.dataset.value;
-                                            fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(opt => {
-                                                opt.classList.remove('selected');
-                                            });
-                                            this.classList.add('selected');
-                                            if (selectedFireProtectionCategoryInput) {
-                                                selectedFireProtectionCategoryInput.value = categoryValue;
-                                            }
-                                            updateTagsWithCategory(categoryValue, 'fire_protection');
-                                        });
-                                    });
-
-                                    restoreFireProtectionCategorySelection();
-                                }
+                        // Restore category selection after brand is selected
+                        setTimeout(() => {
+                            const oldCategory = '{{ old('fire_protection_category', $post->fire_protection_category ?? '') }}';
+                            if (oldCategory && fireProtectionCategoryOptions) {
+                                const categoryOptions = fireProtectionCategoryOptions.querySelectorAll('.category-option-item');
+                                categoryOptions.forEach(opt => {
+                                    if (opt.dataset.value === oldCategory || opt.textContent === oldCategory) {
+                                        opt.click();
+                                    }
+                                });
                             }
-                        }
-                    });
+                        }, 100);
+                    }
                 }
             }
 
-            function restoreFireProtectionCategorySelection() {
-                const oldFireProtectionCategory = '{{ old("fire_protection_category", $post->fire_protection_category ?? "") }}';
-                if (oldFireProtectionCategory && fireProtectionCategoryOptions) {
-                    const options = fireProtectionCategoryOptions.querySelectorAll('.category-option-item');
-                    options.forEach(option => {
-                        if (option.dataset.value === oldFireProtectionCategory) {
-                            option.classList.add('selected');
-                            if (selectedFireProtectionCategoryInput) {
-                                selectedFireProtectionCategoryInput.value = oldFireProtectionCategory;
-                            }
-                            updateTagsWithCategory(oldFireProtectionCategory, 'fire_protection');
+            function restoreAuxiliarySelection() {
+                const oldAuxCategory = '{{ old('auxiliary_category', $auxiliaryCategory ?? '') }}';
+                if (oldAuxCategory) {
+                    const auxRadio = document.querySelector(`.auxiliary-category-radio[value="${oldAuxCategory}"]`);
+                    if (auxRadio) {
+                        auxRadio.click();
+                    }
+                }
+
+                const oldBrand = '{{ $currentBrand }}';
+                if (oldBrand) {
+                    setTimeout(() => {
+                        const brandOption = Array.from(auxiliaryBrandOptions).find(opt => opt.dataset.value === oldBrand);
+                        if (brandOption) {
+                            brandOption.click();
                         }
-                    });
+                    }, 100);
                 }
             }
 
@@ -2199,7 +2405,12 @@
 
                 if (!selectedCategory) {
                     e.preventDefault();
-                    alert('Please select a category');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: 'Please select a category',
+                        confirmButtonColor: '#084433'
+                    });
                     return;
                 }
 
@@ -2209,49 +2420,84 @@
                     const selectedBrand = document.getElementById('selectedBrand').value;
                     if (!selectedBrand || selectedBrand.trim() === '') {
                         e.preventDefault();
-                        alert('Please select a brand');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select a brand',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
 
                     const selectedCategory = document.getElementById('selectedFireProtectionCategory')?.value;
                     if (!selectedCategory || selectedCategory.trim() === '') {
                         e.preventDefault();
-                        alert('Please select a product category');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select a product category',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
                 } else if (category === 'mechanical') {
                     const selectedMechanicalCategory = document.getElementById('selectedMechanicalCategory').value;
                     if (!selectedMechanicalCategory || selectedMechanicalCategory.trim() === '') {
                         e.preventDefault();
-                        alert('Please select a Mechanical product category');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select a Mechanical product category',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
                 } else if (category === 'electrical') {
                     const selectedElectricalCategory = document.getElementById('selectedElectricalCategory')?.value;
                     if (!selectedElectricalCategory || selectedElectricalCategory.trim() === '') {
                         e.preventDefault();
-                        alert('Please select an Electrical product category');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select an Electrical product category',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
                 } else if (category === 'material_handling') {
                     const selectedMaterialHandlingCategory = document.getElementById('selectedMaterialHandlingCategory')?.value;
                     if (!selectedMaterialHandlingCategory || selectedMaterialHandlingCategory.trim() === '') {
                         e.preventDefault();
-                        alert('Please select a Material Handling product category');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select a Material Handling product category',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
                 } else if (category === 'tools_and_lifting_equipment') {
                     const selectedToolsLiftingCategory = document.getElementById('selectedToolsLiftingCategory')?.value;
                     if (!selectedToolsLiftingCategory || selectedToolsLiftingCategory.trim() === '') {
                         e.preventDefault();
-                        alert('Please select a Tools & Lifting product category');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select a Tools & Lifting product category',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
                 } else {
                     const selectedBrand = document.getElementById('selectedBrand').value;
                     if (!selectedBrand || selectedBrand.trim() === '') {
                         e.preventDefault();
-                        alert('Please select a brand');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select a brand',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
                 }
@@ -2260,14 +2506,24 @@
                     const selectedAuxCategory = document.querySelector('input[name="auxiliary_category"]:checked');
                     if (!selectedAuxCategory) {
                         e.preventDefault();
-                        alert('Please select an auxiliary category (CCTV or Access Control)');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select an auxiliary category (CCTV or Access Control)',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
 
                     const selectedBrand = document.getElementById('selectedBrand').value;
                     if (!selectedBrand || selectedBrand.trim() === '') {
                         e.preventDefault();
-                        alert('Please select an auxiliary brand');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please select an auxiliary brand',
+                            confirmButtonColor: '#084433'
+                        });
                         return;
                     }
                 }
@@ -2295,7 +2551,7 @@
                 });
             }
 
-            // SweetAlert2 notification
+            // SweetAlert2 notification for success
             @if(session('success'))
                 Swal.fire({
                     position: 'center',
