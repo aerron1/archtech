@@ -159,7 +159,7 @@
             width: 100%;
         }
 
-        /* Mobile Styles - EXACTLY like dashboard.blade.php */
+        /* Mobile Styles */
         @media (max-width: 992px) {
             .mobile-header {
                 display: flex;
@@ -979,7 +979,7 @@
     </style>
 </head>
 <body>
-    <!-- Mobile Header with Logo - EXACTLY like dashboard.blade.php -->
+    <!-- Mobile Header with Logo -->
     <div class="mobile-header">
         <div class="mobile-header-logo">
             <img src="{{ asset('homepage/file/assets/faviconlogo.png') }}" alt="Archtech">
@@ -1000,7 +1000,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="admin-container">
-        <!-- Sidebar - EXACTLY like dashboard.blade.php -->
+        <!-- Sidebar -->
         <div class="admin-sidebar" id="adminSidebar">
             <div class="admin-logo">
                 <a href="{{ route('admin.dashboard') }}" class="d-block">
@@ -1020,11 +1020,12 @@
                             <i class="fas fa-newspaper"></i>
                             <span>Blog Posts</span>
                         </a>
-                            <!-- NEW: Projects Menu Item - Just below Blog Posts -->
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.projects.*') && !request()->routeIs('admin.projects.trash') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">
                             <i class="fas fa-project-diagram"></i>
                             <span>Projects</span>
                         </a>
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.team.*') ? 'active' : '' }}" href="{{ route('admin.team.index') }}">
                             <i class="fas fa-users"></i>
                             <span>Team Members</span>
@@ -1034,6 +1035,7 @@
                             <i class="fas fa-trash"></i>
                             <span>Recently Deleted</span>
                         </a>
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.settings') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
                             <i class="fas fa-cog"></i>
                             <span>Settings</span>
@@ -1083,8 +1085,8 @@
             <div class="admin-header">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <h1 style="color: #084433; margin: 0 0 5px 0;">Edit Post: {{ $post->title }}</h1>
-                        <p class="text-muted" style="margin: 0;">Update your blog content</p>
+                        <h1 style="color: #084433; margin: 0 0 5px 0;">Edit Post</h1>
+                        <p class="text-muted" style="margin: 0;">Update your blog post content</p>
                     </div>
                     <div style="text-align: right;">
                         <span class="text-muted">
@@ -1107,25 +1109,11 @@
                 </div>
             @endif
 
-            @if(session('success'))
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle me-2"></i>
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if(session('error'))
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    {{ session('error') }}
-                </div>
-            @endif
-
             <!-- Form -->
             <div class="admin-card">
                 <div class="admin-card-header mb-4">
                     <h3 class="admin-card-title">
-                        <i class="fas fa-edit me-2"></i>Edit Post: {{ $post->title }}
+                        <i class="fas fa-edit me-2"></i>Edit Post Details
                     </h3>
                 </div>
 
@@ -1155,9 +1143,6 @@
                                 <!-- Category Selection -->
                                 <div class="mb-3">
                                     <label class="form-label">Select Category <span class="text-danger">*</span></label>
-                                    @php
-                                        $currentCategory = old('category', $post->category ? $post->category->name : '');
-                                    @endphp
                                     <div class="category-options">
                                         @foreach(['Fire Protection', 'Mechanical', 'Electrical', 'Material Handling', 'Tools and Lifting Equipment', 'Auxilliary'] as $category)
                                         <div class="category-item">
@@ -1165,7 +1150,7 @@
                                                    name="category" value="{{ $category }}"
                                                    id="cat{{ $loop->index }}"
                                                    data-category="{{ strtolower(str_replace(' ', '_', $category)) }}"
-                                                   {{ $currentCategory == $category ? 'checked' : '' }}>
+                                                   {{ old('category', $post->category->name) == $category ? 'checked' : '' }}>
                                             <label class="category-name" for="cat{{ $loop->index }}">
                                                 {{ $category }}
                                             </label>
@@ -1178,7 +1163,7 @@
                                 </div>
 
                                 <!-- Fire Protection Brand Selection -->
-                                <div id="fireProtectionBrands" class="brand-section">
+                                <div id="fireProtectionBrands" class="brand-section {{ $post->category && $post->category->slug == 'fire-protection' ? 'active' : '' }}">
                                     <label class="form-label">Fire Protection Brands <span class="text-danger">*</span></label>
                                     <div class="brand-options">
                                         @php
@@ -1228,6 +1213,7 @@
                                                         'Accessories',
                                                         'Detectors & Bases',
                                                         'Manual Alarm Station',
+                                                        'Notification Appliances', // Added here
                                                         'Gas Detectors',
                                                         'Explosion Proof Type',
                                                         'Test Tool'
@@ -1236,6 +1222,7 @@
                                                         'Panel',
                                                         'FX Series Accessories',
                                                         'NF Series Accessories',
+                                                        'Detectors & Bases', // Added here
                                                         'Call Points',
                                                         'Notification Appliances',
                                                         'Gas Detectors',
@@ -1341,178 +1328,112 @@
                                         @endphp
 
                                         @foreach($fireProtectionBrands as $brand => $categories)
-                                        <div class="brand-option"
+                                        <div class="brand-option {{ $post->brand && $post->brand->name == $brand ? 'selected' : '' }}"
                                              data-value="{{ $brand }}"
                                              data-categories='@json($categories)'>
                                             {{ $brand }}
                                         </div>
                                         @endforeach
                                     </div>
-                                    <div id="fireProtectionCategories" class="category-selection-section" style="display: none; margin-top: 15px;">
+                                    <div id="fireProtectionCategories" class="category-selection-section" style="display: {{ $post->category && $post->category->slug == 'fire-protection' && $post->brand ? 'block' : 'none' }}; margin-top: 15px;">
                                         <label class="form-label">Product Category <span class="text-danger">*</span></label>
                                         <p class="brand-note">Select a product category. This will be added to tags.</p>
                                         <div class="category-options-grid" id="fireProtectionCategoryOptions">
                                             <!-- Categories will be populated here based on brand selection -->
                                         </div>
-                                        <input type="hidden" id="selectedFireProtectionCategory" name="fire_protection_category" value="{{ old('fire_protection_category', $post->fire_protection_category ?? '') }}">
+                                        <input type="hidden" id="selectedFireProtectionCategory" name="fire_protection_category" value="{{ old('fire_protection_category', $mechanicalCategory ?? '') }}">
                                     </div>
                                 </div>
 
                                 <!-- Mechanical Category Selection -->
-                                <div id="mechanicalCategories" class="category-selection-section">
+                                <div id="mechanicalCategories" class="category-selection-section {{ $post->category && $post->category->slug == 'mechanical' ? 'active' : '' }}">
                                     <label class="form-label">Mechanical Product Category <span class="text-danger">*</span></label>
                                     <p class="brand-note">Select the product category. This will automatically fill the tags field.</p>
                                     <div class="category-options-grid">
-                                        <div class="category-option-item" data-value="Fuel tanks" data-category-type="mechanical">
-                                            Fuel Tanks
+                                        @php
+                                            $mechanicalOptions = ['Fuel tanks', 'Fire pumps', 'Pumps group', 'Diesel engines', 'Accessories'];
+                                        @endphp
+                                        @foreach($mechanicalOptions as $option)
+                                        <div class="category-option-item {{ $mechanicalCategory == $option ? 'selected' : '' }}" data-value="{{ $option }}" data-category-type="mechanical">
+                                            {{ $option }}
                                         </div>
-                                        <div class="category-option-item" data-value="Fire pumps" data-category-type="mechanical">
-                                            Fire Pumps
-                                        </div>
-                                        <div class="category-option-item" data-value="Pumps group" data-category-type="mechanical">
-                                            Pumps Group
-                                        </div>
-                                        <div class="category-option-item" data-value="Diesel engines" data-category-type="mechanical">
-                                            Diesel Engines
-                                        </div>
-                                        <div class="category-option-item" data-value="Accessories" data-category-type="mechanical">
-                                            Accessories
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    <input type="hidden" id="selectedMechanicalCategory" name="mechanical_category" value="{{ old('mechanical_category', $mechanicalCategory ?? '') }}">
+                                    <input type="hidden" id="selectedMechanicalCategory" name="mechanical_category" value="{{ old('mechanical_category', $mechanicalCategory) }}">
                                     @error('mechanical_category')
                                         <div class="text-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Electrical Category Selection -->
-                                <div id="electricalCategories" class="category-selection-section">
+                                <div id="electricalCategories" class="category-selection-section {{ $post->category && $post->category->slug == 'electrical' ? 'active' : '' }}">
                                     <label class="form-label">Electrical Product Category <span class="text-danger">*</span></label>
                                     <p class="brand-note">Select the product category. This will automatically fill the tags field.</p>
                                     <div class="category-options-grid">
-                                        <div class="category-option-item" data-value="Clamp Meters" data-category-type="electrical">
-                                            Clamp Meters
+                                        @php
+                                            $electricalOptions = ['Clamp Meters', 'Digital Multimeters', 'Electrical Testers', 'Power Factor Controllers', 'Harmonic Filters'];
+                                        @endphp
+                                        @foreach($electricalOptions as $option)
+                                        <div class="category-option-item {{ $electricalCategory == $option ? 'selected' : '' }}" data-value="{{ $option }}" data-category-type="electrical">
+                                            {{ $option }}
                                         </div>
-                                        <div class="category-option-item" data-value="Digital Multimeters" data-category-type="electrical">
-                                            Digital Multimeters
-                                        </div>
-                                        <div class="category-option-item" data-value="Electrical Testers" data-category-type="electrical">
-                                            Electrical Testers
-                                        </div>
-                                        <div class="category-option-item" data-value="Power Factor Controllers" data-category-type="electrical">
-                                            Power Factor Controllers
-                                        </div>
-                                        <div class="category-option-item" data-value="Harmonic Filters" data-category-type="electrical">
-                                            Harmonic Filters
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    <input type="hidden" id="selectedElectricalCategory" name="electrical_category" value="{{ old('electrical_category', $electricalCategory ?? '') }}">
+                                    <input type="hidden" id="selectedElectricalCategory" name="electrical_category" value="{{ old('electrical_category', $electricalCategory) }}">
                                     @error('electrical_category')
                                         <div class="text-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Material Handling Category Selection -->
-                                <div id="materialHandlingCategories" class="category-selection-section">
+                                <div id="materialHandlingCategories" class="category-selection-section {{ $post->category && $post->category->slug == 'material-handling' ? 'active' : '' }}">
                                     <label class="form-label">Material Handling Product Category <span class="text-danger">*</span></label>
                                     <p class="brand-note">Select the product category. This will automatically fill the tags field.</p>
                                     <div class="category-options-grid">
-                                        <div class="category-option-item" data-value="Forklifts" data-category-type="material_handling">
-                                            Forklifts
+                                        @php
+                                            $materialHandlingOptions = [
+                                                'Forklifts', 'Pallet Trucks', 'Pallet Jacks', 'Reach Trucks', 'Order Pickers',
+                                                'Lifting Jacks', 'Offshore & Marine', 'PPE', 'Shelving Systems', 'Racking Systems', 'Material Handling Equipment'
+                                            ];
+                                        @endphp
+                                        @foreach($materialHandlingOptions as $option)
+                                        <div class="category-option-item {{ $materialHandlingCategory == $option ? 'selected' : '' }}" data-value="{{ $option }}" data-category-type="material_handling">
+                                            {{ $option }}
                                         </div>
-                                        <div class="category-option-item" data-value="Pallet Trucks" data-category-type="material_handling">
-                                            Pallet Trucks
-                                        </div>
-                                        <div class="category-option-item" data-value="Pallet Jacks" data-category-type="material_handling">
-                                            Pallet Jacks
-                                        </div>
-                                        <div class="category-option-item" data-value="Reach Trucks" data-category-type="material_handling">
-                                            Reach Trucks
-                                        </div>
-                                        <div class="category-option-item" data-value="Order Pickers" data-category-type="material_handling">
-                                            Order Pickers
-                                        </div>
-                                        <div class="category-option-item" data-value="Lifting Jacks" data-category-type="material_handling">
-                                            Lifting Jacks
-                                        </div>
-                                        <div class="category-option-item" data-value="Offshore & Marine" data-category-type="material_handling">
-                                            Offshore & Marine
-                                        </div>
-                                        <div class="category-option-item" data-value="PPE" data-category-type="material_handling">
-                                            PPE
-                                        </div>
-                                        <div class="category-option-item" data-value="Shelving Systems" data-category-type="material_handling">
-                                            Shelving Systems
-                                        </div>
-                                        <div class="category-option-item" data-value="Racking Systems" data-category-type="material_handling">
-                                            Racking Systems
-                                        </div>
-                                        <div class="category-option-item" data-value="Material Handling Equipment" data-category-type="material_handling">
-                                            General Equipment
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    <input type="hidden" id="selectedMaterialHandlingCategory" name="material_handling_category" value="{{ old('material_handling_category', $materialHandlingCategory ?? '') }}">
+                                    <input type="hidden" id="selectedMaterialHandlingCategory" name="material_handling_category" value="{{ old('material_handling_category', $materialHandlingCategory) }}">
                                     @error('material_handling_category')
                                         <div class="text-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Tools & Lifting Category Selection -->
-                                <div id="toolsLiftingCategories" class="category-selection-section">
+                                <div id="toolsLiftingCategories" class="category-selection-section {{ $post->category && $post->category->slug == 'tools-and-lifting-equipment' ? 'active' : '' }}">
                                     <label class="form-label">Tools & Lifting Product Category <span class="text-danger">*</span></label>
                                     <p class="brand-note">Select the product category. This will automatically fill the tags field.</p>
                                     <div class="category-options-grid">
-                                        <div class="category-option-item" data-value="Power Tools" data-category-type="tools_lifting">
-                                            Power Tools
+                                        @php
+                                            $toolsLiftingOptions = [
+                                                'Power Tools', 'Hand Tools', 'Lifting Equipment', 'Lifting Shackles', 'Webbing Sling',
+                                                'Concrete & Masonry', 'Grinders', 'Drills', 'Saws', 'Sanders', 'Socket & Sets',
+                                                'Cutting Tools', 'PPE', 'Tools & Equipment'
+                                            ];
+                                        @endphp
+                                        @foreach($toolsLiftingOptions as $option)
+                                        <div class="category-option-item {{ $toolsLiftingCategory == $option ? 'selected' : '' }}" data-value="{{ $option }}" data-category-type="tools_lifting">
+                                            {{ $option }}
                                         </div>
-                                        <div class="category-option-item" data-value="Hand Tools" data-category-type="tools_lifting">
-                                            Hand Tools
-                                        </div>
-                                        <div class="category-option-item" data-value="Lifting Equipment" data-category-type="tools_lifting">
-                                            Lifting Equipment
-                                        </div>
-                                        <div class="category-option-item" data-value="Lifting Shackles" data-category-type="tools_lifting">
-                                            Lifting Shackles
-                                        </div>
-                                        <div class="category-option-item" data-value="Webbing Sling" data-category-type="tools_lifting">
-                                            Webbing Sling
-                                        </div>
-                                        <div class="category-option-item" data-value="Concrete & Masonry" data-category-type="tools_lifting">
-                                            Concrete & Masonry
-                                        </div>
-                                        <div class="category-option-item" data-value="Grinders" data-category-type="tools_lifting">
-                                            Grinders
-                                        </div>
-                                        <div class="category-option-item" data-value="Drills" data-category-type="tools_lifting">
-                                            Drills
-                                        </div>
-                                        <div class="category-option-item" data-value="Saws" data-category-type="tools_lifting">
-                                            Saws
-                                        </div>
-                                        <div class="category-option-item" data-value="Sanders" data-category-type="tools_lifting">
-                                            Sanders
-                                        </div>
-                                        <div class="category-option-item" data-value="Socket & Sets" data-category-type="tools_lifting">
-                                            Socket & Sets
-                                        </div>
-                                        <div class="category-option-item" data-value="Cutting Tools" data-category-type="tools_lifting">
-                                            Cutting Tools
-                                        </div>
-                                        <div class="category-option-item" data-value="PPE" data-category-type="tools_lifting">
-                                            PPE
-                                        </div>
-                                        <div class="category-option-item" data-value="Tools & Equipment" data-category-type="tools_lifting">
-                                            General Equipment
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    <input type="hidden" id="selectedToolsLiftingCategory" name="tools_lifting_category" value="{{ old('tools_lifting_category', $toolsLiftingCategory ?? '') }}">
+                                    <input type="hidden" id="selectedToolsLiftingCategory" name="tools_lifting_category" value="{{ old('tools_lifting_category', $toolsLiftingCategory) }}">
                                     @error('tools_lifting_category')
                                         <div class="text-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <!-- Auxiliary Brand Selection -->
-                                <div id="auxiliaryBrands" class="brand-section">
+                                <div id="auxiliaryBrands" class="brand-section {{ $post->category && $post->category->slug == 'auxilliary' ? 'active' : '' }}">
                                     <label class="form-label">Auxiliary Brands <span class="text-danger">*</span></label>
 
                                     <!-- Auxiliary Category Selection -->
@@ -1524,7 +1445,7 @@
                                                        name="auxiliary_category" value="cctv"
                                                        id="auxCatCCTV"
                                                        data-category="cctv"
-                                                       {{ old('auxiliary_category', $auxiliaryCategory ?? '') == 'cctv' ? 'checked' : '' }}>
+                                                       {{ old('auxiliary_category', $post->auxiliary_category) == 'cctv' ? 'checked' : '' }}>
                                                 <label class="category-name" for="auxCatCCTV">
                                                     CCTV Brands
                                                 </label>
@@ -1534,7 +1455,7 @@
                                                        name="auxiliary_category" value="access_control"
                                                        id="auxCatAccessControl"
                                                        data-category="access_control"
-                                                       {{ old('auxiliary_category', $auxiliaryCategory ?? '') == 'access_control' ? 'checked' : '' }}>
+                                                       {{ old('auxiliary_category', $post->auxiliary_category) == 'access_control' ? 'checked' : '' }}>
                                                 <label class="category-name" for="auxCatAccessControl">
                                                     Access Control Brands
                                                 </label>
@@ -1543,11 +1464,11 @@
                                     </div>
 
                                     <!-- CCTV Brands -->
-                                    <div id="cctvBrands" class="brand-sub-section">
+                                    <div id="cctvBrands" class="brand-sub-section" style="display: {{ old('auxiliary_category', $post->auxiliary_category) == 'cctv' ? 'block' : 'none' }};">
                                         <label class="form-label">CCTV Brands</label>
                                         <div class="brand-options">
                                             @foreach(['Dahua'] as $brand)
-                                            <div class="brand-option" data-value="{{ $brand }}" data-categories='["CCTV Cameras", "DVRs", "NVRs", "CCTV Accessories"]'>
+                                            <div class="brand-option {{ $post->brand && $post->brand->name == $brand ? 'selected' : '' }}" data-value="{{ $brand }}" data-categories='["CCTV Cameras", "DVRs", "NVRs", "CCTV Accessories"]'>
                                                 {{ $brand }}
                                             </div>
                                             @endforeach
@@ -1555,7 +1476,7 @@
                                     </div>
 
                                     <!-- Access Control Brands -->
-                                    <div id="accessControlBrands" class="brand-sub-section">
+                                    <div id="accessControlBrands" class="brand-sub-section" style="display: {{ old('auxiliary_category', $post->auxiliary_category) == 'access_control' ? 'block' : 'none' }};">
                                         <label class="form-label">Access Control Brands</label>
                                         <div class="brand-options">
                                             @foreach([
@@ -1564,7 +1485,7 @@
                                                 'Honeywell' => ['Access Control Panels', 'Access Control Readers', 'Security Management'],
                                                 'HIKVision' => ['Access Control Systems', 'Video Intercom', 'Access Control Readers']
                                             ] as $brand => $categories)
-                                            <div class="brand-option"
+                                            <div class="brand-option {{ $post->brand && $post->brand->name == $brand ? 'selected' : '' }}"
                                                  data-value="{{ $brand }}"
                                                  data-categories='@json($categories)'>
                                                 {{ $brand }}
@@ -1575,10 +1496,7 @@
                                 </div>
 
                                 <!-- Hidden input for brand selection -->
-                                @php
-                                    $currentBrand = old('brand', $post->brand ? $post->brand->name : '');
-                                @endphp
-                                <input type="hidden" id="selectedBrand" name="brand" value="{{ $currentBrand }}">
+                                <input type="hidden" id="selectedBrand" name="brand" value="{{ old('brand', $post->brand->name ?? '') }}">
 
                                 @error('brand')
                                     <div class="text-danger mt-2">{{ $message }}</div>
@@ -1628,8 +1546,7 @@
                                         <div class="status-options">
                                             <div class="status-item">
                                                 <input class="form-check-input" type="radio" name="is_published"
-                                                       id="statusDraft" value="0"
-                                                       {{ old('is_published', $post->is_published) == 0 ? 'checked' : '' }}>
+                                                       id="statusDraft" value="0" {{ old('is_published', $post->is_published) == 0 ? 'checked' : '' }}>
                                                 <label class="status-name" for="statusDraft">
                                                     <i class="fas fa-save"></i>
                                                     Save as Draft
@@ -1637,8 +1554,7 @@
                                             </div>
                                             <div class="status-item">
                                                 <input class="form-check-input" type="radio" name="is_published"
-                                                       id="statusPublished" value="1"
-                                                       {{ old('is_published', $post->is_published) == 1 ? 'checked' : '' }}>
+                                                       id="statusPublished" value="1" {{ old('is_published', $post->is_published) == 1 ? 'checked' : '' }}>
                                                 <label class="status-name" for="statusPublished">
                                                     <i class="fas fa-check-circle"></i>
                                                     Publish
@@ -1652,22 +1568,22 @@
                                         <label for="published_at" class="form-label">Publish Date</label>
                                         <input type="datetime-local" class="form-control @error('published_at') is-invalid @enderror"
                                                id="published_at" name="published_at"
-                                               value="{{ old('published_at', $post->published_at ? $post->published_at->format('Y-m-d\TH:i') : '') }}">
+                                               value="{{ old('published_at', $post->published_at ? \Carbon\Carbon::parse($post->published_at)->format('Y-m-d\TH:i') : '') }}">
                                         @error('published_at')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="text-muted" id="publishDateHelp">
                                             <i class="fas fa-info-circle me-1"></i>
-                                            Auto-filled with current date/time. You can edit this date anytime.
+                                            You can edit this date anytime.
                                         </small>
                                     </div>
 
                                     <div class="d-grid gap-2">
                                         <button type="submit" class="btn-archtech">
-                                            <i class="fas fa-paper-plane me-2"></i>Update Post
+                                            <i class="fas fa-save me-2"></i>Update Post
                                         </button>
                                         <button type="submit" name="draft" value="1" class="btn-archtech-outline">
-                                            <i class="fas fa-save me-2"></i>Save Draft
+                                            <i class="fas fa-save me-2"></i>Save as Draft
                                         </button>
                                     </div>
                                 </div>
@@ -1681,27 +1597,14 @@
                                     </h4>
                                 </div>
                                 <div class="p-3">
-                                    <!-- Current Image -->
                                     @if($post->featured_image)
-                                        <div class="mb-3 text-center">
-                                            <img src="{{ asset('storage/' . $post->featured_image) }}"
-                                                 alt="Current Featured Image"
-                                                 class="img-fluid rounded mb-2" style="max-height: 150px;">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                       name="remove_featured_image" id="removeFeaturedImage" value="1">
-                                                <label class="form-check-label text-danger" for="removeFeaturedImage">
-                                                    Remove current image
-                                                </label>
-                                            </div>
+                                        <div class="text-center mb-3">
+                                            <img src="{{ asset('storage/' . $post->featured_image) }}" alt="Current featured image" class="img-fluid rounded" style="max-height: 150px;">
+                                            <p class="text-muted mt-2">Current Image</p>
                                         </div>
                                     @endif
-
-                                    <!-- New Image Upload -->
                                     <div class="mb-3">
-                                        <label for="featured_image" class="form-label">
-                                            {{ $post->featured_image ? 'Upload New Image' : 'Upload Image' }}
-                                        </label>
+                                        <label for="featured_image" class="form-label">Upload New Image</label>
                                         <input type="file" class="form-control @error('featured_image') is-invalid @enderror"
                                                id="featured_image" name="featured_image"
                                                accept="image/*">
@@ -1713,7 +1616,7 @@
                                     <div id="imagePreview" class="text-center mt-3" style="display: none;">
                                         <img id="previewImage" src="" alt="Preview" class="img-fluid rounded" style="max-height: 200px;">
                                     </div>
-                                    <small class="text-muted">Recommended size: 1200x630px. Max file size: 2MB.</small>
+                                    <small class="text-muted">Recommended size: 1200x630px. Max file size: 2MB. Leave empty to keep current image.</small>
                                 </div>
                             </div>
 
@@ -1751,7 +1654,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile Sidebar Functionality - EXACTLY like dashboard.blade.php
+            // Mobile Sidebar Functionality
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('adminSidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -1791,7 +1694,6 @@
             // Mobile header actions
             if (mobileSearchToggle) {
                 mobileSearchToggle.addEventListener('click', function() {
-                    // You can implement search functionality here
                     console.log('Search clicked');
                 });
             }
@@ -1829,76 +1731,28 @@
                 e.stopPropagation();
             });
 
-            // Active link highlighting
-            const currentPath = window.location.pathname;
-            document.querySelectorAll('.nav-link-admin').forEach(link => {
-                if (link.getAttribute('href') === currentPath ||
-                    link.href.includes(currentPath) && currentPath !== '/') {
-                    link.classList.add('active');
-                }
-            });
-
-            // Auto-dismiss alerts after 5 seconds
-            setTimeout(() => {
-                document.querySelectorAll('.alert').forEach(alert => {
-                    alert.style.transition = 'opacity 0.5s ease';
-                    alert.style.opacity = '0';
-                    setTimeout(() => alert.remove(), 500);
-                });
-            }, 5000);
-
             // ========== PUBLISH DATE FUNCTIONALITY ==========
-            // Function to get current datetime in local format for input
-            function getCurrentDateTimeLocal() {
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                return `${year}-${month}-${day}T${hours}:${minutes}`;
-            }
-
-            // Auto-fill publish date with current time if empty
             const publishedAtInput = document.getElementById('published_at');
             const statusDraftRadio = document.getElementById('statusDraft');
             const statusPublishedRadio = document.getElementById('statusPublished');
             const publishDateHelp = document.getElementById('publishDateHelp');
 
-            // If no published_at value exists, set to current time
-            if (!publishedAtInput.value) {
-                publishedAtInput.value = getCurrentDateTimeLocal();
-            }
-
             // Update help text based on selected status
             function updateDateHelpText() {
-                if (statusPublishedRadio && statusPublishedRadio.checked) {
-                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Auto-filled with current date/time. You can edit this date anytime.';
-                } else if (statusDraftRadio && statusDraftRadio.checked) {
+                if (statusPublishedRadio.checked) {
+                    publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>For published posts, you can edit this date anytime.';
+                } else {
                     publishDateHelp.innerHTML = '<i class="fas fa-info-circle me-1"></i>Optional: Set a date for when this draft should be published, or leave as is.';
                 }
             }
 
             // Handle status changes
             if (statusPublishedRadio) {
-                statusPublishedRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // If no date is set, set to current time
-                        if (!publishedAtInput.value) {
-                            publishedAtInput.value = getCurrentDateTimeLocal();
-                        }
-                        updateDateHelpText();
-                    }
-                });
+                statusPublishedRadio.addEventListener('change', updateDateHelpText);
             }
 
             if (statusDraftRadio) {
-                statusDraftRadio.addEventListener('change', function() {
-                    if (this.checked) {
-                        // For drafts, keep the date as is (allows scheduling)
-                        updateDateHelpText();
-                    }
-                });
+                statusDraftRadio.addEventListener('change', updateDateHelpText);
             }
 
             // Initialize help text
@@ -1970,7 +1824,7 @@
                     // Nittan Categories - UL Conventional
                     'Pull Stations', 'Notification Appliances',
                     // Nittan Categories - JP Conventional
-                    'Manual Alarm Station', 'Explosion Proof Type', 'Test Tool',
+                    'Manual Alarm Station', 'Notification Appliances', 'Gas Detectors', 'Explosion Proof Type', 'Test Tool',
                     // Nittan Categories - EN Addressable
                     'FX Series Accessories', 'NF Series Accessories', 'Call Points', 'Loop Modules',
                     // Nittan Categories - EN Conventional
@@ -2071,7 +1925,6 @@
                     const category = this.dataset.category;
                     if (category === 'fire_protection') {
                         document.getElementById('fireProtectionBrands').classList.add('active');
-                        restoreFireProtectionBrandSelection();
                     } else if (category === 'mechanical') {
                         if (mechanicalCategorySection) {
                             mechanicalCategorySection.classList.add('active');
@@ -2090,16 +1943,11 @@
                         }
                     } else if (category === 'auxilliary') {
                         document.getElementById('auxiliaryBrands').classList.add('active');
-                        restoreAuxiliarySelection();
                     }
                 });
-
-                if (radio.checked) {
-                    radio.dispatchEvent(new Event('change'));
-                }
             });
 
-            // Handle brand selection for Fire Protection - with nested category support
+            // Handle brand selection for Fire Protection
             const fireProtectionBrandOptions = document.querySelectorAll('#fireProtectionBrands .brand-option');
             fireProtectionBrandOptions.forEach(option => {
                 option.addEventListener('click', function() {
@@ -2109,7 +1957,7 @@
                     let categories;
                     try {
                         categories = JSON.parse(this.dataset.categories);
-                        console.log('Brand selected:', brandValue, 'Categories:', categories); // Debug log
+                        console.log('Brand selected:', brandValue, 'Categories:', categories);
                     } catch (e) {
                         console.error('Error parsing categories:', e);
                         categories = [];
@@ -2219,10 +2067,20 @@
                                     tagValue = categoryValue;
                                 }
 
-                                console.log('Category selected:', tagValue); // Debug log
+                                console.log('Category selected:', tagValue);
                                 updateTagsWithCategory(tagValue, 'fire_protection');
                             });
                         });
+
+                        // If there's a pre-selected category, highlight it
+                        const preselectedCategory = selectedFireProtectionCategoryInput.value;
+                        if (preselectedCategory) {
+                            fireProtectionCategoryOptions.querySelectorAll('.category-option-item').forEach(opt => {
+                                if (opt.dataset.value === preselectedCategory || opt.textContent === preselectedCategory) {
+                                    opt.classList.add('selected');
+                                }
+                            });
+                        }
                     } else {
                         fireProtectionCategoriesSection.style.display = 'none';
                     }
@@ -2249,10 +2107,6 @@
                     });
                     document.getElementById('selectedBrand').value = '';
                 });
-
-                if (radio.checked) {
-                    radio.dispatchEvent(new Event('change'));
-                }
             });
 
             // Handle auxiliary brand selection
@@ -2355,62 +2209,13 @@
                 });
             });
 
-            // Restore functions for existing data
-            function restoreFireProtectionBrandSelection() {
-                const oldBrand = '{{ $currentBrand }}';
-                if (oldBrand) {
-                    const brandOption = Array.from(fireProtectionBrandOptions).find(opt => opt.dataset.value === oldBrand);
-                    if (brandOption) {
-                        brandOption.click();
-
-                        // Restore category selection after brand is selected
-                        setTimeout(() => {
-                            const oldCategory = '{{ old('fire_protection_category', $post->fire_protection_category ?? '') }}';
-                            if (oldCategory && fireProtectionCategoryOptions) {
-                                const categoryOptions = fireProtectionCategoryOptions.querySelectorAll('.category-option-item');
-                                categoryOptions.forEach(opt => {
-                                    if (opt.dataset.value === oldCategory || opt.textContent === oldCategory) {
-                                        opt.click();
-                                    }
-                                });
-                            }
-                        }, 100);
-                    }
-                }
-            }
-
-            function restoreAuxiliarySelection() {
-                const oldAuxCategory = '{{ old('auxiliary_category', $auxiliaryCategory ?? '') }}';
-                if (oldAuxCategory) {
-                    const auxRadio = document.querySelector(`.auxiliary-category-radio[value="${oldAuxCategory}"]`);
-                    if (auxRadio) {
-                        auxRadio.click();
-                    }
-                }
-
-                const oldBrand = '{{ $currentBrand }}';
-                if (oldBrand) {
-                    setTimeout(() => {
-                        const brandOption = Array.from(auxiliaryBrandOptions).find(opt => opt.dataset.value === oldBrand);
-                        if (brandOption) {
-                            brandOption.click();
-                        }
-                    }, 100);
-                }
-            }
-
             // Form validation
             document.querySelector('form').addEventListener('submit', function(e) {
                 const selectedCategory = document.querySelector('input[name="category"]:checked');
 
                 if (!selectedCategory) {
                     e.preventDefault();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Validation Error',
-                        text: 'Please select a category',
-                        confirmButtonColor: '#084433'
-                    });
+                    alert('Please select a category');
                     return;
                 }
 
@@ -2420,84 +2225,49 @@
                     const selectedBrand = document.getElementById('selectedBrand').value;
                     if (!selectedBrand || selectedBrand.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select a brand',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select a brand');
                         return;
                     }
 
                     const selectedCategory = document.getElementById('selectedFireProtectionCategory')?.value;
                     if (!selectedCategory || selectedCategory.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select a product category',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select a product category');
                         return;
                     }
                 } else if (category === 'mechanical') {
                     const selectedMechanicalCategory = document.getElementById('selectedMechanicalCategory').value;
                     if (!selectedMechanicalCategory || selectedMechanicalCategory.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select a Mechanical product category',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select a Mechanical product category');
                         return;
                     }
                 } else if (category === 'electrical') {
                     const selectedElectricalCategory = document.getElementById('selectedElectricalCategory')?.value;
                     if (!selectedElectricalCategory || selectedElectricalCategory.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select an Electrical product category',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select an Electrical product category');
                         return;
                     }
                 } else if (category === 'material_handling') {
                     const selectedMaterialHandlingCategory = document.getElementById('selectedMaterialHandlingCategory')?.value;
                     if (!selectedMaterialHandlingCategory || selectedMaterialHandlingCategory.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select a Material Handling product category',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select a Material Handling product category');
                         return;
                     }
                 } else if (category === 'tools_and_lifting_equipment') {
                     const selectedToolsLiftingCategory = document.getElementById('selectedToolsLiftingCategory')?.value;
                     if (!selectedToolsLiftingCategory || selectedToolsLiftingCategory.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select a Tools & Lifting product category',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select a Tools & Lifting product category');
                         return;
                     }
                 } else {
                     const selectedBrand = document.getElementById('selectedBrand').value;
                     if (!selectedBrand || selectedBrand.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select a brand',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select a brand');
                         return;
                     }
                 }
@@ -2506,24 +2276,14 @@
                     const selectedAuxCategory = document.querySelector('input[name="auxiliary_category"]:checked');
                     if (!selectedAuxCategory) {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select an auxiliary category (CCTV or Access Control)',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select an auxiliary category (CCTV or Access Control)');
                         return;
                     }
 
                     const selectedBrand = document.getElementById('selectedBrand').value;
                     if (!selectedBrand || selectedBrand.trim() === '') {
                         e.preventDefault();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please select an auxiliary brand',
-                            confirmButtonColor: '#084433'
-                        });
+                        alert('Please select an auxiliary brand');
                         return;
                     }
                 }
@@ -2551,7 +2311,7 @@
                 });
             }
 
-            // SweetAlert2 notification for success
+            // SweetAlert2 notification
             @if(session('success'))
                 Swal.fire({
                     position: 'center',

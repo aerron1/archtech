@@ -1159,7 +1159,7 @@
                                     @enderror
                                 </div>
 
-                                <!-- Fire Protection Brand Selection -->
+                               <!-- Fire Protection Brand Selection -->
                                 <div id="fireProtectionBrands" class="brand-section">
                                     <label class="form-label">Fire Protection Brands <span class="text-danger">*</span></label>
                                     <div class="brand-options">
@@ -1210,6 +1210,7 @@
                                                         'Accessories',
                                                         'Detectors & Bases',
                                                         'Manual Alarm Station',
+                                                        'Notification Appliances', // Added here
                                                         'Gas Detectors',
                                                         'Explosion Proof Type',
                                                         'Test Tool'
@@ -1218,6 +1219,7 @@
                                                         'Panel',
                                                         'FX Series Accessories',
                                                         'NF Series Accessories',
+                                                        'Detectors & Bases', // Added here
                                                         'Call Points',
                                                         'Notification Appliances',
                                                         'Gas Detectors',
@@ -1324,8 +1326,8 @@
 
                                         @foreach($fireProtectionBrands as $brand => $categories)
                                         <div class="brand-option"
-                                             data-value="{{ $brand }}"
-                                             data-categories='@json($categories)'>
+                                            data-value="{{ $brand }}"
+                                            data-categories='@json($categories)'>
                                             {{ $brand }}
                                         </div>
                                         @endforeach

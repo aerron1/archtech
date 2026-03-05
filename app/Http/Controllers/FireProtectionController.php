@@ -119,22 +119,37 @@ class FireProtectionController extends Controller
                 'Accessories',
 
                 // Nittan Categories - UL Conventional
+                'Detectors & Bases',
                 'Pull Stations',
                 'Notification Appliances',
+                'Accessories',
 
-                // Nittan Categories - JP Conventional
+                // Nittan Categories - JP Conventional - UPDATED with Notification Appliances
+                'Panels',
+                'Accessories',
+                'Detectors & Bases',
                 'Manual Alarm Station',
+                'Notification Appliances', // Added here
+                'Gas Detectors',
                 'Explosion Proof Type',
                 'Test Tool',
 
-                // Nittan Categories - EN Addressable
+                // Nittan Categories - EN Addressable - UPDATED with Detectors & Bases
+                'Panel',
                 'FX Series Accessories',
                 'NF Series Accessories',
+                'Detectors & Bases', // Added here
                 'Call Points',
+                'Notification Appliances',
+                'Gas Detectors',
                 'Loop Modules',
 
                 // Nittan Categories - EN Conventional
+                'Panels',
+                'Gas Detectors',
+                'Detectors & Bases',
                 'Call points',
+                'Notification Appliances',
 
                 // Honeywell Categories
                 'Fire Alarm Systems',
@@ -307,26 +322,53 @@ class FireProtectionController extends Controller
             'accessories' => 'Accessories',
 
             // Nittan Categories - UL Conventional
+            'detector' => 'Detectors & Bases',
+            'bases' => 'Detectors & Bases',
             'pull station' => 'Pull Stations',
             'pull stations' => 'Pull Stations',
             'notification appliance' => 'Notification Appliances',
+            'notification appliances' => 'Notification Appliances',
+            'accessories' => 'Accessories',
 
-            // Nittan Categories - JP Conventional
+            // Nittan Categories - JP Conventional - UPDATED with Notification Appliances
+            'panel' => 'Panels',
+            'accessories' => 'Accessories',
+            'detector' => 'Detectors & Bases',
+            'bases' => 'Detectors & Bases',
             'manual alarm' => 'Manual Alarm Station',
             'alarm station' => 'Manual Alarm Station',
+            'notification appliance' => 'Notification Appliances', // Added here
+            'notification appliances' => 'Notification Appliances', // Added here
+            'gas detector' => 'Gas Detectors',
+            'gas detectors' => 'Gas Detectors',
             'explosion proof' => 'Explosion Proof Type',
             'test tool' => 'Test Tool',
 
-            // Nittan Categories - EN Addressable
+            // Nittan Categories - EN Addressable - UPDATED with Detectors & Bases
+            'panel' => 'Panel',
             'fx series' => 'FX Series Accessories',
             'nf series' => 'NF Series Accessories',
+            'detector' => 'Detectors & Bases', // Added here
+            'bases' => 'Detectors & Bases', // Added here
             'call point' => 'Call Points',
             'call points' => 'Call Points',
+            'notification appliance' => 'Notification Appliances',
+            'notification appliances' => 'Notification Appliances',
+            'gas detector' => 'Gas Detectors',
+            'gas detectors' => 'Gas Detectors',
             'loop module' => 'Loop Modules',
+            'loop modules' => 'Loop Modules',
 
             // Nittan Categories - EN Conventional
-            'call points' => 'Call points',
+            'panels' => 'Panels',
+            'gas detector' => 'Gas Detectors',
             'gas detectors' => 'Gas Detectors',
+            'detector' => 'Detectors & Bases',
+            'bases' => 'Detectors & Bases',
+            'call point' => 'Call points',
+            'call points' => 'Call points',
+            'notification appliance' => 'Notification Appliances',
+            'notification appliances' => 'Notification Appliances',
 
             // Honeywell Categories
             'fire alarm' => 'Fire Alarm Systems',
