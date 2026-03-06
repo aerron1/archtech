@@ -32,13 +32,25 @@ class ContactController extends Controller
 
         $recaptchaData = $recaptchaResponse->json();
 
-        if (!$recaptchaData['success'] || ($recaptchaData['score'] ?? 1) < 0.5) {
+        // For v3, check the score (0.5 is the threshold, adjust as needed)
+        if (!$recaptchaData['success'] || ($recaptchaData['score'] ?? 0) < 0.5) {
             return response()->json([
                 'success' => false,
                 'message' => 'reCAPTCHA verification failed. Please try again.',
                 'alert_type' => 'error',
                 'alert_title' => 'Verification Failed!',
-                'alert_message' => 'Please complete the reCAPTCHA verification.'
+                'alert_message' => 'Security verification failed. Please try again.'
+            ], 422);
+        }
+
+        // Check the action matches
+        if (($recaptchaData['action'] ?? '') !== 'submit') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid reCAPTCHA action.',
+                'alert_type' => 'error',
+                'alert_title' => 'Verification Failed!',
+                'alert_message' => 'Security verification failed. Please try again.'
             ], 422);
         }
 

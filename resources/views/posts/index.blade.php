@@ -24,8 +24,9 @@
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-    <!-- reCAPTCHA Script -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+   <script src="https://www.google.com/recaptcha/enterprise.js?render={{ config('services.recaptcha.site_key') }}"></script>
+<!-- OR if using standard reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 
     <style>
         :root {
@@ -1710,60 +1711,56 @@
     </div>
 </section>
 
-    <!-- Contact Section -->
-    <section class="page-section" id="contact">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold mb-3">Contact Us</h2>
-                <p class="text-muted">Get in touch with our team for inquiries and consultations</p>
-            </div>
+  <!-- Contact Section -->
+<section class="page-section" id="contact">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold mb-3">Contact Us</h2>
+            <p class="text-muted">Get in touch with our team for inquiries and consultations</p>
+        </div>
 
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <form id="contactForm" method="POST" action="{{ route('contact.send') }}">
-                        @csrf
-                        <!-- Explicit token field for extra safety -->
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}" autocomplete="off">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form id="contactForm" method="POST" action="{{ route('contact.send') }}">
+                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" autocomplete="off">
 
-                        <div class="row mb-4">
-                            <div class="col-md-6 mb-3">
-                                <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-                                <div class="invalid-feedback">Please enter your name.</div>
-                            </div>
+                    <!-- reCAPTCHA v3 token field -->
+                    <input type="hidden" name="g-recaptcha-response" id="recaptcha-token">
 
-                            <div class="col-md-6 mb-3">
-                                <input type="email" name="email" class="form-control" placeholder="Your Email" required>
-                                <div class="invalid-feedback">Please enter a valid email address.</div>
-                            </div>
-
-                            <div class="col-12 mb-3">
-                                <input type="text" name="subject" class="form-control" placeholder="Subject" required>
-                                <div class="invalid-feedback">Please enter a subject.</div>
-                            </div>
-
-                            <div class="col-12 mb-3">
-                                <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
-                                <div class="invalid-feedback">Please enter your message.</div>
-                            </div>
-
-                            <!-- reCAPTCHA -->
-                            <div class="col-12 mb-3">
-                                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
-                                <div class="invalid-feedback recaptcha-feedback" style="display: none;">Please complete the reCAPTCHA verification.</div>
-                            </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                            <div class="invalid-feedback">Please enter your name.</div>
                         </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg px-5" id="submitBtn">
-                                <span id="submitText">Send Message</span>
-                                <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
-                            </button>
+                        <div class="col-md-6 mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
                         </div>
-                    </form>
-                </div>
+
+                        <div class="col-12 mb-3">
+                            <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                            <div class="invalid-feedback">Please enter a subject.</div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                            <div class="invalid-feedback">Please enter your message.</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-5" id="submitBtn">
+                            <span id="submitText">Send Message</span>
+                            <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Updated Footer with All Accreditation Images -->
     <footer class="bg-dark text-light pt-5 pb-3 mt-5">
@@ -2123,102 +2120,90 @@
             });
         });
 
-        // Contact form submission with reCAPTCHA
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const submitText = document.getElementById('submitText');
-        const submitSpinner = document.getElementById('submitSpinner');
+        // Contact form submission with reCAPTCHA v3
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const submitText = document.getElementById('submitText');
+const submitSpinner = document.getElementById('submitSpinner');
 
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-                // Check if reCAPTCHA is completed
-                const recaptchaResponse = grecaptcha ? grecaptcha.getResponse() : '';
+        // Validate form
+        const formData = new FormData(this);
+        let isValid = true;
 
-                if (!recaptchaResponse) {
-                    document.querySelector('.recaptcha-feedback').style.display = 'block';
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'warning',
-                        title: 'Verification Required',
-                        text: 'Please complete the reCAPTCHA verification.',
-                        showConfirmButton: true,
-                        timer: 3000
-                    });
-                    return;
-                } else {
-                    document.querySelector('.recaptcha-feedback').style.display = 'none';
-                }
+        this.querySelectorAll('input[required], textarea[required]').forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
 
-                // Validate form
-                const formData = new FormData(this);
-                let isValid = true;
+        if (!isValid) {
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Validation Error',
+                text: 'Please fill in all required fields',
+                showConfirmButton: true,
+                timer: 3000
+            });
+            return;
+        }
 
-                this.querySelectorAll('input[required], textarea[required]').forEach(input => {
-                    if (!input.value.trim()) {
-                        input.classList.add('is-invalid');
-                        isValid = false;
-                    } else {
-                        input.classList.remove('is-invalid');
-                    }
-                });
+        // Email validation
+        const emailInput = this.querySelector('input[name="email"]');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailInput.value.trim())) {
+            emailInput.classList.add('is-invalid');
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Validation Error',
+                text: 'Please enter a valid email address',
+                showConfirmButton: true,
+                timer: 3000
+            });
+            return;
+        }
 
-                if (!isValid) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'warning',
-                        title: 'Validation Error',
-                        text: 'Please fill in all required fields',
-                        showConfirmButton: true,
-                        timer: 3000
-                    });
-                    return;
-                }
+        // Show loading state
+        Swal.fire({
+            title: 'Sending Message...',
+            text: 'Please wait while we send your message.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
 
-                // Email validation
-                const emailInput = this.querySelector('input[name="email"]');
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(emailInput.value.trim())) {
-                    emailInput.classList.add('is-invalid');
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'warning',
-                        title: 'Validation Error',
-                        text: 'Please enter a valid email address',
-                        showConfirmButton: true,
-                        timer: 3000
-                    });
-                    return;
-                }
+        // Disable submit button
+        submitBtn.disabled = true;
+        submitText.textContent = 'Sending...';
+        submitSpinner.classList.remove('d-none');
 
-                // Add reCAPTCHA response to form data
-                formData.append('g-recaptcha-response', recaptchaResponse);
-
-                // Show loading state
-                Swal.fire({
-                    title: 'Sending Message...',
-                    text: 'Please wait while we send your message.',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-
-                // Disable submit button
-                submitBtn.disabled = true;
-                submitText.textContent = 'Sending...';
-                submitSpinner.classList.remove('d-none');
+        // Execute reCAPTCHA v3
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'submit'}).then(function(token) {
+                // Add the token to the form
+                document.getElementById('recaptcha-token').value = token;
 
                 // Get CSRF token
-                const token = document.querySelector('input[name="_token"]').value;
+                const csrfToken = document.querySelector('input[name="_token"]').value;
+
+                // Create new FormData with the token
+                const formData = new FormData(contactForm);
 
                 // Send AJAX request
-                fetch(this.action, {
+                fetch(contactForm.action, {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': token,
+                        'X-CSRF-TOKEN': csrfToken,
                         'X-Requested-With': 'XMLHttpRequest',
                         'Accept': 'application/json'
                     }
@@ -2256,10 +2241,6 @@
                             timer: 5000
                         }).then(() => {
                             contactForm.reset();
-                            // Reset reCAPTCHA
-                            if (grecaptcha) {
-                                grecaptcha.reset();
-                            }
                         });
                     } else {
                         Swal.fire({
@@ -2268,11 +2249,6 @@
                             title: data.alert_title || 'Error!',
                             text: data.alert_message || data.message || 'Failed to send your message. Please try again.',
                             showConfirmButton: true
-                        }).then(() => {
-                            // Reset reCAPTCHA on error
-                            if (grecaptcha) {
-                                grecaptcha.reset();
-                            }
                         });
                     }
                 })
@@ -2282,11 +2258,6 @@
                     submitBtn.disabled = false;
                     submitText.textContent = 'Send Message';
                     submitSpinner.classList.add('d-none');
-
-                    // Reset reCAPTCHA on error
-                    if (grecaptcha) {
-                        grecaptcha.reset();
-                    }
 
                     let errorMessage = 'Failed to send your message. Please try again.';
 
@@ -2305,25 +2276,27 @@
                     console.error('Error:', error);
                 });
             });
+        });
+    });
 
-            // Real-time validation
-            contactForm.querySelectorAll('input, textarea').forEach(input => {
-                input.addEventListener('input', function() {
-                    if (this.value.trim()) {
-                        this.classList.remove('is-invalid');
-                    }
-                });
+    // Real-time validation
+    contactForm.querySelectorAll('input, textarea').forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.classList.remove('is-invalid');
+            }
+        });
 
-                if (input.name === 'email') {
-                    input.addEventListener('blur', function() {
-                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        if (this.value.trim() && !emailPattern.test(this.value.trim())) {
-                            this.classList.add('is-invalid');
-                        }
-                    });
+        if (input.name === 'email') {
+            input.addEventListener('blur', function() {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (this.value.trim() && !emailPattern.test(this.value.trim())) {
+                    this.classList.add('is-invalid');
                 }
             });
         }
+    });
+}
 
         // Team carousel functionality
         const track = document.getElementById('teamCarouselTrack');
