@@ -8,18 +8,39 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail;
 use App\Mail\SenderMail;
 use App\Models\ContactSubmission;
+use Illuminate\Support\Facades\Http;
 
 class ContactController extends Controller
 {
     public function send(Request $request)
     {
-        // Validate the form data
+        // Validate the form data including reCAPTCHA
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'subject' => 'required|string|max:255',
             'message' => 'required|string|min:10',
+            'g-recaptcha-response' => 'required|string',
         ]);
+
+        // Verify reCAPTCHA with Google
+        $recaptchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => config('services.recaptcha.secret_key'),
+            'response' => $validated['g-recaptcha-response'],
+            'remoteip' => $request->ip(),
+        ]);
+
+        $recaptchaData = $recaptchaResponse->json();
+
+        if (!$recaptchaData['success'] || ($recaptchaData['score'] ?? 1) < 0.5) {
+            return response()->json([
+                'success' => false,
+                'message' => 'reCAPTCHA verification failed. Please try again.',
+                'alert_type' => 'error',
+                'alert_title' => 'Verification Failed!',
+                'alert_message' => 'Please complete the reCAPTCHA verification.'
+            ], 422);
+        }
 
         try {
             // Save to database
@@ -33,10 +54,11 @@ class ContactController extends Controller
                 'is_read' => false
             ]);
 
-            // Send email
+            // Send emails
             Mail::to(['jophetbaruel.archtechphil@gmail.com'])
                 ->send(new ContactFormMail($validated));
-              Mail::to([$request->email])
+
+            Mail::to([$request->email])
                 ->send(new SenderMail($validated));
 
             return response()->json([

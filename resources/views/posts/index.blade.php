@@ -24,6 +24,9 @@
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    <!-- reCAPTCHA Script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <style>
         :root {
             --primary-color: rgb(1, 101, 99);
@@ -1053,47 +1056,68 @@
             opacity: 1;
         }
 
-    /* Office Carousel - CONSTANT ROTATION */
-.office-carousel {
-    overflow: hidden;
-    width: 100%;
-}
+        /* Office Carousel - CONSTANT ROTATION */
+        .office-carousel {
+            overflow: hidden;
+            width: 100%;
+        }
 
-.office-carousel .carousel-track {
-    display: flex;
-    gap: 24px;
-    width: max-content;
-    animation: scrollOffice 40s linear infinite;
-    /* This ensures NO RESET - just constant smooth scrolling */
-    will-change: transform;
-}
+        .office-carousel .carousel-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            animation: scrollOffice 40s linear infinite;
+            /* This ensures NO RESET - just constant smooth scrolling */
+            will-change: transform;
+        }
 
-/* Pause on hover - optional, remove if you don't want pause */
-.office-carousel:hover .carousel-track {
-    animation-play-state: paused;
-}
+        /* Pause on hover - optional, remove if you don't want pause */
+        .office-carousel:hover .carousel-track {
+            animation-play-state: paused;
+        }
 
-@keyframes scrollOffice {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        /* This moves exactly half the width (one full set) */
-        transform: translateX(calc(-50% - 12px)); /* -12px accounts for half the gap */
-    }
-}
+        @keyframes scrollOffice {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* This moves exactly half the width (one full set) */
+                transform: translateX(calc(-50% - 12px)); /* -12px accounts for half the gap */
+            }
+        }
 
-/* Ensure cards don't shrink */
-.office-carousel .carousel-card {
-    flex: 0 0 auto;
-    width: 420px; /* Fixed width to ensure consistency */
-}
+        /* Ensure cards don't shrink */
+        .office-carousel .carousel-card {
+            flex: 0 0 auto;
+            width: 420px; /* Fixed width to ensure consistency */
+        }
 
-@media (max-width: 768px) {
-    .office-carousel .carousel-card {
-        width: 280px;
-    }
-}
+        @media (max-width: 768px) {
+            .office-carousel .carousel-card {
+                width: 280px;
+            }
+        }
+
+        /* reCAPTCHA Styles */
+        .g-recaptcha {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .recaptcha-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+            text-align: center;
+        }
+
+        @media (max-width: 400px) {
+            .g-recaptcha {
+                transform: scale(0.9);
+                transform-origin: center;
+            }
+        }
     </style>
 </head>
 
@@ -1126,7 +1150,6 @@
                             <li><a class="dropdown-item" href="{{ route('material-handling.index') }}">Material Handling</a></li>
                             <li><a class="dropdown-item" href="{{ Route('tools-lifting.index') }}">Tools & lifting equipment</a></li>
                             <li><hr class="dropdown-divider"></li>
-
                         </ul>
                     </li>
 
@@ -1722,6 +1745,12 @@
                                 <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
                                 <div class="invalid-feedback">Please enter your message.</div>
                             </div>
+
+                            <!-- reCAPTCHA -->
+                            <div class="col-12 mb-3">
+                                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                                <div class="invalid-feedback recaptcha-feedback" style="display: none;">Please complete the reCAPTCHA verification.</div>
+                            </div>
                         </div>
 
                         <div class="text-center">
@@ -1738,7 +1767,7 @@
 
     <!-- Updated Footer with All Accreditation Images -->
     <footer class="bg-dark text-light pt-5 pb-3 mt-5">
-           <div class="container">
+        <div class="container">
             <div class="row text-center text-md-start">
                 <div class="row align-items-center text-center text-md-start">
 
@@ -1968,8 +1997,6 @@
                     <a href="#" class="text-muted fs-5"><i class="bi bi-twitter-x"></i></a>
                     <a href="#" class="text-muted fs-5"><i class="bi bi-linkedin"></i></a>
                 </div>
-
-
             </div>
         </div>
     </footer>
@@ -2096,7 +2123,7 @@
             });
         });
 
-        // Contact form submission
+        // Contact form submission with reCAPTCHA
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
         const submitText = document.getElementById('submitText');
@@ -2105,6 +2132,24 @@
         if (contactForm) {
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+                // Check if reCAPTCHA is completed
+                const recaptchaResponse = grecaptcha ? grecaptcha.getResponse() : '';
+
+                if (!recaptchaResponse) {
+                    document.querySelector('.recaptcha-feedback').style.display = 'block';
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'warning',
+                        title: 'Verification Required',
+                        text: 'Please complete the reCAPTCHA verification.',
+                        showConfirmButton: true,
+                        timer: 3000
+                    });
+                    return;
+                } else {
+                    document.querySelector('.recaptcha-feedback').style.display = 'none';
+                }
 
                 // Validate form
                 const formData = new FormData(this);
@@ -2146,6 +2191,9 @@
                     });
                     return;
                 }
+
+                // Add reCAPTCHA response to form data
+                formData.append('g-recaptcha-response', recaptchaResponse);
 
                 // Show loading state
                 Swal.fire({
@@ -2208,6 +2256,10 @@
                             timer: 5000
                         }).then(() => {
                             contactForm.reset();
+                            // Reset reCAPTCHA
+                            if (grecaptcha) {
+                                grecaptcha.reset();
+                            }
                         });
                     } else {
                         Swal.fire({
@@ -2216,6 +2268,11 @@
                             title: data.alert_title || 'Error!',
                             text: data.alert_message || data.message || 'Failed to send your message. Please try again.',
                             showConfirmButton: true
+                        }).then(() => {
+                            // Reset reCAPTCHA on error
+                            if (grecaptcha) {
+                                grecaptcha.reset();
+                            }
                         });
                     }
                 })
@@ -2225,6 +2282,11 @@
                     submitBtn.disabled = false;
                     submitText.textContent = 'Send Message';
                     submitSpinner.classList.add('d-none');
+
+                    // Reset reCAPTCHA on error
+                    if (grecaptcha) {
+                        grecaptcha.reset();
+                    }
 
                     let errorMessage = 'Failed to send your message. Please try again.';
 
