@@ -67,7 +67,7 @@ class ContactController extends Controller
             ]);
 
             // Send emails
-            Mail::to(['jophetbaruel.archtechphil@gmail.com'])
+            Mail::to(['aerron.archtechphil@gmail.com'])
                 ->send(new ContactFormMail($validated));
 
             Mail::to([$request->email])

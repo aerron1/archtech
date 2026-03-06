@@ -6,32 +6,65 @@
     </div>
 
     <nav class="sidebar-nav">
+        <!-- Dashboard -->
         <a class="nav-link-admin {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
             <i class="fas fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
 
+        <!-- Blog Posts -->
         <a class="nav-link-admin {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}" href="{{ route('admin.posts.index') }}">
             <i class="fas fa-newspaper"></i>
             <span>Blog Posts</span>
         </a>
 
+        <!-- Projects -->
+        <a class="nav-link-admin {{ request()->routeIs('admin.projects.*') && !request()->routeIs('admin.projects.trash') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">
+            <i class="fas fa-project-diagram"></i>
+            <span>Projects</span>
+        </a>
+
+        <!-- Services -->
         <a class="nav-link-admin" href="#">
             <i class="fas fa-cogs"></i>
             <span>Services</span>
         </a>
 
+        <!-- Products -->
         <a class="nav-link-admin" href="#">
             <i class="fas fa-boxes"></i>
             <span>Products</span>
         </a>
 
-        <a class="nav-link-admin" href="#">
+        <!-- Team Members -->
+        <a class="nav-link-admin {{ request()->routeIs('admin.team.*') ? 'active' : '' }}" href="{{ route('admin.team.index') }}">
             <i class="fas fa-users"></i>
             <span>Team Members</span>
         </a>
 
-        <a class="nav-link-admin" href="#">
+        <!-- CONTACT SUBMISSIONS - Add this right after Team Members -->
+        <a class="nav-link-admin {{ request()->routeIs('admin.contact-submissions.*') ? 'active' : '' }}" href="{{ route('admin.contact-submissions.index') }}">
+            <i class="fas fa-envelope"></i>
+            <span>Contact Submissions</span>
+            @php
+                use App\Models\ContactSubmission;
+                $unreadCount = ContactSubmission::where('is_read', false)->count();
+            @endphp
+            @if($unreadCount > 0)
+                <span class="badge" style="background-color: #ffc107 !important; color: #212529 !important; margin-left: auto; font-size: 0.75rem; padding: 3px 8px; border-radius: 10px;">
+                    {{ $unreadCount }} new
+                </span>
+            @endif
+        </a>
+
+        <!-- Recently Deleted -->
+        <a class="nav-link-admin {{ request()->routeIs('admin.posts.trash') ? 'active' : '' }}" href="{{ route('admin.posts.trash') }}">
+            <i class="fas fa-trash"></i>
+            <span>Recently Deleted</span>
+        </a>
+
+        <!-- Settings -->
+        <a class="nav-link-admin {{ request()->routeIs('admin.settings') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
         </a>

@@ -901,7 +901,17 @@
                             <i class="fas fa-users"></i>
                             <span>Team Members</span>
                         </a>
-
+                        <!-- Add this after the Team Members link -->
+                            <a class="nav-link-admin {{ request()->routeIs('admin.contact-submissions.*') ? 'active' : '' }}" href="{{ route('admin.contact-submissions.index') }}">
+                                <i class="fas fa-envelope"></i>
+                                <span>Contact Submissions</span>
+                                @php
+                                    $unreadCount = \App\Models\ContactSubmission::where('is_read', false)->count();
+                                @endphp
+                                @if($unreadCount > 0)
+                                    <span class="badge bg-warning text-dark ms-auto">{{ $unreadCount }}</span>
+                                @endif
+                            </a>
                         <a class="nav-link-admin {{ request()->routeIs('admin.posts.trash') ? 'active' : '' }}" href="{{ route('admin.posts.trash') }}">
                             <i class="fas fa-trash"></i>
                             <span>Recently Deleted</span>

@@ -117,6 +117,38 @@ Route::middleware(['auth', 'verified', 'active'])
         Route::post('team/{team}/toggle-status', [\App\Http\Controllers\Admin\TeamController::class, 'toggleStatus'])
             ->name('team.toggle-status');
 
+        // ========== CONTACT SUBMISSIONS MANAGEMENT ==========
+        Route::resource('contact-submissions', \App\Http\Controllers\Admin\ContactSubmissionController::class)
+            ->except(['create', 'edit', 'update']);
+
+        // Mark as Read/Unread (Individual)
+        Route::post('contact-submissions/{contactSubmission}/mark-as-read',
+            [\App\Http\Controllers\Admin\ContactSubmissionController::class, 'markAsRead'])
+            ->name('contact-submissions.mark-as-read');
+
+        Route::post('contact-submissions/{contactSubmission}/mark-as-unread',
+            [\App\Http\Controllers\Admin\ContactSubmissionController::class, 'markAsUnread'])
+            ->name('contact-submissions.mark-as-unread');
+
+        // Bulk Actions
+        Route::post('contact-submissions/bulk-mark-read',
+            [\App\Http\Controllers\Admin\ContactSubmissionController::class, 'bulkMarkAsRead'])
+            ->name('contact-submissions.bulk-mark-read');
+
+        Route::post('contact-submissions/bulk-mark-unread',
+            [\App\Http\Controllers\Admin\ContactSubmissionController::class, 'bulkMarkAsUnread'])
+            ->name('contact-submissions.bulk-mark-unread');
+
+        Route::post('contact-submissions/bulk-delete',
+            [\App\Http\Controllers\Admin\ContactSubmissionController::class, 'bulkDelete'])
+            ->name('contact-submissions.bulk-delete');
+
+        // Export to CSV
+        Route::get('contact-submissions/export/csv',
+            [\App\Http\Controllers\Admin\ContactSubmissionController::class, 'export'])
+            ->name('contact-submissions.export');
+        // ========== END CONTACT SUBMISSIONS ==========
+
         // Settings Routes
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::put('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.update-profile');
@@ -158,10 +190,8 @@ Route::get('/tools-lifting/product', [ToolsLiftingController::class, 'product'])
 |--------------------------------------------------------------------------
 */
 
-
 /*  EMAIL  */
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
-
 
 Route::post('/add-to-quote', function (Request $request) {
     session()->push('quote.items', $request->product_id);
