@@ -17,6 +17,8 @@ class User extends Authenticatable
         'role',
         'position',
         'is_active', // Add this
+         'status_changed_at',
+    'profile_picture', // Make sure this is included!
     ];
 
     protected $hidden = [

@@ -159,7 +159,7 @@
             width: 100%;
         }
 
-        /* Mobile Styles - EXACTLY like dashboard.blade.php */
+        /* Mobile Styles */
         @media (max-width: 992px) {
             .mobile-header {
                 display: flex;
@@ -431,6 +431,93 @@
             border-color: #dc3545;
         }
 
+        /* Profile Picture Upload Styles */
+        .profile-preview-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-preview-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .profile-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--archtech-secondary) 0%, var(--archtech-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            font-weight: 600;
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto;
+            border: 5px solid white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-upload-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .profile-upload-btn {
+            background: var(--archtech-primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(8, 68, 51, 0.3);
+        }
+
+        .profile-remove-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-remove-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .profile-remove-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #profile-picture-input {
+            display: none;
+        }
+
         /* SIDEBAR STYLES */
         .admin-logo {
             padding: 25px 20px;
@@ -618,7 +705,7 @@
     </style>
 </head>
 <body>
-    <!-- Mobile Header with Logo - EXACTLY like dashboard.blade.php -->
+    <!-- Mobile Header with Logo -->
     <div class="mobile-header">
         <div class="mobile-header-logo">
             <img src="{{ asset('homepage/file/assets/faviconlogo.png') }}" alt="Archtech">
@@ -639,7 +726,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="admin-container">
-        <!-- Sidebar - EXACTLY like dashboard.blade.php -->
+        <!-- Sidebar -->
         <div class="admin-sidebar" id="adminSidebar">
             <div class="admin-logo">
                 <a href="{{ route('admin.dashboard') }}" class="d-block">
@@ -659,32 +746,36 @@
                             <i class="fas fa-newspaper"></i>
                             <span>Blog Posts</span>
                         </a>
-                            <!-- NEW: Projects Menu Item - Just below Blog Posts -->
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.projects.*') && !request()->routeIs('admin.projects.trash') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">
                             <i class="fas fa-project-diagram"></i>
                             <span>Projects</span>
                         </a>
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.team.*') ? 'active' : '' }}" href="{{ route('admin.team.index') }}">
                             <i class="fas fa-users"></i>
                             <span>Team Members</span>
                         </a>
-                                         <a class="nav-link-admin {{ request()->routeIs('admin.contact-submissions.*') ? 'active' : '' }}" href="{{ route('admin.contact-submissions.index') }}">
-                        <i class="fas fa-envelope"></i>
-                        <span>Contact Submissions</span>
-                        @php
-                            use App\Models\ContactSubmission;
-                            $unreadCount = ContactSubmission::where('is_read', false)->count();
-                        @endphp
-                        @if($unreadCount > 0)
-                            <span class="badge" style="background-color: #ffc107 !important; color: #212529 !important; margin-left: auto; font-size: 0.75rem; padding: 3px 8px; border-radius: 10px;">
-                                {{ $unreadCount }} new
-                            </span>
-                        @endif
-                    </a>
+
+                        <a class="nav-link-admin {{ request()->routeIs('admin.contact-submissions.*') ? 'active' : '' }}" href="{{ route('admin.contact-submissions.index') }}">
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact Submissions</span>
+                            @php
+                                use App\Models\ContactSubmission;
+                                $unreadCount = ContactSubmission::where('is_read', false)->count();
+                            @endphp
+                            @if($unreadCount > 0)
+                                <span class="badge" style="background-color: #ffc107 !important; color: #212529 !important; margin-left: auto; font-size: 0.75rem; padding: 3px 8px; border-radius: 10px;">
+                                    {{ $unreadCount }} new
+                                </span>
+                            @endif
+                        </a>
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.posts.trash') ? 'active' : '' }}" href="{{ route('admin.posts.trash') }}">
                             <i class="fas fa-trash"></i>
                             <span>Recently Deleted</span>
                         </a>
+
                         <a class="nav-link-admin {{ request()->routeIs('admin.settings') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
                             <i class="fas fa-cog"></i>
                             <span>Settings</span>
@@ -758,10 +849,41 @@
                 </div>
             @endif
 
-            <!-- Create Form -->
+            <!-- Create Form with Profile Picture Upload -->
             <div class="form-container">
-                <form action="{{ route('admin.team.store') }}" method="POST">
+                <form action="{{ route('admin.team.store') }}" method="POST" enctype="multipart/form-data" id="createTeamForm">
                     @csrf
+
+                    <!-- Profile Picture Upload Section -->
+                    <div class="profile-preview-container">
+                        <div class="profile-preview-wrapper">
+                            <div class="profile-preview" id="profilePreview">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+
+                        <div class="profile-upload-actions">
+                            <button type="button" class="profile-upload-btn" onclick="document.getElementById('profile-picture-input').click()">
+                                <i class="fas fa-upload"></i> Choose Photo
+                            </button>
+                            <button type="button" class="profile-remove-btn" id="removePhotoBtn" onclick="removeProfilePhoto()" disabled>
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </div>
+
+                        <!-- Hidden file input -->
+                        <input type="file"
+                               id="profile-picture-input"
+                               name="profile_picture"
+                               accept="image/jpeg,image/png,image/gif,image/webp"
+                               style="display: none;"
+                               onchange="previewProfilePhoto(this)">
+
+                        <p class="text-muted text-small mt-2">
+                            <i class="fas fa-info-circle"></i>
+                            Recommended: Square image, at least 400x400 pixels. Max file size: 2MB. (JPEG, PNG, GIF, WEBP)
+                        </p>
+                    </div>
 
                     <div class="form-group">
                         <label for="name" class="form-label">Full Name</label>
@@ -843,7 +965,7 @@
                     </div>
 
                     <div style="display: flex; gap: 15px; margin-top: 30px;">
-                        <button type="submit" class="btn-archtech">
+                        <button type="submit" class="btn-archtech" id="submitBtn">
                             <i class="fas fa-user-plus me-1"></i> Create Admin Member
                         </button>
                         <a href="{{ route('admin.team.index') }}" class="btn-archtech-outline">
@@ -862,7 +984,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile Sidebar Functionality - EXACTLY like dashboard.blade.php
+            // Mobile Sidebar Functionality
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('adminSidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -901,7 +1023,6 @@
             // Mobile header actions
             if (mobileSearchToggle) {
                 mobileSearchToggle.addEventListener('click', function() {
-                    // You can implement search functionality here
                     console.log('Search clicked');
                 });
             }
@@ -958,7 +1079,7 @@
             }, 5000);
 
             // Form validation
-            const form = document.querySelector('form');
+            const form = document.getElementById('createTeamForm');
             if (form) {
                 form.addEventListener('submit', function(e) {
                     const password = document.getElementById('password');
@@ -997,6 +1118,74 @@
                 });
             @endif
         });
+
+        // Profile Photo Functions
+        function previewProfilePhoto(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file type
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Invalid File Type',
+                    text: 'Please select an image file (JPEG, PNG, GIF, WEBP)',
+                    confirmButtonColor: '#084433',
+                    customClass: {
+                        confirmButton: 'swal-cancel-btn'
+                    }
+                });
+                input.value = '';
+                return;
+            }
+
+            // Validate file size (2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'File Too Large',
+                    text: 'File size should not exceed 2MB',
+                    confirmButtonColor: '#084433',
+                    customClass: {
+                        confirmButton: 'swal-cancel-btn'
+                    }
+                });
+                input.value = '';
+                return;
+            }
+
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('profilePreview');
+                preview.style.backgroundImage = `url('${e.target.result}')`;
+                preview.style.backgroundSize = 'cover';
+                preview.style.backgroundPosition = 'center';
+                preview.innerHTML = ''; // Remove the icon
+
+                // Enable remove button
+                document.getElementById('removePhotoBtn').disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeProfilePhoto() {
+            const preview = document.getElementById('profilePreview');
+            const fileInput = document.getElementById('profile-picture-input');
+
+            // Reset preview
+            preview.style.backgroundImage = '';
+            preview.innerHTML = '<i class="fas fa-user"></i>';
+
+            // Clear file input
+            fileInput.value = '';
+
+            // Disable remove button
+            document.getElementById('removePhotoBtn').disabled = true;
+        }
     </script>
 
     <style>
