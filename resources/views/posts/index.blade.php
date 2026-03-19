@@ -24,9 +24,8 @@
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-   <script src="https://www.google.com/recaptcha/enterprise.js?render={{ config('services.recaptcha.site_key') }}"></script>
-<!-- OR if using standard reCAPTCHA -->
-<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+    <!-- reCAPTCHA v3 - SINGLE SCRIPT -->
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 
     <style>
         :root {
@@ -1724,8 +1723,6 @@
                 <form id="contactForm" method="POST" action="{{ route('contact.send') }}">
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" autocomplete="off">
-
-                    <!-- reCAPTCHA v3 token field -->
                     <input type="hidden" name="g-recaptcha-response" id="recaptcha-token">
 
                     <div class="row mb-4">
@@ -2004,7 +2001,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-    // Add this to your existing DOMContentLoaded event listener or create a new one
     document.addEventListener('DOMContentLoaded', function() {
         // Create blur backdrop element if it doesn't exist
         if (!document.querySelector('.modal-blur-backdrop')) {
@@ -2032,13 +2028,11 @@
 
         // Handle all project modals
         document.querySelectorAll('.portfolio-modal').forEach(modal => {
-            // When modal is shown
             modal.addEventListener('show.bs.modal', function() {
                 openModalsCount++;
                 updateBlurBackdrop();
             });
 
-            // When modal is hidden
             modal.addEventListener('hidden.bs.modal', function() {
                 openModalsCount = Math.max(0, openModalsCount - 1);
                 updateBlurBackdrop();
@@ -2053,9 +2047,9 @@
             "Strong infrastructure creates smarter buildings. We install dependable auxiliary systems that enhance security and efficiency."
         ];
 
-        const speed = 40;      // typing speed
-        const eraseSpeed = 25; // erase speed
-        const delayBetween = 1500; // delay before erase
+        const speed = 40;
+        const eraseSpeed = 25;
+        const delayBetween = 1500;
         let textIndex = 0;
         let charIndex = 0;
         const typewriter = document.getElementById("typewriter");
@@ -2082,10 +2076,9 @@
             }
         }
 
-        // Start typewriter
         type();
 
-        // View More/Less functionality for projects
+        // View More/Less functionality
         const viewMoreBtn = document.getElementById('viewMoreBtn');
         const viewLessBtn = document.getElementById('viewLessBtn');
         const projectsDropdown = document.getElementById('projectsDropdown');
@@ -2120,183 +2113,133 @@
             });
         });
 
-        // Contact form submission with reCAPTCHA v3
-const contactForm = document.getElementById('contactForm');
-const submitBtn = document.getElementById('submitBtn');
-const submitText = document.getElementById('submitText');
-const submitSpinner = document.getElementById('submitSpinner');
+        // ========== CONTACT FORM WITH reCAPTCHA v3 ==========
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const submitSpinner = document.getElementById('submitSpinner');
 
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-        // Validate form
-        const formData = new FormData(this);
-        let isValid = true;
-
-        this.querySelectorAll('input[required], textarea[required]').forEach(input => {
-            if (!input.value.trim()) {
-                input.classList.add('is-invalid');
-                isValid = false;
-            } else {
-                input.classList.remove('is-invalid');
-            }
-        });
-
-        if (!isValid) {
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Validation Error',
-                text: 'Please fill in all required fields',
-                showConfirmButton: true,
-                timer: 3000
-            });
-            return;
-        }
-
-        // Email validation
-        const emailInput = this.querySelector('input[name="email"]');
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(emailInput.value.trim())) {
-            emailInput.classList.add('is-invalid');
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Validation Error',
-                text: 'Please enter a valid email address',
-                showConfirmButton: true,
-                timer: 3000
-            });
-            return;
-        }
-
-        // Show loading state
-        Swal.fire({
-            title: 'Sending Message...',
-            text: 'Please wait while we send your message.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
-        // Disable submit button
-        submitBtn.disabled = true;
-        submitText.textContent = 'Sending...';
-        submitSpinner.classList.remove('d-none');
-
-        // Execute reCAPTCHA v3
-        grecaptcha.ready(function() {
-            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'submit'}).then(function(token) {
-                // Add the token to the form
-                document.getElementById('recaptcha-token').value = token;
-
-                // Get CSRF token
-                const csrfToken = document.querySelector('input[name="_token"]').value;
-
-                // Create new FormData with the token
-                const formData = new FormData(contactForm);
-
-                // Send AJAX request
-                fetch(contactForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        if (response.status === 419) {
-                            throw new Error('Session expired. Please refresh the page and try again.');
-                        }
-                        if (response.status === 422) {
-                            return response.json().then(data => {
-                                throw new Error(data.message || 'Validation failed');
-                            });
-                        }
-                        return response.json().then(data => {
-                            throw new Error(data.message || 'Server error occurred');
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    Swal.close();
-
-                    submitBtn.disabled = false;
-                    submitText.textContent = 'Send Message';
-                    submitSpinner.classList.add('d-none');
-
-                    if (data.success) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: data.alert_title || 'Success!',
-                            text: data.alert_message || data.message || 'Your message has been sent successfully.',
-                            showConfirmButton: true,
-                            timer: 5000
-                        }).then(() => {
-                            contactForm.reset();
-                        });
+                // Basic validation
+                let isValid = true;
+                this.querySelectorAll('input[required], textarea[required]').forEach(input => {
+                    if (!input.value.trim()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
                     } else {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'error',
-                            title: data.alert_title || 'Error!',
-                            text: data.alert_message || data.message || 'Failed to send your message. Please try again.',
-                            showConfirmButton: true
-                        });
+                        input.classList.remove('is-invalid');
                     }
-                })
-                .catch(error => {
-                    Swal.close();
+                });
 
-                    submitBtn.disabled = false;
-                    submitText.textContent = 'Send Message';
-                    submitSpinner.classList.add('d-none');
+                // Email validation
+                const emailInput = this.querySelector('input[name="email"]');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailInput.value.trim() && !emailPattern.test(emailInput.value.trim())) {
+                    emailInput.classList.add('is-invalid');
+                    isValid = false;
+                }
 
-                    let errorMessage = 'Failed to send your message. Please try again.';
-
-                    if (error.message) {
-                        errorMessage = error.message;
-                    }
-
+                if (!isValid) {
                     Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: 'Error!',
-                        text: errorMessage,
-                        showConfirmButton: true
+                        icon: 'warning',
+                        title: 'Validation Error',
+                        text: 'Please fill in all fields correctly',
+                        timer: 3000
                     });
+                    return;
+                }
 
-                    console.error('Error:', error);
+                // Show loading
+                Swal.fire({
+                    title: 'Sending...',
+                    text: 'Please wait',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Disable button
+                submitBtn.disabled = true;
+                submitText.textContent = 'Sending...';
+                submitSpinner.classList.remove('d-none');
+
+                // Execute reCAPTCHA
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'submit'})
+                        .then(function(token) {
+                            // Add token to form
+                            document.getElementById('recaptcha-token').value = token;
+
+                            // Submit form via AJAX
+                            fetch(contactForm.action, {
+                                method: 'POST',
+                                body: new FormData(contactForm),
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                Swal.close();
+
+                                if (data.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success!',
+                                        text: data.message || 'Message sent successfully!',
+                                        timer: 5000
+                                    });
+                                    contactForm.reset();
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: data.message || 'Something went wrong'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.close();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Network error. Please try again.'
+                                });
+                                console.error('Error:', error);
+                            })
+                            .finally(() => {
+                                submitBtn.disabled = false;
+                                submitText.textContent = 'Send Message';
+                                submitSpinner.classList.add('d-none');
+                            });
+                        })
+                        .catch(function(error) {
+                            Swal.close();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'reCAPTCHA Error',
+                                text: 'Failed to verify. Please refresh the page.'
+                            });
+                            submitBtn.disabled = false;
+                            submitText.textContent = 'Send Message';
+                            submitSpinner.classList.add('d-none');
+                            console.error('reCAPTCHA error:', error);
+                        });
                 });
             });
-        });
-    });
 
-    // Real-time validation
-    contactForm.querySelectorAll('input, textarea').forEach(input => {
-        input.addEventListener('input', function() {
-            if (this.value.trim()) {
-                this.classList.remove('is-invalid');
-            }
-        });
-
-        if (input.name === 'email') {
-            input.addEventListener('blur', function() {
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (this.value.trim() && !emailPattern.test(this.value.trim())) {
-                    this.classList.add('is-invalid');
-                }
+            // Real-time validation
+            contactForm.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('input', function() {
+                    this.classList.remove('is-invalid');
+                });
             });
         }
-    });
-}
 
         // Team carousel functionality
         const track = document.getElementById('teamCarouselTrack');
@@ -2335,7 +2278,7 @@ if (contactForm) {
             });
         });
 
-        // Simple scroll handler for homepage
+        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2355,19 +2298,17 @@ if (contactForm) {
                         behavior: 'smooth'
                     });
 
-                    // Update URL without reload
                     history.pushState(null, null, hash);
                 }
             });
         });
 
-        // Check if URL has hash on page load
+        // Handle hash on page load
         if (window.location.hash) {
             const hash = window.location.hash;
             const element = document.querySelector(hash);
 
             if (element) {
-                // Wait for page to fully load
                 setTimeout(function() {
                     const navbar = document.querySelector('.navbar');
                     const navbarHeight = navbar ? navbar.offsetHeight : 80;
@@ -2385,13 +2326,11 @@ if (contactForm) {
         // Office carousel - ensure proper animation
         const officeTrack = document.getElementById('officeCarouselTrack');
         if (officeTrack) {
-            // Calculate total width for proper animation
             const cards = officeTrack.querySelectorAll('.carousel-card');
             if (cards.length > 0) {
-                const cardWidth = cards[0].offsetWidth + 24; // width + gap
-                const totalWidth = cardWidth * (cards.length / 2); // half because we duplicated for seamless loop
+                const cardWidth = cards[0].offsetWidth + 24;
+                const totalWidth = cardWidth * (cards.length / 2);
 
-                // Add custom animation for this specific carousel if needed
                 const style = document.createElement('style');
                 style.innerHTML = `
                     #officeCarouselTrack {
