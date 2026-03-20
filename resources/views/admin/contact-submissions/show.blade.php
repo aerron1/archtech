@@ -30,8 +30,9 @@
 </div>
 
 <div class="row">
+    <!-- Left Column - Message Details -->
     <div class="col-md-8">
-        <div class="card mb-4">
+        <div class="card h-100">
             <div class="card-header" style="background: linear-gradient(135deg, var(--archtech-primary) 0%, var(--archtech-dark) 100%); color: white;">
                 <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Message Details</h5>
             </div>
@@ -43,7 +44,7 @@
 
                 <div class="mb-4">
                     <h6 class="fw-bold" style="color: var(--archtech-primary);">Message:</h6>
-                    <div class="p-3 bg-light rounded" style="white-space: pre-wrap; line-height: 1.8;">
+                    <div class="p-3 bg-light rounded" style="white-space: pre-wrap; line-height: 1.8; min-height: 200px;">
                         {{ $contactSubmission->message }}
                     </div>
                 </div>
@@ -51,75 +52,80 @@
         </div>
     </div>
 
+    <!-- Right Column - Sender Info and Technical Details -->
     <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-header" style="background: linear-gradient(135deg, var(--archtech-primary) 0%, var(--archtech-dark) 100%); color: white;">
-                <h5 class="mb-0"><i class="fas fa-user me-2"></i>Sender Information</h5>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label class="fw-bold" style="color: var(--archtech-primary);">Name:</label>
-                    <p class="mb-0">{{ $contactSubmission->name }}</p>
+        <div class="d-flex flex-column h-100">
+            <!-- Sender Information Card -->
+            <div class="card mb-4">
+                <div class="card-header" style="background: linear-gradient(135deg, var(--archtech-primary) 0%, var(--archtech-dark) 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Sender Information</h5>
                 </div>
-
-                <div class="mb-3">
-                    <label class="fw-bold" style="color: var(--archtech-primary);">Email:</label>
-                    <p class="mb-0">
-                        <a href="mailto:{{ $contactSubmission->email }}" style="color: var(--archtech-primary);">
-                            {{ $contactSubmission->email }}
-                        </a>
-                    </p>
-                </div>
-
-                <div class="mb-3">
-                    <label class="fw-bold" style="color: var(--archtech-primary);">Status:</label>
-                    <p class="mb-0">
-                        @if($contactSubmission->is_read)
-                            <span class="badge" style="background-color: #198754; color: white; padding: 5px 10px;">
-                                <i class="fas fa-check-circle me-1"></i>Read
-                            </span>
-                        @else
-                            <span class="badge" style="background-color: #ffc107; color: #212529; padding: 5px 10px;">
-                                <i class="fas fa-clock me-1"></i>Unread
-                            </span>
-                        @endif
-                    </p>
-                </div>
-
-                <div class="mb-3">
-                    <label class="fw-bold" style="color: var(--archtech-primary);">Date Submitted:</label>
-                    <p class="mb-0">
-                        {{ $contactSubmission->created_at->format('F d, Y') }}<br>
-                        <small class="text-muted">{{ $contactSubmission->created_at->format('h:i A') }}</small>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header" style="background: linear-gradient(135deg, var(--archtech-primary) 0%, var(--archtech-dark) 100%); color: white;">
-                <h5 class="mb-0"><i class="fas fa-network-wired me-2"></i>Technical Details</h5>
-            </div>
-            <div class="card-body">
-                @if($contactSubmission->ip_address)
+                <div class="card-body">
                     <div class="mb-3">
-                        <label class="fw-bold" style="color: var(--archtech-primary);">IP Address:</label>
-                        <p class="mb-0"><code>{{ $contactSubmission->ip_address }}</code></p>
+                        <label class="fw-bold" style="color: var(--archtech-primary);">Name:</label>
+                        <p class="mb-0">{{ $contactSubmission->name }}</p>
                     </div>
-                @endif
 
-                @if($contactSubmission->user_agent)
                     <div class="mb-3">
-                        <label class="fw-bold" style="color: var(--archtech-primary);">User Agent:</label>
-                        <p class="mb-0 small text-muted" style="word-break: break-all;">
-                            {{ $contactSubmission->user_agent }}
+                        <label class="fw-bold" style="color: var(--archtech-primary);">Email:</label>
+                        <p class="mb-0">
+                            <a href="mailto:{{ $contactSubmission->email }}" style="color: var(--archtech-primary);">
+                                {{ $contactSubmission->email }}
+                            </a>
                         </p>
                     </div>
-                @endif
 
-                <div class="mb-3">
-                    <label class="fw-bold" style="color: var(--archtech-primary);">Submission ID:</label>
-                    <p class="mb-0"><code>#{{ $contactSubmission->id }}</code></p>
+                    <div class="mb-3">
+                        <label class="fw-bold" style="color: var(--archtech-primary);">Status:</label>
+                        <p class="mb-0">
+                            @if($contactSubmission->is_read)
+                                <span class="badge" style="background-color: #198754; color: white; padding: 5px 10px;">
+                                    <i class="fas fa-check-circle me-1"></i>Read
+                                </span>
+                            @else
+                                <span class="badge" style="background-color: #ffc107; color: #212529; padding: 5px 10px;">
+                                    <i class="fas fa-clock me-1"></i>Unread
+                                </span>
+                            @endif
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold" style="color: var(--archtech-primary);">Date Submitted:</label>
+                        <p class="mb-0">
+                            {{ $contactSubmission->created_at->format('F d, Y') }}<br>
+                            <small class="text-muted">{{ $contactSubmission->created_at->format('h:i A') }}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Details Card -->
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, var(--archtech-primary) 0%, var(--archtech-dark) 100%); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-network-wired me-2"></i>Technical Details</h5>
+                </div>
+                <div class="card-body">
+                    @if($contactSubmission->ip_address)
+                        <div class="mb-3">
+                            <label class="fw-bold" style="color: var(--archtech-primary);">IP Address:</label>
+                            <p class="mb-0"><code>{{ $contactSubmission->ip_address }}</code></p>
+                        </div>
+                    @endif
+
+                    @if($contactSubmission->user_agent)
+                        <div class="mb-3">
+                            <label class="fw-bold" style="color: var(--archtech-primary);">User Agent:</label>
+                            <p class="mb-0 small text-muted" style="word-break: break-all;">
+                                {{ $contactSubmission->user_agent }}
+                            </p>
+                        </div>
+                    @endif
+
+                    <div class="mb-3">
+                        <label class="fw-bold" style="color: var(--archtech-primary);">Submission ID:</label>
+                        <p class="mb-0"><code>#{{ $contactSubmission->id }}</code></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,6 +137,28 @@
     @csrf
     @method('DELETE')
 </form>
+
+<style>
+/* Ensure both columns have equal height */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    flex: 1 1 auto;
+}
+
+/* Ensure the message area has a minimum height */
+.bg-light.rounded {
+    min-height: 150px;
+}
+</style>
 @endsection
 
 @push('scripts')
@@ -236,6 +264,27 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // Fix for equal height columns
+    function setEqualHeight() {
+        const leftCol = document.querySelector('.col-md-8');
+        const rightCol = document.querySelector('.col-md-4');
+        
+        if (leftCol && rightCol) {
+            // Reset heights
+            rightCol.style.minHeight = 'auto';
+            
+            // Get left column height
+            const leftHeight = leftCol.offsetHeight;
+            
+            // Set right column to match left column height
+            rightCol.style.minHeight = leftHeight + 'px';
+        }
+    }
+
+    // Run on load and on resize
+    window.addEventListener('load', setEqualHeight);
+    window.addEventListener('resize', setEqualHeight);
 });
 </script>
 @endpush
