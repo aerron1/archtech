@@ -78,7 +78,7 @@ class ContactController extends Controller
             ]);
 
             // Send emails
-            Mail::to('aerrontapican1@gmail.com')->send(new ContactFormMail($validated));
+            Mail::to('jophetbaruel.archtechphil@gmail.com')->send(new ContactFormMail($validated));
             Mail::to($request->email)->send(new SenderMail($validated));
 
             return response()->json([
